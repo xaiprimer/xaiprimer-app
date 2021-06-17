@@ -1,1 +1,1 @@
-# primer-app
+# xaiprimer-app

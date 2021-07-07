@@ -1,39 +1,67 @@
-import * as React from "react";
-import * as D3 from "d3";
-import { useD3 } from "d3blackbox";
-
+import React from "react";
 import Layout from "../components/layout";
+import Seo from "../components/seo";
+import ChartWrapper from "../components/Chart/ ChartWrapper";
 
-const getRandomData = () =>
-  D3.range(20).map(() => ({ x: Math.random(), y: Math.random() }));
-
-const Axis = ({ x, y, scale, axisType }) => {
-  const fnName = axisType === "left" ? "axisLeft" : "axisBottom";
-  const ref = useD3((el) => D3.select(el).call(D3[fnName](scale)));
-
-  return <g transform={`translate(${x}, ${y})`} ref={ref} />;
-};
-
-export default () => {
-  const data = getRandomData();
-  const margin = { top: 100, right: 50, bottom: 100, left: 50 };
-  const width = 1600;
-  const height = 1000 - margin.top - margin.bottom;
-
-  const xScale = D3.scaleLinear().domain([0, 1]).range([45, width]);
-  const yScale = D3.scaleLinear()
-    .domain([0, 1])
-    .range([height - 45, 5]);
-
+export default function Tool() {
   return (
     <Layout>
-      <svg width={width} height={height}>
-        {data.map((d) => (
-          <circle cx={xScale(d.x)} cy={yScale(d.y)} r={5} />
-        ))}
-        <Axis x={40} y={5} scale={yScale} axisType="left" />
-        <Axis x={0} y={height - 40} scale={xScale} axisType="bottom" />
-      </svg>
-    </Layout>
+    <Seo title="tool" />
+    <div className="Tool">
+    <h1>This is the Wrapper</h1>
+    <ChartWrapper />
+    </div>
+  </Layout>
   );
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// import { Chart } from "../components/Chart/Chart";
+// import Layout from "../components/layout";
+// import Seo from "../components/seo";
+
+// function Tool() {
+//   // const [data, setData] = useState([]);
+
+//   React.useEffect(() => {
+//     d3.json("./components/Chart/glyphs.json").then((d) => {
+//       setData(d);
+//       setLoading(false);
+//     });
+//     return () => undefined;
+//   }, []);
+
+//   const [height, setHeight] = useState(window.innerHeight);
+//   const [width, setWidth] = useState(window.innerWidth);
+//   const updateDimensions = () => {
+//     setWidth(window.innerWidth);
+//     setHeight(window.innerHeight - "5vh");
+//   };
+//   useEffect(() => {
+//     window.addEventListener("resize", updateDimensions);
+//     return () => window.removeEventListener("resize", updateDimensions);
+//   }, []);
+
+//   useEffect(() => {
+//     Chart(height, width);
+//   }, [Chart]);
+
+//   return (
+//     <Layout>
+//       <Seo title="tool" />
+//       <div id="chart"></div>
+//     </Layout>
+//   );
+// }
+// export default Tool;
+

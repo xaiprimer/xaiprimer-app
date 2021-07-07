@@ -1,21 +1,13 @@
-import { useD3 } from '../../hooks/useD3';
-import React from 'react';
-import * as d3 from 'd3';
+import { useD3 } from "../../hooks/useD3";
+import React from "react";
+import * as d3 from "d3";
 
 function Chart({ data }) {
   const ref = useD3(
     (svg) => {
-        const margin = { top: 100, right: 50, bottom: 100, left: 50 },
+      const margin = { top: 100, right: 50, bottom: 100, left: 50 },
         width = 1600 - margin.left - margin.right,
         height = 800 - margin.top - margin.bottom;
-
-        const r = 10;
-        const collisionR = -r / 5;
-        // define the size
-        const sizeMedium = (d) => +d.medium;
-
-
-        const data2 = d3.csv("./textdata.csv", function(data) {console.log(data) });
 
       const x = d3
         .scaleBand()
@@ -75,10 +67,12 @@ function Chart({ data }) {
   );
 
   return (
+
+    
     <svg
       ref={ref}
       style={{
-        height: 500,
+        height: 600,
         width: "100%",
         marginRight: "0px",
         marginLeft: "0px",

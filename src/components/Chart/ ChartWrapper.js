@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import Chart from './Chart';
+import data from './data.csv';
 
 
-const data = [
+/* const data = [
   {year: 1980, efficiency: 24.3, sales: 8949000},
   {year: 1985, efficiency: 27.6, sales: 10979000},
   {year: 1990, efficiency: 28, sales: 9303000},
@@ -35,21 +36,10 @@ const data = [
   {year: 2016, efficiency: 37.7, sales: 6873000},
   {year: 2017, efficiency: 39.4, sales: 6081000},
 ]
-
-const data2 = d3.csv("./textdata.csv", function(data) {console.log(data) });
+ */
 
 const margin = { top: 100, right: 50, bottom: 100, left: 50 },
-  width = 1600 - margin.left - margin.right,
-  height = 800 - margin.top - margin.bottom;
-
-  const svg = d3
-    .select("#xai")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+  width = 1600 - margin.left - margin.right;
 
 class ChartWrapper extends React.Component {
   constructor(props) {
@@ -58,12 +48,18 @@ class ChartWrapper extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.myRef) 
+    d3.csv(data).then(function(data) {
+      console.log(data)
+  }).catch(function(err) {
+      throw err;
+  })
+
 
     d3.select(this.myRef.current)
     .append('svg')
     .classed('box', true)
     .attr("width", width + margin.left + margin.right)
+    
 }
 
   render() {

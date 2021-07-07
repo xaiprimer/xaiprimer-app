@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import Chart from './Chart';
-import data from './data.csv';
 
 
-/* const data = [
+
+const data = [
   {year: 1980, efficiency: 24.3, sales: 8949000},
   {year: 1985, efficiency: 27.6, sales: 10979000},
   {year: 1990, efficiency: 28, sales: 9303000},
@@ -36,7 +36,7 @@ import data from './data.csv';
   {year: 2016, efficiency: 37.7, sales: 6873000},
   {year: 2017, efficiency: 39.4, sales: 6081000},
 ]
- */
+
 
 const margin = { top: 100, right: 50, bottom: 100, left: 50 },
   width = 1600 - margin.left - margin.right;
@@ -48,13 +48,6 @@ class ChartWrapper extends React.Component {
   }
 
   componentDidMount() {
-    d3.csv(data).then(function(data) {
-      console.log(data)
-  }).catch(function(err) {
-      throw err;
-  })
-
-
     d3.select(this.myRef.current)
     .append('svg')
     .classed('box', true)

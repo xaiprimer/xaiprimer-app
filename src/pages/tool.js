@@ -10,11 +10,11 @@ const Tool = () => {
   const svgEl = useRef();
   const g1El = useRef();
 
-  data = data.filter(d=>d.cluster==="1")
-
   useEffect(() => {
     let zoomLevel = 0;
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
+    const radius = d3.scaleSqrt().domain([0,1]).range([0,30])
+    const linkDistance = d3.scaleSqrt().domain([0,1]).range([0,60])
     const simulation = d3
       .forceSimulation()
       .force(
@@ -31,9 +31,24 @@ const Tool = () => {
       )
       .force(
         "link",
-        d3.forceLink().id((d) => d.id)
+        d3
+          .forceLink()
+          .id((d) => d.id)
+          .distance(d=>linkDistance(d.target.size))
       )
-      .force("collide", d3.forceCollide().radius(75).iterations(1))
+      .force(
+        "charge",
+        d3
+          .forceManyBody()
+          .strength(-200)
+      )
+      .force(
+        "collide",
+        d3
+          .forceCollide()
+          .radius(d=> radius(d.size||1) / (d.category?2:1) )
+          .iterations(1)
+        )
       .on("tick", ticked)
       .velocityDecay(0.65)
       .alphaDecay(0.01)
@@ -89,7 +104,6 @@ const Tool = () => {
             const net = makeNetworks(data);
             update(net.nodes, net.links);
             svg.style("background-color", "#EBEBEB");
-            console.log(net)
             break;
           default:
             // do nothing
@@ -99,22 +113,19 @@ const Tool = () => {
 
     function ticked() {
       item.attr("transform", (d) => `translate(${d.x}, ${d.y})`);
-      link
-        .attr("x1", (d) => d.source.x)
-        .attr("y1", (d) => d.source.y)
-        .attr("x2", (d) => d.target.x)
-        .attr("y2", (d) => d.target.y);
+      link.attr("d", linkArc);
     }
 
     function update(nodes, links) {
-
+      console.log(nodes)
       link = link.data(links, (d) => d.id);
       link.exit().transition().duration(250).style("opacity", "-0.5").remove();
       link = link
         .enter()
-        .append("line")
-        .classed("line", true)
+        .append("path")
+        .classed("link", true)
         .attr("stroke", "black")
+        .attr("fill","none")
         .style("opacity", "0")
         .merge(link);
 
@@ -144,7 +155,7 @@ const Tool = () => {
           (d) => d.id
         )
         .join("circle")
-        .attr("r", 75)
+        .attr("r", d=>radius(d.size||1))
         .attr("fill", (d) =>
           d.category === "cluster"
             ? "#7765E3"
@@ -162,19 +173,28 @@ const Tool = () => {
         .join("text")
         .attr("fill", "black")
         .attr("font-size", 30)
+        .attr("y",10)
         .attr("text-anchor", "middle")
-        .text((d) => d.id);
+        .text((d) => d.title.toUpperCase());
 
       simulation.nodes(nodes);
       simulation.force("link").links(links);
       simulation.alpha(1).restart();
     }
 
+    function linkArc(d) {
+      const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+      return `
+        M${d.source.x},${d.source.y}
+        A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+      `;
+    }
+
     function makeClusters(data) {
       const clusters = d3
         .flatRollup(
           data,
-          (v) => [d3.mean(v, (d) => d._x), d3.mean(v, (d) => d._y)],
+          (v) => [d3.mean(v, (d) => d._x), d3.mean(v, (d) => d._y), v.length],
           (d) => d.cluster
         )
         .map((d) => ({
@@ -186,6 +206,8 @@ const Tool = () => {
           fading_x: xy(d[1][0]),
           fading_y: xy(d[1][1]),
           category: "cluster",
+          size: d[1][2],
+          title: "Cluster " + d[0]
         }));
       return clusters;
     }
@@ -231,7 +253,7 @@ const Tool = () => {
             )
             .map((d) => ({
                 id: _cluster[0] + "-" + d[0],
-                label: d[0],
+                title: d[0],
                 _x: _cluster[1][0],
                 _y: _cluster[1][1],
                 x: xy(_cluster[1][0]),
@@ -239,7 +261,7 @@ const Tool = () => {
                 fading_x: xy(_cluster[1][0]) + 0,
                 fading_y: xy(_cluster[1][1]) + 0,
                 category: "tactic",
-                degree: d[1]
+                size: d[1]
               })
             )
         },
@@ -263,7 +285,7 @@ const Tool = () => {
       );
       const flatLinks = links.map((d) => d[1].flat()).flat();
 
-      return { nodes: data.concat(flatTactics), links: flatLinks };
+      return { nodes: flatTactics.concat(data), links: flatLinks };
     }
   }, []);
 

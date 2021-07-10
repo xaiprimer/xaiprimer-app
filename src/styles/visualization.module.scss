@@ -1,0 +1,16 @@
+.tooltip {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    min-height: 200px;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+    background-color: #ffffff;
+
+    .tag {
+        background-color: #777777;
+        height: 20px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+}

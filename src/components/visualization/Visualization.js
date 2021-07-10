@@ -1,14 +1,17 @@
 import React from "react";
-import { useEffect, useRef } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
+import * as styles from "../../styles/visualization.module.scss"
 import data from "./data-primer.json";
+import Tooltip from "./Tooltip";
 
 const Visualization = () => {
   const svgEl = useRef();
   const g1El = useRef();
   const miniMapEl = useRef();
+  const [tooltip, setTooltip] = useState(null)
+  const [vizViewport, setVizViewport] = useState([0,0])
   useEffect(() => {
     let zoomLevel = 0;
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
@@ -55,6 +58,10 @@ const Visualization = () => {
       bbox = svg.node().getBoundingClientRect(),
       width = bbox.width,
       height = bbox.height;
+      
+      setVizViewport([width,height])
+
+    // const vbox = g1.append("rect").attr("fill", "#3479FF");
 
     // contours
     const extent_x = d3.extent(data, (d) => +d._x);
@@ -80,22 +87,24 @@ const Visualization = () => {
       .bandwidth(130)
       .thresholds(7)(dataContour);
 
-    let contour = g1
-      .append("g")
-      .attr("transform", `translate(${xy(extent_x[0])}, ${xy(extent_y[0])})`)
-      .selectAll("path");
+    let contour = g1.append("g").classed("contours", true).selectAll("path");
 
     contour
       .data(contours)
       .join("path")
+      .attr("transform", `translate(${xy(extent_x[0])}, ${xy(extent_y[0])})`)
       .attr("stroke", "#ccc")
       .attr("fill", "#fff")
       .attr("fill-opacity", 0.35)
       .attr("d", d3.geoPath());
 
     let link = g1.append("g").selectAll(".link");
+    let cluster = g1.append("g").selectAll(".cluster");
     let item = g1.append("g").selectAll(".item");
-    
+    let tactic = g1.append("g").selectAll(".tactic");
+
+    update(makeClusters(data), []);
+
     // mini map
     const mm_opts = {
       width: 240,
@@ -106,7 +115,10 @@ const Visualization = () => {
     mm_opts.y = height - mm_opts.height - 2 * mm_opts.margin;
     miniMap.attr("transform", `translate(${mm_opts.x}, ${mm_opts.y})`);
 
-    const mm_scale = d3.scaleLinear().domain([0,width]).range([0,mm_opts.width]);
+    const mm_scale = d3
+      .scaleLinear()
+      .domain([0, width])
+      .range([0, mm_opts.width]);
 
     miniMap
       .append("rect")
@@ -114,37 +126,28 @@ const Visualization = () => {
       .attr("height", mm_opts.height)
       .attr("fill", "white")
       .attr("stroke", "#ccc");
-    
-    miniMap.selectAll("circle")
-      .data(data)
-      .join("circle")
-      .attr("r",2)
-      .attr("cx",d=>d._x)
-      .attr("cy",d=>d._y)
 
     miniMap
       .append("rect")
+      .classed("mm_vbox", true)
       .attr("width", mm_opts.width)
       .attr("height", mm_opts.height)
       .attr("fill", "rgba(255,255,255,0.5)")
       .attr("stroke", "#3479FF");
 
-    update(makeClusters(data), []);
-
     // set initial zoom
-    
-    const gBBox = g1.node().getBBox(),
-          x0 = gBBox.x,
-          y0 = gBBox.y,
-          x1 = x0 + gBBox.width,
-          y1 = y0 + gBBox.height;
 
-    const scale = 1 / Math.max((x1 - x0) / width, (y1 - y0) / height)
+    const gBBox = d3.select(".contours").node().getBBox(),
+      x0 = gBBox.x,
+      y0 = gBBox.y,
+      x1 = x0 + gBBox.width,
+      y1 = y0 + gBBox.height;
 
+    const scale = 1 / Math.max((x1 - x0) / width, (y1 - y0) / height);
     const translation = [
-      -(x0*scale + (gBBox.width*scale - width)/2),
-      -(y0*scale + (gBBox.height*scale - height)/2)
-    ]
+      -(x0 * scale + (gBBox.width * scale - width) / 2),
+      -(y0 * scale + (gBBox.height * scale - height) / 2),
+    ];
 
     svg
       .attr("viewbox", `0 0 ${width} ${height}`)
@@ -158,9 +161,11 @@ const Visualization = () => {
         zoom.transform,
         d3.zoomIdentity.translate(translation[0], translation[1]).scale(scale)
       );
-      
+
     function zoomed(e) {
       const { x, y, k } = e.transform;
+      g1.attr("transform", `translate(${x},${y}) scale(${k})`);
+
       const previousZoom = zoomLevel;
       if (k < 0.2) {
         zoomLevel = 0;
@@ -169,7 +174,6 @@ const Visualization = () => {
       } else {
         zoomLevel = 2;
       }
-      g1.style("transform", `translate(${x}px,${y}px) scale(${k})`);
 
       if (previousZoom !== zoomLevel) {
         switch (zoomLevel) {
@@ -194,25 +198,58 @@ const Visualization = () => {
     }
 
     function ticked() {
+      cluster.attr("transform", (d) => `translate(${d.x}, ${d.y})`);
       item.attr("transform", (d) => `translate(${d.x}, ${d.y})`);
+      tactic.attr("transform", (d) => `translate(${d.x}, ${d.y})`);
       link.attr("d", linkArc);
     }
 
     function update(nodes, links) {
+
       link = link.data(links, (d) => d.id);
       link.exit().transition().duration(250).style("opacity", "-0.5").remove();
       link = link
         .enter()
         .append("path")
         .classed("link", true)
-        .attr("stroke", "black")
+        .attr("stroke", "#FF451D")
         .attr("fill", "none")
         .style("opacity", "0")
         .merge(link);
 
       link.transition().delay(500).duration(500).style("opacity", "1");
 
-      item = item.data(nodes, (d) => d.id);
+      // clusters
+      cluster = cluster.data(nodes.filter(d=>d.category==="cluster"), (d) => d.id);
+      cluster
+        .exit()
+        .transition()
+        .duration(750)
+        .style("opacity", "-0.5")
+        .attr("transform", (d) => `translate(${d.fading_x}, ${d.fading_y})`)
+        .remove();
+      cluster = cluster
+        .enter()
+        .append("g")
+        .classed("cluster", true)
+        .style("opacity", "0")
+        .merge(cluster);
+
+      cluster.transition().duration(500).style("opacity", "1");
+
+      cluster
+        .selectAll("circle")
+        .data(
+          (d) => [d],
+          (d) => d.id
+        )
+        .join("circle")
+        .attr("r", (d) => radius(d.size))
+        .attr("fill", "#7765E3");
+
+
+      // projects
+      item = item.data(nodes.filter(d=>!d.category), (d) => d.id);
       item
         .exit()
         .transition()
@@ -225,6 +262,14 @@ const Visualization = () => {
         .append("g")
         .classed("item", true)
         .style("opacity", "0")
+        .on("click",(e,d)=>{
+          const data = {
+            ...d,
+            posX: e.pageX,
+            posY: e.pageY,
+          }
+          return setTooltip(data)
+        })
         .merge(item);
 
       item.transition().duration(500).style("opacity", "1");
@@ -258,6 +303,57 @@ const Visualization = () => {
         .attr("text-anchor", "middle")
         .text((d) => d.title.toUpperCase());
 
+      // tactics
+      tactic = tactic.data(nodes.filter(d=>d.category==="tactic"), (d) => d.id);
+      tactic
+        .exit()
+        .transition()
+        .duration(750)
+        .style("opacity", "-0.5")
+        .attr("transform", (d) => `translate(${d.fading_x}, ${d.fading_y})`)
+        .remove();
+      tactic = tactic
+        .enter()
+        .append("g")
+        .classed("tactic", true)
+        .style("opacity", "0")
+        .on("click",(e,d)=>{
+          const data = {
+            ...d,
+            posX: e.pageX,
+            posY: e.pageY,
+          }
+          return setTooltip(data)
+        })
+        .merge(tactic);
+
+      tactic.transition().duration(500).style("opacity", "1");
+
+      tactic
+        .selectAll("circle")
+        .data(
+          (d) => [d],
+          (d) => d.id
+        )
+        .join("circle")
+        .attr("r", (d) => radius(d.size || 1))
+        .attr("fill", "#FFFFFF")
+        .attr("stroke", "#FF451D");
+
+      tactic
+        .selectAll("text")
+        .data(
+          (d) => [d],
+          (d) => d.id
+        )
+        .join("text")
+        .attr("fill", "black")
+        .attr("font-size", 30)
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .text((d) => d.title.toUpperCase());
+
+      // simulation
       simulation.nodes(nodes);
       simulation.force("link").links(links);
       simulation.alpha(1).restart();
@@ -375,6 +471,7 @@ const Visualization = () => {
         <g ref={g1El}></g>
         <g ref={miniMapEl}></g>
       </svg>
+      {tooltip && <Tooltip data={tooltip} close={()=>setTooltip(null)} viewport={vizViewport} />}
     </>
   );
 };

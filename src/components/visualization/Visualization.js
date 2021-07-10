@@ -8,12 +8,12 @@ import data from "./data-primer.json";
 const Visualization = () => {
   const svgEl = useRef();
   const g1El = useRef();
-
+  const miniMapEl = useRef();
   useEffect(() => {
     let zoomLevel = 0;
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
-    const radius = d3.scaleSqrt().domain([0,1]).range([0,30])
-    const linkDistance = d3.scaleSqrt().domain([0,1]).range([0,50])
+    const radius = d3.scaleSqrt().domain([0, 1]).range([0, 30]);
+    const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 50]);
     const simulation = d3
       .forceSimulation()
       .force(
@@ -33,66 +33,118 @@ const Visualization = () => {
         d3
           .forceLink()
           .id((d) => d.id)
-          .distance(d=>linkDistance(d.target.size))
+          .distance((d) => linkDistance(d.target.size))
       )
-      .force(
-        "charge",
-        d3
-          .forceManyBody()
-          .strength(-200)
-      )
+      .force("charge", d3.forceManyBody().strength(-200))
       .force(
         "collide",
         d3
           .forceCollide()
-          .radius(d=> radius(d.size||1) * (d.category?0.60:1) )
+          .radius((d) => radius(d.size || 1) * (d.category ? 0.6 : 1))
           .iterations(1)
-        )
+      )
       .on("tick", ticked)
       .velocityDecay(0.65)
       .alphaDecay(0.01)
       .stop();
+
     const zoom = d3.zoom().on("zoom", zoomed),
       svg = d3.select(svgEl.current).call(zoom),
       g1 = d3.select(g1El.current),
+      miniMap = d3.select(miniMapEl.current),
       bbox = svg.node().getBoundingClientRect(),
       width = bbox.width,
       height = bbox.height;
-    
 
     // contours
-    const extent_x = d3.extent(data, d=>+d._x)
-    const extent_y = d3.extent(data, d=>+d._y)
+    const extent_x = d3.extent(data, (d) => +d._x);
+    const extent_y = d3.extent(data, (d) => +d._y);
 
-    const cont_x = d3.scaleLinear().domain(extent_x).range([0, extent_x[1] - extent_x[0] ])
-    const cont_y = d3.scaleLinear().domain(extent_y).range([0, extent_y[1] - extent_y[0] ])
+    const cont_x = d3
+      .scaleLinear()
+      .domain(extent_x)
+      .range([0, extent_x[1] - extent_x[0]]);
+    const cont_y = d3
+      .scaleLinear()
+      .domain(extent_y)
+      .range([0, extent_y[1] - extent_y[0]]);
 
-    let dataContour = data.map(d=>( [ xy(cont_x(+d._x)), xy(cont_y(+d._y)) ] ))
+    let dataContour = data.map((d) => [xy(cont_x(+d._x)), xy(cont_y(+d._y))]);
 
-    const maxX = d3.max(dataContour, d=>d[0])
-    const maxY = d3.max(dataContour, d=>d[1])
+    const maxX = d3.max(dataContour, (d) => d[0]);
+    const maxY = d3.max(dataContour, (d) => d[1]);
 
-    const contours = d3.contourDensity()
+    const contours = d3
+      .contourDensity()
       .size([maxX, maxY])
       .bandwidth(130)
-      .thresholds(7)
-    (dataContour)
-    
-    let contour = g1.append("g")
+      .thresholds(7)(dataContour);
+
+    let contour = g1
+      .append("g")
       .attr("transform", `translate(${xy(extent_x[0])}, ${xy(extent_y[0])})`)
       .selectAll("path");
 
-    contour.data(contours)
+    contour
+      .data(contours)
       .join("path")
-        .attr("stroke", "#ccc")
-        .attr("fill","#fff")
-        .attr("fill-opacity", 0.35)
-        .attr("d", d3.geoPath());
+      .attr("stroke", "#ccc")
+      .attr("fill", "#fff")
+      .attr("fill-opacity", 0.35)
+      .attr("d", d3.geoPath());
 
     let link = g1.append("g").selectAll(".link");
     let item = g1.append("g").selectAll(".item");
+    
+    // mini map
+    const mm_opts = {
+      width: 240,
+      margin: 10,
+    };
+    mm_opts.height = (height / width) * mm_opts.width;
+    mm_opts.x = width - mm_opts.width - 2 * mm_opts.margin;
+    mm_opts.y = height - mm_opts.height - 2 * mm_opts.margin;
+    miniMap.attr("transform", `translate(${mm_opts.x}, ${mm_opts.y})`);
+
+    const mm_scale = d3.scaleLinear().domain([0,width]).range([0,mm_opts.width]);
+
+    miniMap
+      .append("rect")
+      .attr("width", mm_opts.width)
+      .attr("height", mm_opts.height)
+      .attr("fill", "white")
+      .attr("stroke", "#ccc");
+    
+    miniMap.selectAll("circle")
+      .data(data)
+      .join("circle")
+      .attr("r",2)
+      .attr("cx",d=>d._x)
+      .attr("cy",d=>d._y)
+
+    miniMap
+      .append("rect")
+      .attr("width", mm_opts.width)
+      .attr("height", mm_opts.height)
+      .attr("fill", "rgba(255,255,255,0.5)")
+      .attr("stroke", "#3479FF");
 
     update(makeClusters(data), []);
+
+    // set initial zoom
+    
+    const gBBox = g1.node().getBBox(),
+          x0 = gBBox.x,
+          y0 = gBBox.y,
+          x1 = x0 + gBBox.width,
+          y1 = y0 + gBBox.height;
+
+    const scale = 1 / Math.max((x1 - x0) / width, (y1 - y0) / height)
+
+    const translation = [
+      -(x0*scale + (gBBox.width*scale - width)/2),
+      -(y0*scale + (gBBox.height*scale - height)/2)
+    ]
 
     svg
       .attr("viewbox", `0 0 ${width} ${height}`)
@@ -104,8 +156,9 @@ const Visualization = () => {
       .duration(1000)
       .call(
         zoom.transform,
-        d3.zoomIdentity.translate(width / 2, height / 2).scale(0.15)
+        d3.zoomIdentity.translate(translation[0], translation[1]).scale(scale)
       );
+      
     function zoomed(e) {
       const { x, y, k } = e.transform;
       const previousZoom = zoomLevel;
@@ -135,7 +188,7 @@ const Visualization = () => {
             svg.style("background-color", "#EBEBEB");
             break;
           default:
-            // do nothing
+          // do nothing
         }
       }
     }
@@ -146,7 +199,6 @@ const Visualization = () => {
     }
 
     function update(nodes, links) {
-
       link = link.data(links, (d) => d.id);
       link.exit().transition().duration(250).style("opacity", "-0.5").remove();
       link = link
@@ -154,7 +206,7 @@ const Visualization = () => {
         .append("path")
         .classed("link", true)
         .attr("stroke", "black")
-        .attr("fill","none")
+        .attr("fill", "none")
         .style("opacity", "0")
         .merge(link);
 
@@ -184,7 +236,7 @@ const Visualization = () => {
           (d) => d.id
         )
         .join("circle")
-        .attr("r", d=>radius(d.size||1))
+        .attr("r", (d) => radius(d.size || 1))
         .attr("fill", (d) =>
           d.category === "cluster"
             ? "#7765E3"
@@ -202,7 +254,7 @@ const Visualization = () => {
         .join("text")
         .attr("fill", "black")
         .attr("font-size", 30)
-        .attr("y",10)
+        .attr("y", 10)
         .attr("text-anchor", "middle")
         .text((d) => d.title.toUpperCase());
 
@@ -236,7 +288,7 @@ const Visualization = () => {
           fading_y: xy(d[1][1]),
           category: "cluster",
           size: d[1][2],
-          title: "Cluster " + d[0]
+          title: "Cluster " + d[0],
         }));
       return clusters;
     }
@@ -281,18 +333,17 @@ const Visualization = () => {
               (d) => d
             )
             .map((d) => ({
-                id: _cluster[0] + "-" + d[0],
-                title: d[0],
-                _x: _cluster[1][0],
-                _y: _cluster[1][1],
-                x: xy(_cluster[1][0]),
-                y: xy(_cluster[1][1]),
-                fading_x: xy(_cluster[1][0]) + 0,
-                fading_y: xy(_cluster[1][1]) + 0,
-                category: "tactic",
-                size: d[1]
-              })
-            )
+              id: _cluster[0] + "-" + d[0],
+              title: d[0],
+              _x: _cluster[1][0],
+              _y: _cluster[1][1],
+              x: xy(_cluster[1][0]),
+              y: xy(_cluster[1][1]),
+              fading_x: xy(_cluster[1][0]) + 0,
+              fading_y: xy(_cluster[1][1]) + 0,
+              category: "tactic",
+              size: d[1],
+            }));
         },
         (d) => d.cluster
       );
@@ -320,8 +371,9 @@ const Visualization = () => {
 
   return (
     <>
-      <svg ref={svgEl} style={{width:"100%", height:"100%"}}>
+      <svg ref={svgEl} style={{ width: "100%", height: "100%" }}>
         <g ref={g1El}></g>
+        <g ref={miniMapEl}></g>
       </svg>
     </>
   );

@@ -6,9 +6,11 @@ import * as d3 from "d3";
 
 import data from "../components/data-primer.json";
 
-const ToolPage = () => {
+const Tool = () => {
   const svgEl = useRef();
   const g1El = useRef();
+
+  data = data.filter(d=>d.cluster==="1")
 
   useEffect(() => {
     let zoomLevel = 0;
@@ -43,8 +45,8 @@ const ToolPage = () => {
       width = bbox.width,
       height = bbox.height;
 
-    let link = g1.selectAll(".link");
-    let item = g1.selectAll(".item");
+    let link = g1.append("g").selectAll(".link");
+    let item = g1.append("g").selectAll(".item");
 
     update(makeClusters(data), []);
 
@@ -87,6 +89,7 @@ const ToolPage = () => {
             const net = makeNetworks(data);
             update(net.nodes, net.links);
             svg.style("background-color", "#EBEBEB");
+            console.log(net)
             break;
           default:
             // do nothing
@@ -135,16 +138,13 @@ const ToolPage = () => {
       item.transition().duration(500).style("opacity", "1");
 
       item
-        .selectAll("rect")
+        .selectAll("circle")
         .data(
           (d) => [d],
           (d) => d.id
         )
-        .join("rect")
-        .attr("width", 100)
-        .attr("height", 100)
-        .attr("x", -50)
-        .attr("y", -50)
+        .join("circle")
+        .attr("r", 75)
         .attr("fill", (d) =>
           d.category === "cluster"
             ? "#7765E3"
@@ -224,18 +224,24 @@ const ToolPage = () => {
           const _arr = v.map((vv) => vv.alltactics.split(";")).flat();
           const _cluster = clustersPositions.find((c) => c[0] === v[0].cluster);
           return d3
-            .flatGroup(_arr, (d) => d)
+            .flatRollup(
+              _arr,
+              (v) => v.length,
+              (d) => d
+            )
             .map((d) => ({
-              id: _cluster[0] + "-" + d[0],
-              label: d[0],
-              _x: _cluster[1][0],
-              _y: _cluster[1][1],
-              x: xy(_cluster[1][0]),
-              y: xy(_cluster[1][1]),
-              fading_x: xy(_cluster[1][0]) + 0,
-              fading_y: xy(_cluster[1][1]) + 0,
-              category: "tactic",
-            }));
+                id: _cluster[0] + "-" + d[0],
+                label: d[0],
+                _x: _cluster[1][0],
+                _y: _cluster[1][1],
+                x: xy(_cluster[1][0]),
+                y: xy(_cluster[1][1]),
+                fading_x: xy(_cluster[1][0]) + 0,
+                fading_y: xy(_cluster[1][1]) + 0,
+                category: "tactic",
+                degree: d[1]
+              })
+            )
         },
         (d) => d.cluster
       );
@@ -270,4 +276,4 @@ const ToolPage = () => {
   );
 };
 
-export default ToolPage;
+export default Tool;

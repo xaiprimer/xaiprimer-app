@@ -1,15 +1,13 @@
 import React from "react";
 import * as styles from "../../styles/visualization.module.scss";
-
+import { BsX, BsTools, BsEye } from "react-icons/bs";
 const Tooltip = ({ data, close, viewport }) => {
   const { posX, posY } = data;
-  const [w, h] = viewport;
+  // const [w, h] = viewport;
   const positioning = {
     left: posX,
     bottom: posY,
   };
-
-  console.log(posX, posY, positioning);
 
   return (
     <div className={styles.tooltip} style={positioning}>
@@ -32,14 +30,20 @@ const Tooltip = ({ data, close, viewport }) => {
           </div>
         </>
       )}
+      {data.description && (
+        <>
+          <p>{data.description}</p>
+        </>
+      )}
       {data.category !== "tactic" && (
         <>
           <h3>Supplemental material</h3>
-          <p>Explore design process</p>
-          <p>Watch the video interview</p>
+          <p><BsTools/> Explore design process</p>
+          <p><BsEye/> Watch the video interview</p>
         </>
       )}
-      <span onClick={() => close()}>X</span>
+      <div className={styles.addToCollection}>Add to collection</div>
+      <BsX className={styles.closeBtn} onClick={() => close()} />
     </div>
   );
 };

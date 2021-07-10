@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-import * as styles from "../../styles/visualization.module.scss"
+// import * as styles from "../../styles/visualization.module.scss"
 import data from "./data-primer.json";
 import Tooltip from "./Tooltip";
 
@@ -115,10 +115,10 @@ const Visualization = () => {
     mm_opts.y = height - mm_opts.height - 2 * mm_opts.margin;
     miniMap.attr("transform", `translate(${mm_opts.x}, ${mm_opts.y})`);
 
-    const mm_scale = d3
-      .scaleLinear()
-      .domain([0, width])
-      .range([0, mm_opts.width]);
+    // const mm_scale = d3
+    //   .scaleLinear()
+    //   .domain([0, width])
+    //   .range([0, mm_opts.width]);
 
     miniMap
       .append("rect")

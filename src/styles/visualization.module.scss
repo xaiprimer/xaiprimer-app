@@ -1,16 +1,46 @@
 .tooltip {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    min-height: 200px;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
-    background-color: #ffffff;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  min-height: 200px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  padding: 10px;
 
-    .tag {
-        background-color: #777777;
-        height: 20px;
-        border-radius: 10px;
-        display: inline-block;
+  .closeBtn {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    &:hover {
+      background-color: #eee;
     }
+  }
+
+  .tag {
+    background-color: #777777;
+    color: #ffffff;
+    height: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 0px 10px;
+    margin: 3px;
+  }
+
+  .addToCollection {
+    background-color: #000;
+    height: 20px;
+    width: calc(100% + 20px);
+    display: block;
+    margin: -10px;
+    color: white;
+    text-align: center;
+    // cursor: not-allowed;
+    &:hover {
+        background-color: #444;
+    }
+  }
 }

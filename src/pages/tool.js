@@ -14,7 +14,7 @@ const Tool = () => {
     let zoomLevel = 0;
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
     const radius = d3.scaleSqrt().domain([0,1]).range([0,30])
-    const linkDistance = d3.scaleSqrt().domain([0,1]).range([0,60])
+    const linkDistance = d3.scaleSqrt().domain([0,1]).range([0,50])
     const simulation = d3
       .forceSimulation()
       .force(
@@ -46,7 +46,7 @@ const Tool = () => {
         "collide",
         d3
           .forceCollide()
-          .radius(d=> radius(d.size||1) / (d.category?2:1) )
+          .radius(d=> radius(d.size||1) * (d.category?0.60:1) )
           .iterations(1)
         )
       .on("tick", ticked)
@@ -117,7 +117,7 @@ const Tool = () => {
     }
 
     function update(nodes, links) {
-      console.log(nodes)
+
       link = link.data(links, (d) => d.id);
       link.exit().transition().duration(250).style("opacity", "-0.5").remove();
       link = link

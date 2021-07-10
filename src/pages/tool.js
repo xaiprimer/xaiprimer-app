@@ -59,6 +59,36 @@ const Tool = () => {
       bbox = svg.node().getBoundingClientRect(),
       width = bbox.width,
       height = bbox.height;
+    
+
+    // contours
+    const extent_x = d3.extent(data, d=>+d._x)
+    const extent_y = d3.extent(data, d=>+d._y)
+
+    const cont_x = d3.scaleLinear().domain(extent_x).range([0, extent_x[1] - extent_x[0] ])
+    const cont_y = d3.scaleLinear().domain(extent_y).range([0, extent_y[1] - extent_y[0] ])
+
+    let dataContour = data.map(d=>( [ xy(cont_x(+d._x)), xy(cont_y(+d._y)) ] ))
+
+    const maxX = d3.max(dataContour, d=>d[0])
+    const maxY = d3.max(dataContour, d=>d[1])
+
+    const contours = d3.contourDensity()
+      .size([maxX, maxY])
+      .bandwidth(130)
+      .thresholds(7)
+    (dataContour)
+    
+    let contour = g1.append("g")
+      .attr("transform", `translate(${xy(extent_x[0])}, ${xy(extent_y[0])})`)
+      .selectAll("path");
+
+    contour.data(contours)
+      .join("path")
+        .attr("stroke", "#ccc")
+        .attr("fill","#fff")
+        .attr("fill-opacity", 0.35)
+        .attr("d", d3.geoPath());
 
     let link = g1.append("g").selectAll(".link");
     let item = g1.append("g").selectAll(".item");

@@ -6,13 +6,9 @@ import Tooltip from "./Tooltip";
 const Collection = ({ collection, updateCollection }) => {
 
   const removeItem = (d) => {
-    console.log("remove d", d);
     const index = collection.indexOf(d);
-    console.log(index)
     if (index > -1) {
-      console.log(collection)
-      const arr = collection.splice(index, 1);
-      console.log(arr)
+      const arr = collection.filter((el, i)=>i!==index);
       updateCollection(arr);
     }
   };

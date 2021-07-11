@@ -1,3 +1,44 @@
 body {
-    margin: 0;
+  margin: 0;
+  font-family: inter, sans-serif;
+}
+
+h1 {
+  font-family: inter, sans-serif;
+  font-style: medium;
+  font-weight: 600;
+  font-size: 3.375rem;
+  line-height: 3.875rem;
+}
+
+h2 {
+  font-family: crimson text, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+
+h3 {
+  font-family: inter, sans-serif;
+  font-style: medium;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.3625rem;
+}
+
+h4 {
+  font-family: inter, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.212rem;
+}
+
+p {
+  font-family: inter, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1rem;
 }

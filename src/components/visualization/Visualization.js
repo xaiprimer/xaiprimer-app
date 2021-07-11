@@ -2,16 +2,18 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-// import * as styles from "../../styles/visualization.module.scss"
+import * as styles from "../../styles/tool.module.scss";
 import data from "./data-primer.json";
+import Collection from "./Collection";
 import Tooltip from "./Tooltip";
 
 const Visualization = () => {
   const svgEl = useRef();
   const g1El = useRef();
   const miniMapEl = useRef();
-  const [tooltip, setTooltip] = useState(null)
-  const [vizViewport, setVizViewport] = useState([0,0])
+  const [tooltip, setTooltip] = useState({ ...data[12], posX: 200, posY: 200 });
+  const [collection, updateCollection] = useState([]);
+  const [vizViewport, setVizViewport] = useState([0, 0]);
   useEffect(() => {
     let zoomLevel = 0;
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
@@ -58,8 +60,8 @@ const Visualization = () => {
       bbox = svg.node().getBoundingClientRect(),
       width = bbox.width,
       height = bbox.height;
-      
-      setVizViewport([width,height])
+
+    setVizViewport([width, height]);
 
     // const vbox = g1.append("rect").attr("fill", "#3479FF");
 
@@ -163,6 +165,7 @@ const Visualization = () => {
       );
 
     function zoomed(e) {
+      setTooltip(null);
       const { x, y, k } = e.transform;
       g1.attr("transform", `translate(${x},${y}) scale(${k})`);
 
@@ -205,7 +208,6 @@ const Visualization = () => {
     }
 
     function update(nodes, links) {
-
       link = link.data(links, (d) => d.id);
       link.exit().transition().duration(250).style("opacity", "-0.5").remove();
       link = link
@@ -220,7 +222,10 @@ const Visualization = () => {
       link.transition().delay(500).duration(500).style("opacity", "1");
 
       // clusters
-      cluster = cluster.data(nodes.filter(d=>d.category==="cluster"), (d) => d.id);
+      cluster = cluster.data(
+        nodes.filter((d) => d.category === "cluster"),
+        (d) => d.id
+      );
       cluster
         .exit()
         .transition()
@@ -247,9 +252,11 @@ const Visualization = () => {
         .attr("r", (d) => radius(d.size))
         .attr("fill", "#7765E3");
 
-
       // projects
-      item = item.data(nodes.filter(d=>!d.category), (d) => d.id);
+      item = item.data(
+        nodes.filter((d) => !d.category),
+        (d) => d.id
+      );
       item
         .exit()
         .transition()
@@ -262,13 +269,13 @@ const Visualization = () => {
         .append("g")
         .classed("item", true)
         .style("opacity", "0")
-        .on("click",(e,d)=>{
+        .on("click", (e, d) => {
           const data = {
             ...d,
             posX: e.pageX,
             posY: e.pageY,
-          }
-          return setTooltip(data)
+          };
+          return setTooltip(data);
         })
         .merge(item);
 
@@ -304,7 +311,10 @@ const Visualization = () => {
         .text((d) => d.title.toUpperCase());
 
       // tactics
-      tactic = tactic.data(nodes.filter(d=>d.category==="tactic"), (d) => d.id);
+      tactic = tactic.data(
+        nodes.filter((d) => d.category === "tactic"),
+        (d) => d.id
+      );
       tactic
         .exit()
         .transition()
@@ -317,13 +327,13 @@ const Visualization = () => {
         .append("g")
         .classed("tactic", true)
         .style("opacity", "0")
-        .on("click",(e,d)=>{
+        .on("click", (e, d) => {
           const data = {
             ...d,
             posX: e.pageX,
             posY: e.pageY,
-          }
-          return setTooltip(data)
+          };
+          return setTooltip(data);
         })
         .merge(tactic);
 
@@ -467,11 +477,24 @@ const Visualization = () => {
 
   return (
     <>
-      <svg ref={svgEl} style={{ width: "100%", height: "100%" }}>
+      <svg
+        className={styles.visualizationSvg}
+        ref={svgEl}
+        style={{ width: "100%", height: "100%" }}
+      >
         <g ref={g1El}></g>
         <g ref={miniMapEl}></g>
       </svg>
-      {tooltip && <Tooltip data={tooltip} close={()=>setTooltip(null)} viewport={vizViewport} />}
+      <Collection collection={collection} updateCollection={updateCollection} />
+      {tooltip && (
+        <Tooltip
+          data={tooltip}
+          close={() => setTooltip(null)}
+          collection={collection}
+          updateCollection={updateCollection}
+          viewport={vizViewport}
+        />
+      )}
     </>
   );
 };

@@ -41,7 +41,7 @@ const Collection = ({ collection, updateCollection }) => {
   };
 
   return (
-    <div className={styles.collection}>
+    <div className={ClassNames(styles.collection, {[styles.open]: collectionPanel })}>
       <div className={ClassNames(styles.header, styles.firstHeader)}>
         <h3 className={ClassNames("text-uppercase", styles.title)}>Collection</h3>
         <div></div>

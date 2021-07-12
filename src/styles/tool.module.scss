@@ -29,6 +29,12 @@
     display: grid;
     grid-template-rows: 40px auto 40px;
     padding: 0 10px;
+    transition: height 0.15s ease;
+    height: 40px;
+
+    &.open {
+      height: 100%;
+    }
 
     .header {
       display: grid;
@@ -43,8 +49,7 @@
       // padding: 0 10px;
 
       &.firstHeader {
-        margin: 0 10px;
-        width: calc(100% - 20px);
+        width: calc(100% - 10px);
       }
 
       .title {
@@ -86,7 +91,7 @@
         overflow: hidden;
         height: 40px;
         height: 40px;
-        transition: height 0.35s ease 0.15s;
+        transition: height 0.15s ease;
         box-sizing: border-box;
         border-radius: 7px;
         background-color: #fff;
@@ -119,6 +124,9 @@
     .download {
       background-color: black;
       color: #ffffff;
+      margin: 0 -10px;
+      text-align: center;
+      cursor: not-allowed;
     }
   }
 }

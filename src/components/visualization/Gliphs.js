@@ -6,7 +6,18 @@ const cluster = (parent, data) => {
     .data(data, (d) => d.id)
     .join("circle")
     .attr("r", (d) => d.r)
-    .attr("fill", "#7765E3");
+    .attr("stroke", "#7765E3")
+    .attr("fill", "none");
+
+  d3.select(parent)
+    .selectAll("rect")
+    .data(data, (d) => d.id)
+    .join("rect")
+    .attr("fill", "#7765E3")
+    .attr("width", (d) => d.side)
+    .attr("height", (d) => d.side)
+    .attr("x", (d) => -0.5*d.side)
+    .attr("y", (d) => -0.5*d.side);
 };
 
 const project = (parent, data) => {

@@ -10,8 +10,6 @@ import {
   BsChevronExpand as OpenIcon,
   BsX as CloseCollectionIcon,
   BsArrowBarDown as OpenCollectionIcon,
-  // BsLayoutWtf as DesignProcess,
-  // BsFilm as VideoInterview,
 } from "react-icons/bs";
 import classNames from "classnames";
 

@@ -245,7 +245,8 @@ const Visualization = () => {
 
       cluster.each(function (d) {
         const _r = radius(d.size);
-        const _data = [{ id: d.id, r: _r, fill: "#7765E3" }]
+        const side = 2*_r / Math.sqrt(2)
+        const _data = [{ id: d.id, r: _r, fill: "#7765E3", side }]
         renderCluster(this, _data);
       });
 

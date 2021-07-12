@@ -12,14 +12,16 @@ const Visualization = () => {
   const svgEl = useRef();
   const g1El = useRef();
   const miniMapEl = useRef();
-  const [tooltip, setTooltip] = useState({ ...data[12], posX: 200, posY: 200 });
+  const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
   const [vizViewport, setVizViewport] = useState([0, 0]);
+
   useEffect(() => {
     let zoomLevel = 0;
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
-    const radius = d3.scaleSqrt().domain([0, 1]).range([0, 30]);
-    const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 50]);
+    const radius = d3.scaleSqrt().domain([0, 1]).range([0, 20]);
+    const side = d3.scaleSqrt().domain([0, 1]).range([0, 100]);
+    const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 20]);
     const simulation = d3
       .forceSimulation()
       .force(
@@ -46,7 +48,7 @@ const Visualization = () => {
         "collide",
         d3
           .forceCollide()
-          .radius((d) => radius(d.size || 1) * (d.category ? 0.6 : 1))
+          .radius((d) => (!d.category ? side(d.size || 1) : radius(d.size)))
           .iterations(1)
       )
       .on("tick", ticked)
@@ -244,9 +246,20 @@ const Visualization = () => {
       cluster.transition().duration(500).style("opacity", "1");
 
       cluster.each(function (d) {
-        const _r = radius(d.size);
-        const side = 2*_r / Math.sqrt(2)
-        const _data = [{ id: d.id, r: _r, fill: "#7765E3", side }]
+        const _side = side(d.size);
+        const _r = Math.sqrt(2 * Math.pow(_side, 2)) / 2;
+        const _data = [
+          {
+            id: d.id,
+            r: _r,
+            fill: "#7765E3",
+            side: _side,
+            exploration: d.exploration,
+            scenario_exhibition: 1 / 3,
+            scenario_multiple: 1 / 3,
+            scenario_desktop: 1 / 3,
+          },
+        ];
         renderCluster(this, _data);
       });
 
@@ -278,12 +291,15 @@ const Visualization = () => {
         .merge(item);
 
       item.transition().duration(500).style("opacity", "1");
-      
-      item.each(function(d){
-        const _r = radius(d.size||1);
-        const _data = [{id:d.id, r: _r, fill: "#E4FF1A", title: d.title}]
+
+      item.each(function (d) {
+        const _side = side(1);
+        const _r = Math.sqrt(2 * Math.pow(_side, 2)) / 2;
+        const _data = [
+          { id: d.id, r: _r, fill: "#E4FF1A", title: d.title, side: _side },
+        ];
         renderProject(this, _data);
-      })
+      });
 
       // tactics
       tactic = tactic.data(
@@ -321,7 +337,7 @@ const Visualization = () => {
           (d) => d.id
         )
         .join("circle")
-        .attr("r", (d) => radius(d.size || 1))
+        .attr("r", (d) => radius(d.size))
         .attr("fill", "#FFFFFF")
         .attr("stroke", "#FF451D");
 
@@ -353,6 +369,74 @@ const Visualization = () => {
     }
 
     function makeClusters(data) {
+      const data_expl = data
+        .map((d) => {
+          return d.exploration
+            .split(",")
+            .map((dd) => ({ cluster: d.cluster, exploration: dd }));
+        })
+        .flat();
+
+      const temp_expl = d3.flatRollup(
+        data_expl,
+        (v) => v.length,
+        (d) => d.cluster,
+        (d) => d.exploration
+      );
+
+      const explorations = d3.flatRollup(
+        temp_expl,
+        (v) => v,
+        (d) => d[0]
+      );
+
+      const data_scenarios = data
+        .map((d) => {
+          return d.scenarios
+            .split(",")
+            .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
+        })
+        .flat();
+
+      const temp_scenarios = d3.flatRollup(
+        data_scenarios,
+        (v) => v.length,
+        (d) => d.cluster,
+        (d) => d.scenarios
+      );
+
+      const scenarios = d3.flatRollup(
+        temp_scenarios,
+        (v) => v,
+        (d) => d[0]
+      ).map(d=>{
+
+        return d[1]
+      });
+      console.log("🚨🚨🚨 Mi fermo qui perché ci sono più scenarios di quelli previsti nel design 🚨🚨🚨")
+
+      const allScenarios = data
+      .map((d) => {
+        return d.scenarios
+          .split(",")
+          .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
+      })
+      .flat();
+
+      const temp_allScenarios = d3.flatRollup(
+        allScenarios,
+        (v) => v.length,
+        (d) => d.scenarios
+      ).map(d=>d[0]);
+      console.log(JSON.stringify(temp_allScenarios));
+
+      const returnExploration = (cluster) => {
+        const _exploration = explorations.find((e) => e[0] === cluster);
+        const value =
+          _exploration[1].length === 1 ? _exploration[1][0][1] : "mixed";
+        return value;
+      };
+
       const clusters = d3
         .flatRollup(
           data,
@@ -368,9 +452,12 @@ const Visualization = () => {
           fading_x: xy(d[1][0]),
           fading_y: xy(d[1][1]),
           category: "cluster",
+          exploration: returnExploration(d[0]),
           size: d[1][2],
           title: "Cluster " + d[0],
         }));
+
+      console.log("clusters data", clusters);
       return clusters;
     }
 

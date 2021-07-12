@@ -1,6 +1,5 @@
 import ClassNames from "classnames";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import * as styles from "../../styles/tool.module.scss";
 import Tooltip from "./Tooltip";
@@ -11,10 +10,9 @@ import {
   BsX as CloseCollectionIcon,
   BsArrowBarDown as OpenCollectionIcon,
 } from "react-icons/bs";
-import classNames from "classnames";
 
 const Collection = ({ collection, updateCollection }) => {
-  const [collectionPanel, openCollectionPanel] = useState(true)
+  const [collectionPanel, openCollectionPanel] = useState(false)
   const [artifactsPanel, openArtifactsPanel] = useState(false);
   const [tacticsPanel, openTacticsPanel] = useState(false);
   const removeItem = (d) => {

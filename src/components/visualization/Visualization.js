@@ -4,6 +4,7 @@ import * as d3 from "d3";
 
 import * as styles from "../../styles/tool.module.scss";
 import data from "./data-primer.json";
+import { cluster as renderCluster, project as renderProject } from "./Gliphs";
 import Collection from "./Collection";
 import Tooltip from "./Tooltip";
 
@@ -242,15 +243,11 @@ const Visualization = () => {
 
       cluster.transition().duration(500).style("opacity", "1");
 
-      cluster
-        .selectAll("circle")
-        .data(
-          (d) => [d],
-          (d) => d.id
-        )
-        .join("circle")
-        .attr("r", (d) => radius(d.size))
-        .attr("fill", "#7765E3");
+      cluster.each(function (d) {
+        const _r = radius(d.size);
+        const _data = [{ id: d.id, r: _r, fill: "#7765E3" }]
+        renderCluster(this, _data);
+      });
 
       // projects
       item = item.data(
@@ -280,35 +277,35 @@ const Visualization = () => {
         .merge(item);
 
       item.transition().duration(500).style("opacity", "1");
+      
+      item.each(function(d){
+        const _r = radius(d.size||1);
+        const _data = [{id:d.id, r: _r, fill: "#E4FF1A", title: d.title}]
+        renderProject(this, _data);
+      })
 
-      item
-        .selectAll("circle")
-        .data(
-          (d) => [d],
-          (d) => d.id
-        )
-        .join("circle")
-        .attr("r", (d) => radius(d.size || 1))
-        .attr("fill", (d) =>
-          d.category === "cluster"
-            ? "#7765E3"
-            : d.category === "tactic"
-            ? "#FFFFFF"
-            : "#E4FF1A"
-        );
+      // item
+      //   .selectAll("circle")
+      //   .data(
+      //     (d) => [d],
+      //     (d) => d.id
+      //   )
+      //   .join("circle")
+      //   .attr("r", (d) => radius(d.size || 1))
+      //   .attr("fill", "#E4FF1A");
 
-      item
-        .selectAll("text")
-        .data(
-          (d) => [d],
-          (d) => d.id
-        )
-        .join("text")
-        .attr("fill", "black")
-        .attr("font-size", 30)
-        .attr("y", 10)
-        .attr("text-anchor", "middle")
-        .text((d) => d.title.toUpperCase());
+      // item
+      //   .selectAll("text")
+      //   .data(
+      //     (d) => [d],
+      //     (d) => d.id
+      //   )
+      //   .join("text")
+      //   .attr("fill", "black")
+      //   .attr("font-size", 30)
+      //   .attr("y", 10)
+      //   .attr("text-anchor", "middle")
+      //   .text((d) => d.title.toUpperCase());
 
       // tactics
       tactic = tactic.data(

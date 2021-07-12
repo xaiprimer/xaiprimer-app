@@ -77,7 +77,7 @@ const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
           </a>
         </>
       )}
-      {updateCollection && (
+      {(updateCollection) && (
         <>
           {collection.indexOf(data) < 0 && (
             <div

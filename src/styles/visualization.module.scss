@@ -5,10 +5,9 @@
   display: flex;
   flex-direction: column;
   width: $tooltips-width;
-  min-height: 200px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
   background-color: #ffffff;
-  padding: 10px 10px 0;
+  padding: 10px 10px;
 
   .closeBtn {
     top: 10px;

@@ -284,29 +284,6 @@ const Visualization = () => {
         renderProject(this, _data);
       })
 
-      // item
-      //   .selectAll("circle")
-      //   .data(
-      //     (d) => [d],
-      //     (d) => d.id
-      //   )
-      //   .join("circle")
-      //   .attr("r", (d) => radius(d.size || 1))
-      //   .attr("fill", "#E4FF1A");
-
-      // item
-      //   .selectAll("text")
-      //   .data(
-      //     (d) => [d],
-      //     (d) => d.id
-      //   )
-      //   .join("text")
-      //   .attr("fill", "black")
-      //   .attr("font-size", 30)
-      //   .attr("y", 10)
-      //   .attr("text-anchor", "middle")
-      //   .text((d) => d.title.toUpperCase());
-
       // tactics
       tactic = tactic.data(
         nodes.filter((d) => d.category === "tactic"),

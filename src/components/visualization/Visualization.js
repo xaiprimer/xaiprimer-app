@@ -390,13 +390,22 @@ const Visualization = () => {
         (d) => d[0]
       );
 
+      const returnExploration = (cluster) => {
+        const _exploration = explorations.find((e) => e[0] === cluster);
+        const value =
+          _exploration[1].length === 1 ? _exploration[1][0][1] : "mixed";
+        return value;
+      };
+
       const data_scenarios = data
         .map((d) => {
           return d.scenarios
-            .split(",")
+            .split(";")
             .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
         })
         .flat();
+
+      console.log("data_scenarios", data_scenarios)
 
       const temp_scenarios = d3.flatRollup(
         data_scenarios,
@@ -404,6 +413,8 @@ const Visualization = () => {
         (d) => d.cluster,
         (d) => d.scenarios
       );
+      
+      console.log("temp_scenarios", temp_scenarios)
 
       const scenarios = d3.flatRollup(
         temp_scenarios,
@@ -413,29 +424,28 @@ const Visualization = () => {
 
         return d[1]
       });
-      console.log("🚨🚨🚨 Mi fermo qui perché ci sono più scenarios di quelli previsti nel design 🚨🚨🚨")
 
-      const allScenarios = data
-      .map((d) => {
-        return d.scenarios
-          .split(",")
-          .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
-      })
-      .flat();
+      console.log("scenarios", scenarios)
 
-      const temp_allScenarios = d3.flatRollup(
-        allScenarios,
-        (v) => v.length,
-        (d) => d.scenarios
-      ).map(d=>d[0]);
-      console.log(JSON.stringify(temp_allScenarios));
+      // console.log("🚨🚨🚨 Mi fermo qui perché ci sono più scenarios di quelli previsti nel design 🚨🚨🚨")
 
-      const returnExploration = (cluster) => {
-        const _exploration = explorations.find((e) => e[0] === cluster);
-        const value =
-          _exploration[1].length === 1 ? _exploration[1][0][1] : "mixed";
-        return value;
-      };
+      // const allScenarios = data
+      // .map((d) => {
+      //   return d.scenarios
+      //     .split(";")
+      //     .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
+      // })
+      // .flat();
+
+      // const temp_allScenarios = d3.flatRollup(
+      //   allScenarios,
+      //   (v) => v.length,
+      //   (d) => d.scenarios
+      // );
+
+      // console.log(JSON.stringify(temp_allScenarios));
+
+      
 
       const clusters = d3
         .flatRollup(

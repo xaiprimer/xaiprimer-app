@@ -108,7 +108,13 @@ const project = (parent, data, mediumSize) => {
       users.indexOf("newcomer") !== -1,
       users.indexOf("lay") !== -1,
     ];
-    return { ...d, mediaHeight, borderHeight, userGroups };
+    const tasks = d.tasks.split(";");
+    const taskElements = [
+      tasks.indexOf("understanding") !== -1,
+      tasks.indexOf("diagnosis") !== -1,
+      tasks.indexOf("refinement") !== -1,
+    ];
+    return { ...d, mediaHeight, borderHeight, userGroups, taskElements };
   });
   console.log(data, mediumSize);
 
@@ -147,36 +153,26 @@ const project = (parent, data, mediumSize) => {
     .selectAll(".exploration")
     .data(data, (d) => d.id)
     .join((enter) => enter.append("rect").classed("exploration", true))
-    .attr("fill", d=>exploration(d.exploration))
+    .attr("fill", (d) => exploration(d.exploration))
     .attr("stroke", "#000000")
     .attr("width", (d) => d.side)
-    .attr("height", (d) => d.side*0.07);
+    .attr("height", (d) => d.side * 0.07);
 
   gliph
     .selectAll(".nonSoCosaSono")
     .data((data) =>
-      [
-        {
-          value: true,
-          side: data.side,
-        },
-        {
-          value: false,
-          side: data.side,
-        },
-        {
-          value: true,
-          side: data.side,
-        },
-      ]
+      data.taskElements.map((d) => ({
+        value: d,
+        side: data.side,
+      }))
     )
     .join((enter) => enter.append("rect").classed("nonSoCosaSono", true))
-    .attr("fill", d=>d.value?"#000":"#fff")
+    .attr("fill", (d) => (d.value ? "#000" : "#fff"))
     .attr("stroke", "#000000")
     .attr("width", (d) => (d.side - d.side * 0.21) / 3)
-    .attr("height", (d) => d.side*0.07)
-    .attr("y",d=>d.side*0.14)
-    .attr("x", (d,i)=>d.side * 0.105 + (d.side - d.side * 0.21)*i / 3);
+    .attr("height", (d) => d.side * 0.07)
+    .attr("y", (d) => d.side * 0.14)
+    .attr("x", (d, i) => d.side * 0.105 + ((d.side - d.side * 0.21) * i) / 3);
 
   gliph
     .selectAll(".media")

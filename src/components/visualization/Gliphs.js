@@ -3,14 +3,36 @@ import * as d3 from "d3";
 const exploration = d3
   .scaleOrdinal()
   .domain(["guided", "open ended", "mixed"])
-  .range(["#000", "#fff", "#CECECE"]);
+  .range(["#000", "#fff", "#E5E5E5"]);
 const scenario = d3
   .scaleOrdinal()
-  .domain(["exhibition", "multiple", "desktop"])
-  .range(["#FF451D", "#3479FF", "#FFC200"])
-  .unknown("#5151fc");
+  .domain(["exhibition", "desktop", "mobile", "multiple"])
+  .range(["#FF451D", "#3479FF", "#FFC200", "#E5E5E5"])
+  .unknown("#04CE31");
 
 const cluster = (parent, data) => {
+  const cluster = d3
+    .select(parent)
+    .append("g")
+    .selectAll(".cluster")
+    .data(data)
+    .join((enter) => enter.append("g").classed("cluster", true))
+    .attr("transform",d=>`translate(-${d.side/2},-${d.side/2 - d.side*1/5})`);
+  // map data
+  data = data.map((d) => {
+    // add treemap data structure, for scenarios
+    const treemapOptions = {
+      width: d.side,
+      height: (d.side * 4) / 5,
+      padding: 0,
+      round: true,
+    };
+    d.root = treemap(d.scenarios, treemapOptions);
+    return d;
+  });
+
+  console.log("cluster data", data);
+
   // anti collision circle
   // d3.select(parent)
   //   .selectAll("circle")
@@ -20,58 +42,49 @@ const cluster = (parent, data) => {
   //   .attr("stroke", "grey")
   //   .attr("fill", "none");
 
+  // render treemap scenarios
+  const leaf = cluster
+    .selectAll("g")
+    .data((d) => d.root.leaves())
+    .join("g")
+    .classed("leaf", true)
+    .attr("transform", (d) => `translate(${d.x0},${d.y0})`);
+
+  leaf
+    .append("rect")
+    .attr(
+      "id",
+      (d, i) => (d.leafUid = "leaf-cluster" + d.parent.data.name + "-" + i)
+    )
+    .attr("fill", (d) => {
+      while (d.depth > 1) d = d.parent;
+      return scenario(d.data.name);
+    })
+    .attr("width", (d) => d.x1 - d.x0)
+    .attr("height", (d) => d.y1 - d.y0);
+
+  leaf
+    .append("clipPath")
+    .attr("id", (d, i) => (d.clipUid = "leaf-" + d.parent.data.name + "-" + i))
+    .append("use")
+    .attr("xlink:href", (d) => d.leafUid.href);
+
   d3.select(parent)
     .selectAll(".exploration")
     .data(data, (d) => d.id)
-    .join((enter) => enter.append("rect").classed(".exploration", true))
-    .attr("fill", d=>exploration(d.exploration))
+    .join((enter) => enter.append("rect").classed("exploration", true))
+    .attr("fill", (d) => exploration(d.exploration))
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.side / 5)
     .attr("x", (d) => -0.5 * d.side)
     .attr("y", (d) => -0.5 * d.side);
 
   d3.select(parent)
-    .selectAll(".exhibition")
-    .data(data, (d) => d.id)
-    .join((enter) => enter.append("rect").classed(".exhibition", true))
-    .attr("fill", d=>scenario("exhibition"))
-    .attr("width", (d) => d.side * d.scenario_exhibition)
-    .attr("height", (d) => (d.side / 5) * 4)
-    .attr("x", (d) => -0.5 * d.side)
-    .attr("y", (d) => -0.5 * d.side + d.side / 5);
-
-  d3.select(parent)
-    .selectAll(".multiple")
-    .data(data, (d) => d.id)
-    .join((enter) => enter.append("rect").classed(".multiple", true))
-    .attr("fill", scenario("multiple"))
-    .attr("width", (d) => d.side * d.scenario_multiple)
-    .attr("height", (d) => (d.side / 5) * 4)
-    .attr("x", (d) => -0.5 * d.side + d.side * d.scenario_exhibition)
-    .attr("y", (d) => -0.5 * d.side + d.side / 5);
-
-  d3.select(parent)
-    .selectAll(".desktop")
-    .data(data, (d) => d.id)
-    .join((enter) => enter.append("rect").classed(".desktop", true))
-    .attr("fill", scenario("desktop"))
-    .attr("width", (d) => d.side * d.scenario_desktop)
-    .attr("height", (d) => (d.side / 5) * 4)
-    .attr(
-      "x",
-      (d) =>
-        -0.5 * d.side +
-        d.side * d.scenario_exhibition +
-        d.side * d.scenario_desktop
-    )
-    .attr("y", (d) => -0.5 * d.side + d.side / 5);
-
-  d3.select(parent)
     .selectAll(".mostRecurrentExpl")
     .data(data, (d) => d.id)
-    .join((enter) => enter.append("rect").classed(".mostRecurrentExpl", true))
+    .join((enter) => enter.append("rect").classed("mostRecurrentExpl", true))
     .attr("fill", "none")
-    .attr("stroke", d=>exploration("guided"))
+    .attr("stroke", (d) => exploration("guided"))
     .attr("stroke-width", 3)
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.side)
@@ -110,3 +123,20 @@ const project = (parent, data) => {
 };
 
 export { cluster, project };
+
+function treemap(
+  data,
+  options = { width: 10, height: 10, padding: 0, round: true }
+) {
+  return d3
+    .treemap()
+    .tile(d3.treemapDice)
+    .size([options.width, options.height])
+    .padding(options.padding)
+    .round(options.round)(
+    d3
+      .hierarchy(data)
+      .sum((d) => d.value)
+      .sort((a, b) => b.value - a.value)
+  );
+}

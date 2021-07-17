@@ -255,9 +255,7 @@ const Visualization = () => {
             fill: "#7765E3",
             side: _side,
             exploration: d.exploration,
-            scenario_exhibition: 1 / 3,
-            scenario_multiple: 1 / 3,
-            scenario_desktop: 1 / 3,
+            scenarios: {name: d.id, children: d.scenarios}
           },
         ];
         renderCluster(this, _data);
@@ -389,6 +387,7 @@ const Visualization = () => {
         (v) => v,
         (d) => d[0]
       );
+      // console.log("explorations",explorations)
 
       const returnExploration = (cluster) => {
         const _exploration = explorations.find((e) => e[0] === cluster);
@@ -401,51 +400,34 @@ const Visualization = () => {
         .map((d) => {
           return d.scenarios
             .split(";")
-            .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
+            .map((dd) => ({ cluster: d.cluster, individual_scenario: dd }));
         })
         .flat();
-
-      console.log("data_scenarios", data_scenarios)
+      
+      // // everything that is not "mobile" or "desktop" or "exhibition" becomes "multiple"
+      const data_scenarios_reworked = data_scenarios.map(d=>{
+        d.individual_scenario = (d.individual_scenario==="mobile"||d.individual_scenario==="desktop"||d.individual_scenario==="exhibition")?d.individual_scenario:"multiple";
+        return d
+      })
 
       const temp_scenarios = d3.flatRollup(
-        data_scenarios,
+        data_scenarios_reworked,
         (v) => v.length,
         (d) => d.cluster,
-        (d) => d.scenarios
+        (d) => d.individual_scenario
       );
-      
-      console.log("temp_scenarios", temp_scenarios)
 
       const scenarios = d3.flatRollup(
         temp_scenarios,
         (v) => v,
         (d) => d[0]
-      ).map(d=>{
+      )
+      // console.log("scenarios",scenarios)
 
-        return d[1]
-      });
-
-      console.log("scenarios", scenarios)
-
-      // console.log("🚨🚨🚨 Mi fermo qui perché ci sono più scenarios di quelli previsti nel design 🚨🚨🚨")
-
-      // const allScenarios = data
-      // .map((d) => {
-      //   return d.scenarios
-      //     .split(";")
-      //     .map((dd) => ({ cluster: d.cluster, scenarios: dd }));
-      // })
-      // .flat();
-
-      // const temp_allScenarios = d3.flatRollup(
-      //   allScenarios,
-      //   (v) => v.length,
-      //   (d) => d.scenarios
-      // );
-
-      // console.log(JSON.stringify(temp_allScenarios));
-
-      
+      const returnScenarios = (cluster) => {
+        const _scenarios = scenarios.find((e) => e[0] === cluster)
+        return _scenarios[1].map(d=>({name:d[1],value:d[2]}))
+      }
 
       const clusters = d3
         .flatRollup(
@@ -463,6 +445,7 @@ const Visualization = () => {
           fading_y: xy(d[1][1]),
           category: "cluster",
           exploration: returnExploration(d[0]),
+          scenarios: returnScenarios(d[0]),
           size: d[1][2],
           title: "Cluster " + d[0],
         }));

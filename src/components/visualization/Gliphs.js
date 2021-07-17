@@ -3,7 +3,8 @@ import * as d3 from "d3";
 const exploration = d3
   .scaleOrdinal()
   .domain(["guided", "open ended", "mixed"])
-  .range(["#000", "#fff", "#E5E5E5"]);
+  .range(["#000", "#fff", "#E5E5E5"])
+  .unknown("#E5E5E5");
 const scenario = d3
   .scaleOrdinal()
   .domain(["exhibition", "desktop", "mobile", "multiple"])
@@ -17,7 +18,10 @@ const cluster = (parent, data) => {
     .selectAll(".cluster")
     .data(data)
     .join((enter) => enter.append("g").classed("cluster", true))
-    .attr("transform",d=>`translate(-${d.side/2},-${d.side/2 - d.side*1/5})`);
+    .attr(
+      "transform",
+      (d) => `translate(-${d.side / 2},-${d.side / 2 - (d.side * 1) / 5})`
+    );
   // map data
   data = data.map((d) => {
     // add treemap data structure, for scenarios
@@ -31,7 +35,7 @@ const cluster = (parent, data) => {
     return d;
   });
 
-  console.log("cluster data", data);
+  // console.log("cluster data", data);
 
   // anti collision circle
   // d3.select(parent)
@@ -92,7 +96,22 @@ const cluster = (parent, data) => {
     .attr("y", (d) => -0.5 * d.side);
 };
 
-const project = (parent, data) => {
+const project = (parent, data, mediumSize) => {
+  // mediumSize is in percentage in respect to the size of the square
+  data = data.map((d) => {
+    const mediaHeight = d.side * mediumSize * d.media.length;
+    const borderHeight = d.side * 0.07 * 6 + mediaHeight;
+    const users = d.users.split(";");
+    const userGroups = [
+      users.indexOf("expert") !== -1,
+      users.indexOf("domain expert") !== -1,
+      users.indexOf("newcomer") !== -1,
+      users.indexOf("lay") !== -1,
+    ];
+    return { ...d, mediaHeight, borderHeight, userGroups };
+  });
+  console.log(data, mediumSize);
+
   d3.select(parent)
     .selectAll("circle")
     .data(data, (d) => d.id)
@@ -101,25 +120,99 @@ const project = (parent, data) => {
     .attr("stroke", "grey")
     .attr("fill", "none");
 
-  d3.select(parent)
-    .selectAll("rect")
-    .data(data, (d) => d.id)
-    .join("rect")
-    .attr("fill", (d) => d.fill)
-    .attr("width", (d) => d.side)
-    .attr("height", (d) => d.side)
-    .attr("x", (d) => -0.5 * d.side)
-    .attr("y", (d) => -0.5 * d.side);
+  const gliph = d3
+    .select(parent)
+    .append("g")
+    .selectAll(".gliph")
+    .data(data)
+    .join((enter) => enter.append("g").classed("gliph", true))
+    .attr(
+      "transform",
+      (d) =>
+        `translate(-${d.side / 2},${
+          -d.side / 2 + (d.side - d.borderHeight) / 2
+        })`
+    );
 
-  // d3.select(parent)
-  //   .selectAll("text")
-  //   .data(data, (d) => d.id)
-  //   .join("text")
-  //   .attr("fill", "black")
-  //   .attr("font-size", 30)
-  //   .attr("y", 10)
-  //   .attr("text-anchor", "middle")
-  //   .text((d) => d.title.toUpperCase());
+  gliph
+    .selectAll(".border")
+    .data(data, (d) => d.id)
+    .join((enter) => enter.append("rect").classed("border", true))
+    .attr("fill", "#FFFFFF")
+    .attr("stroke", "#000000")
+    .attr("width", (d) => d.side)
+    .attr("height", (d) => d.borderHeight);
+
+  gliph
+    .selectAll(".exploration")
+    .data(data, (d) => d.id)
+    .join((enter) => enter.append("rect").classed("exploration", true))
+    .attr("fill", d=>exploration(d.exploration))
+    .attr("stroke", "#000000")
+    .attr("width", (d) => d.side)
+    .attr("height", (d) => d.side*0.07);
+
+  gliph
+    .selectAll(".nonSoCosaSono")
+    .data((data) =>
+      [
+        {
+          value: true,
+          side: data.side,
+        },
+        {
+          value: false,
+          side: data.side,
+        },
+        {
+          value: true,
+          side: data.side,
+        },
+      ]
+    )
+    .join((enter) => enter.append("rect").classed("nonSoCosaSono", true))
+    .attr("fill", d=>d.value?"#000":"#fff")
+    .attr("stroke", "#000000")
+    .attr("width", (d) => (d.side - d.side * 0.21) / 3)
+    .attr("height", (d) => d.side*0.07)
+    .attr("y",d=>d.side*0.14)
+    .attr("x", (d,i)=>d.side * 0.105 + (d.side - d.side * 0.21)*i / 3);
+
+  gliph
+    .selectAll(".media")
+    .data(data, (d) => d.id)
+    .join((enter) => enter.append("rect").classed("media", true))
+    .attr("fill", (d) => scenario(d.scenarios))
+    .attr("width", (d) => d.side - d.side * 0.21)
+    .attr("height", (d) => d.mediaHeight)
+    .attr("x", (d) => d.side * 0.105)
+    .attr("y", (d) => d.side * 0.28);
+
+  gliph
+    .selectAll(".userGroup")
+    .data((data) =>
+      data.userGroups.map((d) => ({
+        isPresent: d,
+        side: data.side,
+        borderHeight: data.borderHeight,
+      }))
+    )
+    .join((enter) => enter.append("circle").classed("userGroup", true))
+    .attr("r", (d) => d.side * 0.07)
+    .attr("cy", (d) => d.borderHeight)
+    .attr("cx", (d, i) => d.side * 0.175 + ((d.side - d.side * 0.35) / 3) * i)
+    .attr("fill", (d) => (d.isPresent ? "#000" : "#fff"))
+    .attr("stroke", "#000");
+
+  d3.select(parent)
+    .selectAll("text")
+    .data(data, (d) => d.id)
+    .join("text")
+    .attr("fill", "black")
+    .attr("font-size", 30)
+    .attr("y", 10)
+    .attr("text-anchor", "middle")
+    .text((d) => d.id.toUpperCase());
 };
 
 export { cluster, project };

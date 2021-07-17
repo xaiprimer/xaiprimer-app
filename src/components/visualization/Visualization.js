@@ -21,6 +21,7 @@ const Visualization = () => {
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
     const radius = d3.scaleSqrt().domain([0, 1]).range([0, 20]);
     const side = d3.scaleSqrt().domain([0, 1]).range([0, 100]);
+    const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elements within the project gliph, size is in percentage. By default as if there is a single medium in every gliph
     const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 20]);
     const simulation = d3
       .forceSimulation()
@@ -173,9 +174,9 @@ const Visualization = () => {
       g1.attr("transform", `translate(${x},${y}) scale(${k})`);
 
       const previousZoom = zoomLevel;
-      if (k < 0.2) {
+      if (k < 0.3) {
         zoomLevel = 0;
-      } else if (k < 0.5) {
+      } else if (k < 0.8) {
         zoomLevel = 1;
       } else {
         zoomLevel = 2;
@@ -188,7 +189,7 @@ const Visualization = () => {
             svg.style("background-color", "#F9F9F9");
             break;
           case 1:
-            const projects = makeItems(data, previousZoom !== 2);
+            const projects = makeItems(data, previousZoom === 0);
             update(projects, []);
             svg.style("background-color", "#F5F5F5");
             break;
@@ -255,7 +256,7 @@ const Visualization = () => {
             fill: "#7765E3",
             side: _side,
             exploration: d.exploration,
-            scenarios: {name: d.id, children: d.scenarios}
+            scenarios: { name: d.id, children: d.scenarios },
           },
         ];
         renderCluster(this, _data);
@@ -293,10 +294,8 @@ const Visualization = () => {
       item.each(function (d) {
         const _side = side(1);
         const _r = Math.sqrt(2 * Math.pow(_side, 2)) / 2;
-        const _data = [
-          { id: d.id, r: _r, fill: "#E4FF1A", title: d.title, side: _side },
-        ];
-        renderProject(this, _data);
+        const _data = [{ ...d, r: _r, side: _side }];
+        renderProject(this, _data, medium(1));
       });
 
       // tactics
@@ -403,12 +402,17 @@ const Visualization = () => {
             .map((dd) => ({ cluster: d.cluster, individual_scenario: dd }));
         })
         .flat();
-      
+
       // // everything that is not "mobile" or "desktop" or "exhibition" becomes "multiple"
-      const data_scenarios_reworked = data_scenarios.map(d=>{
-        d.individual_scenario = (d.individual_scenario==="mobile"||d.individual_scenario==="desktop"||d.individual_scenario==="exhibition")?d.individual_scenario:"multiple";
-        return d
-      })
+      const data_scenarios_reworked = data_scenarios.map((d) => {
+        d.individual_scenario =
+          d.individual_scenario === "mobile" ||
+          d.individual_scenario === "desktop" ||
+          d.individual_scenario === "exhibition"
+            ? d.individual_scenario
+            : "multiple";
+        return d;
+      });
 
       const temp_scenarios = d3.flatRollup(
         data_scenarios_reworked,
@@ -421,13 +425,13 @@ const Visualization = () => {
         temp_scenarios,
         (v) => v,
         (d) => d[0]
-      )
+      );
       // console.log("scenarios",scenarios)
 
       const returnScenarios = (cluster) => {
-        const _scenarios = scenarios.find((e) => e[0] === cluster)
-        return _scenarios[1].map(d=>({name:d[1],value:d[2]}))
-      }
+        const _scenarios = scenarios.find((e) => e[0] === cluster);
+        return _scenarios[1].map((d) => ({ name: d[1], value: d[2] }));
+      };
 
       const clusters = d3
         .flatRollup(
@@ -450,7 +454,7 @@ const Visualization = () => {
           title: "Cluster " + d[0],
         }));
 
-      console.log("clusters data", clusters);
+      // console.log("clusters data", clusters);
       return clusters;
     }
 
@@ -471,8 +475,11 @@ const Visualization = () => {
         }
         d.fading_x = xy(_clusterPosition[1][0]);
         d.fading_y = xy(_clusterPosition[1][1]);
+        d.media = d.medium.split(";");
       });
-
+      // set size of a "medium" in the gliph
+      const mediumSize = 0.58 / d3.max(data, (d) => d.media.length);
+      medium.range([0,mediumSize])
       return data;
     }
 

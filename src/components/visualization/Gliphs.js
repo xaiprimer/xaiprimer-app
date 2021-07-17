@@ -116,15 +116,15 @@ const project = (parent, data, mediumSize) => {
     ];
     return { ...d, mediaHeight, borderHeight, userGroups, taskElements };
   });
-  console.log(data, mediumSize);
-
-  d3.select(parent)
-    .selectAll("circle")
-    .data(data, (d) => d.id)
-    .join("circle")
-    .attr("r", (d) => d.r)
-    .attr("stroke", "grey")
-    .attr("fill", "none");
+  // console.log(data, mediumSize);
+  // // anti collision circle
+  // d3.select(parent)
+  //   .selectAll("circle")
+  //   .data(data, (d) => d.id)
+  //   .join("circle")
+  //   .attr("r", (d) => d.r)
+  //   .attr("stroke", "grey")
+  //   .attr("fill", "none");
 
   const gliph = d3
     .select(parent)

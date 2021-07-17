@@ -346,8 +346,8 @@ const Visualization = () => {
         )
         .join("text")
         .attr("fill", "black")
-        .attr("font-size", 30)
-        .attr("y", 10)
+        .attr("font-size", 10)
+        .attr("y", 4)
         .attr("text-anchor", "middle")
         .text((d) => d.title.toUpperCase());
 

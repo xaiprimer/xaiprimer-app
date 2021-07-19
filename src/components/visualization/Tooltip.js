@@ -5,6 +5,7 @@ import {
   BsX,
   BsLayoutWtf as DesignProcess,
   BsFilm as VideoInterview,
+  BsBoxArrowInUpRight as OutLink,
 } from "react-icons/bs";
 const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
   const { posX, posY } = data;
@@ -24,7 +25,7 @@ const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
     <div className={styles.tooltip} style={positioning}>
       {data.title && (
         <h2 className="fst-italic" style={{ width: "calc(100% - 30px)" }}>
-          {data.title}
+          {data.title} <a href={data.link} target="_blank" rel="noreferrer"><OutLink/></a>
         </h2>
       )}
       {data.authors && (

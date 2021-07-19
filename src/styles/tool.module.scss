@@ -18,6 +18,55 @@
     grid-row-end: -1;
   }
 
+  .tools {
+    grid-column-start: 2;
+    grid-column-end: span 1;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    overflow: hidden;
+    display: flex;
+    .panel {
+      background-color: #ffffff;
+      border: 1px solid black;
+      overflow: hidden;
+      transition: height 0.15s ease;
+      height: 40px;
+
+      &.open {
+        height: 100%;
+      }
+
+      .panelHeader {
+        height: 38px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+
+        .closeBtn {
+          font-size: 2rem;
+          border-radius: 5px;
+          padding: 0.3rem;
+          cursor: pointer;
+          &:hover {
+            background-color: #eee;
+          }
+        }
+      }
+    }
+
+    .buttonsTest {
+      grid-column-start: 2;
+      grid-column-end: span 1;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      background-color: #ffffff;
+      border: 1px solid black;
+    }
+  }
+
   .collection {
     grid-column-start: 4;
     grid-column-end: span 1;
@@ -67,7 +116,8 @@
         border-radius: 50%;
       }
 
-      .closeBtn, svg {
+      .closeBtn,
+      svg {
         font-size: 2rem;
         border-radius: 5px;
         padding: 0.3rem;

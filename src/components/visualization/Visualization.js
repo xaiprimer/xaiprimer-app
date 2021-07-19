@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import * as styles from "../../styles/tool.module.scss";
 import data from "./data-primer.json";
 import { cluster as renderCluster, project as renderProject } from "./Gliphs";
+import Tools from  "./Tools"
 import Collection from "./Collection";
 import Tooltip from "./Tooltip";
 
@@ -12,6 +13,7 @@ const Visualization = () => {
   const svgEl = useRef();
   const g1El = useRef();
   const miniMapEl = useRef();
+  const [explorationMode, setExplorationMode] = useState("clusters");
   const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
   const [vizViewport, setVizViewport] = useState([0, 0]);
@@ -475,7 +477,7 @@ const Visualization = () => {
         }
         d.fading_x = xy(_clusterPosition[1][0]);
         d.fading_y = xy(_clusterPosition[1][1]);
-        d.media = d.medium.split(";");
+        d.media = Array.isArray(d.media)?d.media:d.media.split(";");
       });
       // set size of a "medium" in the gliph
       const mediumSize = 0.58 / d3.max(data, (d) => d.media.length);
@@ -547,6 +549,7 @@ const Visualization = () => {
         <g ref={g1El}></g>
         <g ref={miniMapEl}></g>
       </svg>
+      <Tools explorationMode={explorationMode} setExplorationMode={setExplorationMode}/>
       <Collection collection={collection} updateCollection={updateCollection} />
       {tooltip && (
         <Tooltip

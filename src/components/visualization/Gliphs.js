@@ -46,6 +46,18 @@ const cluster = (parent, data) => {
   //   .attr("stroke", "grey")
   //   .attr("fill", "none");
 
+  d3.select(parent)
+    .selectAll(".mostRecurrentExpl")
+    .data(data, (d) => d.id)
+    .join((enter) => enter.append("rect").classed("mostRecurrentExpl", true))
+    .attr("fill", "none")
+    .attr("stroke", (d) => exploration("guided"))
+    .attr("stroke-width", 3)
+    .attr("width", (d) => d.side)
+    .attr("height", (d) => d.side)
+    .attr("x", (d) => -0.5 * d.side)
+    .attr("y", (d) => -0.5 * d.side);
+
   // render treemap scenarios
   const leaf = cluster
     .selectAll("g")
@@ -78,20 +90,9 @@ const cluster = (parent, data) => {
     .data(data, (d) => d.id)
     .join((enter) => enter.append("rect").classed("exploration", true))
     .attr("fill", (d) => exploration(d.exploration))
+    .attr("stroke", "#000")
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.side / 5)
-    .attr("x", (d) => -0.5 * d.side)
-    .attr("y", (d) => -0.5 * d.side);
-
-  d3.select(parent)
-    .selectAll(".mostRecurrentExpl")
-    .data(data, (d) => d.id)
-    .join((enter) => enter.append("rect").classed("mostRecurrentExpl", true))
-    .attr("fill", "none")
-    .attr("stroke", (d) => exploration("guided"))
-    .attr("stroke-width", 3)
-    .attr("width", (d) => d.side)
-    .attr("height", (d) => d.side)
     .attr("x", (d) => -0.5 * d.side)
     .attr("y", (d) => -0.5 * d.side);
 };
@@ -146,6 +147,7 @@ const project = (parent, data, mediumSize) => {
     .join((enter) => enter.append("rect").classed("border", true))
     .attr("fill", "#FFFFFF")
     .attr("stroke", "#000000")
+    .attr("stroke-width", d=>d.path==="iterative"?4:1)
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.borderHeight);
 

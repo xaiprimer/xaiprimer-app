@@ -188,7 +188,7 @@ const Visualization = () => {
         switch (zoomLevel) {
           case 0:
             update(makeClusters(data), []);
-            svg.style("background-color", "#F9F9F9");
+            svg.style("background-color", "#F8F6F2");
             break;
           case 1:
             const projects = makeItems(data, previousZoom === 0);

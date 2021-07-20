@@ -3,8 +3,8 @@ import * as d3 from "d3";
 const exploration = d3
   .scaleOrdinal()
   .domain(["guided", "open ended", "mixed"])
-  .range(["#000", "#fff", "#E5E5E5"])
-  .unknown("#E5E5E5");
+  .range(["#000", "#fff", "#777777"])
+  .unknown("#777777");
 const scenario = d3
   .scaleOrdinal()
   .domain(["exhibition", "desktop", "mobile", "multiple"])

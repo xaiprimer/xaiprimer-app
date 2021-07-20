@@ -193,12 +193,12 @@ const Visualization = () => {
           case 1:
             const projects = makeItems(data, previousZoom === 0);
             update(projects, []);
-            svg.style("background-color", "#F5F5F5");
+            svg.style("background-color", "#FEF7EB");
             break;
           case 2:
             const net = makeNetworks(data);
             update(net.nodes, net.links);
-            svg.style("background-color", "#EBEBEB");
+            svg.style("background-color", "#FFF4DE");
             break;
           default:
           // do nothing

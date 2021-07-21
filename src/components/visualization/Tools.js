@@ -10,6 +10,10 @@ import {
 import { Tabs, Tab } from "react-bootstrap";
 import classNames from "classnames";
 
+import Clusters from "../../images/clusters.png"
+import Projects from "../../images/projects.png"
+import Tactics from "../../images/tact.png"
+
 const Tools = ({explorationMode, setExplorationMode}) => {
   const [panel, openPanel] = useState(false);
   const togglePanel = () => {
@@ -43,13 +47,13 @@ const Tools = ({explorationMode, setExplorationMode}) => {
             id="explorationMode"
           >
             <Tab eventKey="clusters" title="Clusters">
-              Clusters
+              <img src={Clusters}className={styles.legendImg} ></img>
             </Tab>
             <Tab eventKey="projects" title="Projects">
-              Projects
+            <img src={Projects}className={styles.legendImg} ></img>
             </Tab>
             <Tab eventKey="networks" title="Networks">
-              Networks
+            <img src={Tactics}className={styles.legendImg} ></img>
             </Tab>
           </Tabs>
         </div>

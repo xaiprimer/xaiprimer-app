@@ -9,7 +9,7 @@ const scenario = d3
   .scaleOrdinal()
   .domain(["exhibition", "desktop", "mobile", "multiple"])
   .range(["#FF451D", "#3479FF", "#FFC200", "#E5E5E5"])
-  .unknown("#04CE31");
+  .unknown("#E5E5E5");
 
 const cluster = (parent, data) => {
   const cluster = d3

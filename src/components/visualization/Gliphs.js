@@ -98,6 +98,7 @@ const cluster = (parent, data) => {
 };
 
 const project = (parent, data, mediumSize) => {
+  // console.log(data)
   // mediumSize is in percentage in respect to the size of the square
   data = data.map((d) => {
     const mediaHeight = d.side * mediumSize * d.media.length;

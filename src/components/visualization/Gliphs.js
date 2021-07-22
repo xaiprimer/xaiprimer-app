@@ -12,12 +12,12 @@ const scenario = d3
   .unknown("#E5E5E5");
 
 const cluster = (parent, data) => {
-  const cluster = d3
+  const g_treemap = d3
     .select(parent)
-    .append("g")
-    .selectAll(".cluster")
+    // .append("g")
+    .selectAll(".g_treemap")
     .data(data)
-    .join((enter) => enter.append("g").classed("cluster", true))
+    .join((enter) => enter.append("g").classed("g_treemap", true))
     .attr(
       "transform",
       (d) => `translate(-${d.side / 2},-${d.side / 2 - (d.side * 1) / 5})`
@@ -59,7 +59,7 @@ const cluster = (parent, data) => {
     .attr("y", (d) => -0.5 * d.side);
 
   // render treemap scenarios
-  const leaf = cluster
+  const leaf = g_treemap
     .selectAll("g")
     .data((d) => d.root.leaves())
     .join("g")

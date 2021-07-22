@@ -19,7 +19,7 @@ const Visualization = () => {
   const [vizViewport, setVizViewport] = useState([0, 0]);
 
   useEffect(() => {
-    let zoomLevel = 0;
+    let zoomLevel = 0, initialScale = 1, initialTranslation = [0,0];
     const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
     const radius = d3.scaleSqrt().domain([0, 1]).range([0, 20]);
     const side = d3.scaleSqrt().domain([0, 1]).range([0, 100]);
@@ -123,10 +123,10 @@ const Visualization = () => {
     mm_opts.y = height - mm_opts.height - 2 * mm_opts.margin;
     miniMap.attr("transform", `translate(${mm_opts.x}, ${mm_opts.y})`);
 
-    // const mm_scale = d3
-    //   .scaleLinear()
-    //   .domain([0, width])
-    //   .range([0, mm_opts.width]);
+    const mm_scale = d3
+      .scaleLinear()
+      .domain([0, width])
+      .range([0, mm_opts.width]);
 
     miniMap
       .append("rect")
@@ -151,8 +151,8 @@ const Visualization = () => {
       x1 = x0 + gBBox.width,
       y1 = y0 + gBBox.height;
 
-    const scale = 1 / Math.max((x1 - x0) / width, (y1 - y0) / height);
-    const translation = [
+    const scale = initialScale = 1 / Math.max((x1 - x0) / width, (y1 - y0) / height);
+    const translation = initialTranslation = [
       -(x0 * scale + (gBBox.width * scale - width) / 2),
       -(y0 * scale + (gBBox.height * scale - height) / 2),
     ];
@@ -174,6 +174,12 @@ const Visualization = () => {
       setTooltip(null);
       const { x, y, k } = e.transform;
       g1.attr("transform", `translate(${x},${y}) scale(${k})`);
+
+      console.log(x, y, k)
+
+      const {mm_x, mm_y, mm_k} = {mm_x: x*mm_opts.width/width - mm_opts.width/2, mm_y: y*mm_opts.height/height - mm_opts.height/2, mm_k: initialScale/k}
+
+      d3.select(".mm_vbox").attr("transform", `translate(${mm_x},${mm_y}) scale(${mm_k})`);
 
       const previousZoom = zoomLevel;
       if (k < 0.3) {

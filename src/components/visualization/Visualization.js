@@ -302,7 +302,7 @@ const Visualization = () => {
 
       // tactics
       tactic = tactic.data(
-        nodes.filter((d) => d.category === "tactic"),
+        nodes.filter((d) => d.category === "tactic" || d.category === "medium"),
         (d) => d.id
       );
       tactic
@@ -337,7 +337,7 @@ const Visualization = () => {
         )
         .join("circle")
         .attr("r", (d) => radius(d.size))
-        .attr("fill", "#FFFFFF")
+        .attr("fill", d=> d.category==="medium"?"#FFFFFF":"#E5E5E5")
         .attr("stroke", "#FF451D");
 
       tactic
@@ -482,6 +482,7 @@ const Visualization = () => {
       // set size of a "medium" in the gliph
       const mediumSize = 0.58 / d3.max(data, (d) => d.media.length);
       medium.range([0,mediumSize])
+
       return data;
     }
 
@@ -494,7 +495,7 @@ const Visualization = () => {
       const tactics = d3.flatRollup(
         data,
         (v) => {
-          const _arr = v.map((vv) => vv.alltactics.split(";")).flat();
+          const _arr = v.map((vv) => vv.tactics.split(";")).flat();
           const _cluster = clustersPositions.find((c) => c[0] === v[0].cluster);
           return d3
             .flatRollup(
@@ -518,24 +519,64 @@ const Visualization = () => {
         (d) => d.cluster
       );
       const flatTactics = tactics.map((d) => d[1]).flat();
+      // console.log("flatTactics", flatTactics);
+
+      const media = d3.flatRollup(
+        data,
+        (v) => {
+          const _arr = v.map((vv) => Array.isArray(vv.media)?vv.media.flat():vv.media.split(";").flat()).flat();
+          const _cluster = clustersPositions.find((c) => c[0] === v[0].cluster);
+          return d3
+            .flatRollup(
+              _arr,
+              (v) => v.length,
+              (d) => d
+            )
+            .map((d) => ({
+              id: _cluster[0] + "-" + d[0],
+              title: d[0],
+              _x: _cluster[1][0],
+              _y: _cluster[1][1],
+              x: xy(_cluster[1][0]),
+              y: xy(_cluster[1][1]),
+              fading_x: xy(_cluster[1][0]) + 0,
+              fading_y: xy(_cluster[1][1]) + 0,
+              category: "medium",
+              size: d[1],
+            }));
+        },
+        (d) => d.cluster
+      );
+      const flatMedia = media.map((d) => d[1]).flat();
+      // console.log("flatMedia", flatMedia);
 
       const links = d3.flatRollup(
         data,
         (v) => {
           return v.map((d) => {
             const temp = d.cluster + "-" + d.id + "-";
-            return d.alltactics.split(";").map((t) => ({
+
+            const linksTactics = d.tactics.split(";").map((t) => ({
               id: temp + t,
               source: d,
               target: flatTactics.find((ft) => ft.id === d.cluster + "-" + t),
             }));
+
+            d.media = Array.isArray(d.media)?d.media:d.media.split(";")
+            const linksMedia = d.media.map((t)=>({
+              id: temp + t,
+              source: d,
+              target: flatMedia.find((fm) => fm.id === d.cluster + "-" + t),
+            }))
+            return linksTactics.concat(linksMedia)
           });
         },
         (d) => d.cluster
       );
       const flatLinks = links.map((d) => d[1].flat()).flat();
+      // console.log("flatLinks", flatLinks);
 
-      return { nodes: flatTactics.concat(data), links: flatLinks };
+      return { nodes: data.concat(flatTactics, flatMedia), links: flatLinks };
     }
   }, []);
 

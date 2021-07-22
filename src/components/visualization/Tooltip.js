@@ -7,7 +7,7 @@ import {
   BsFilm as VideoInterview,
   BsBoxArrowInUpRight as OutLink,
 } from "react-icons/bs";
-const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
+const Tooltip = ({ data, close, collection, updateCollection }) => {
   const { posX, posY } = data;
   // const [w, h] = viewport;
   const positioning = {

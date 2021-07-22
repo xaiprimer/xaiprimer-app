@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import ClassNames from "classnames";
 import * as styles from "../../styles/tool.module.scss";
 import {
-  BsChevronContract as CloseIcon,
-  BsChevronExpand as OpenIcon,
+  // BsChevronContract as CloseIcon,
+  // BsChevronExpand as OpenIcon,
   BsX as ClosePanelIcon,
   BsArrowBarDown as OpenPanelIcon,
 } from "react-icons/bs";
 import { Tabs, Tab } from "react-bootstrap";
 import classNames from "classnames";
 
-import Clusters from "../../images/clusters.png"
-import Projects from "../../images/projects.png"
-import Tactics from "../../images/tact.png"
+import Clusters from "../../images/clusters.png";
+import Projects from "../../images/projects.png";
+import Tactics from "../../images/tact.png";
 
-const Tools = ({explorationMode, setExplorationMode}) => {
-  const [panel, openPanel] = useState(false);
+const Tools = ({ explorationMode, setExplorationMode }) => {
+  const [panel, openPanel] = useState(true);
   const togglePanel = () => {
     openPanel(!panel);
   };
@@ -42,18 +42,18 @@ const Tools = ({explorationMode, setExplorationMode}) => {
         </div>
         <div>
           <Tabs
-            defaultActiveKey={explorationMode}
+            activeKey={explorationMode}
             onSelect={(k) => setExplorationMode(k)}
             id="explorationMode"
           >
             <Tab eventKey="clusters" title="Clusters">
-              <img src={Clusters}className={styles.legendImg} ></img>
+              <img src={Clusters} className={styles.legendImg} alt="legend"></img>
             </Tab>
             <Tab eventKey="projects" title="Projects">
-            <img src={Projects}className={styles.legendImg} ></img>
+              <img src={Projects} className={styles.legendImg} alt="legend"></img>
             </Tab>
             <Tab eventKey="networks" title="Networks">
-            <img src={Tactics}className={styles.legendImg} ></img>
+              <img src={Tactics} className={styles.legendImg} alt="legend"></img>
             </Tab>
           </Tabs>
         </div>

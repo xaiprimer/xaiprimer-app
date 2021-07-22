@@ -1,7 +1,6 @@
 @import "variables.scss";
 
 .viz {
-  background-color: #f9f9f9;
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -16,6 +15,15 @@
     grid-column-end: -1;
     grid-row-start: 1;
     grid-row-end: -1;
+    &.clusters {
+      background-color: $clusters-bg;
+    }
+    &.projects {
+      background-color: $projects-bg;
+    }
+    &.networks {
+      background-color: $networks-bg;
+    }
   }
 
   .tools {
@@ -181,7 +189,7 @@
     }
   }
 
-  .legendImg{
+  .legendImg {
     width: 100%;
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 
 import * as styles from "../styles/tool.module.scss";
-import Visualization from "../components/visualization/Visualization";
+import VisualizationBackup from "../components/visualization/VisualizationBackup";
 
 const ToolPage = () => {
   return (
@@ -14,7 +14,7 @@ const ToolPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Helmet>
       <div className={styles.viz}>
-        <Visualization />
+        <VisualizationBackup />
       </div>
     </>
   );

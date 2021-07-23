@@ -331,23 +331,24 @@ const switchRender = (mode, setCoordinates) => {
   }
 };
 const setZoom = (options) => {
-  const _zoom = d3.zoomTransform(g.node());
+  let newZoom = d3.zoomIdentity;
+  let oldZoom = d3.zoomTransform(g.node());
   const { translation, scale } = options;
   if (Array.isArray(translation)) {
     const [x, y] = translation;
-    _zoom.translate(x, y);
+    newZoom = newZoom.translate(x, y);
+  } else {
+    const { x, y } = oldZoom;
+    newZoom = newZoom.translate(x, y);
   }
   if (!isNaN(scale)) {
-    _zoom.scale(scale);
+    newZoom = newZoom.scale(scale);
+  } else {
+    const { k } = oldZoom;
+    newZoom = newZoom.scale(k);
   }
-  console.log("id",d3.zoomIdentity);
-  console.log("g",d3.zoomTransform(g.node()))
-  console.log(_zoom)
-  // const [_x, _y] = [(width / 2) / 1, (height / 2) / 1];
-  svg
-    .transition()
-    .duration(1000)
-    .call(zoom.transform, _zoom);
+  // const [_x, _y] = [width / 2 / 1, height / 2 / 1];
+  svg.transition().duration(1000).call(zoom.transform, newZoom);
 };
 const initialize = (element, _data, _setMode, _setTooltip) => {
   console.log("initialize visualization");
@@ -372,7 +373,7 @@ const initialize = (element, _data, _setMode, _setTooltip) => {
   switchRender("clusters");
 };
 const update = (nodes, links) => {
-  console.log("update");
+  // console.log("update");
   // console.log(nodes, links);
 
   link = link.data(links, (d) => d.id);

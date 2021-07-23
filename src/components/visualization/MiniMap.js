@@ -19,7 +19,12 @@ const MiniMap = ({ zoom, data, rescalePositionsViz, tacticHighlighted }) => {
         {data.map((d) => (
           <circle
             key={d.id}
-            r="1"
+            r={
+              d.tactics.toLowerCase().includes(tacticHighlighted) ||
+              d.media.toLowerCase().includes(tacticHighlighted)
+                ? 1.5
+                : 1
+            }
             cx={d._x}
             cy={d._y}
             fill={

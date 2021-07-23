@@ -16,12 +16,6 @@ const MiniMap = ({ zoom, data, rescalePositionsViz, tacticHighlighted }) => {
           miniMapStyle.height / 2
         })`}
       >
-        <rect
-          width={miniMapStyle.width / zoom.k}
-          height={miniMapStyle.height / zoom.k}
-          x={-zoom.x * j}
-          y={-zoom.y * j}
-        ></rect>
         {data.map((d) => (
           <circle
             key={d.id}
@@ -37,6 +31,13 @@ const MiniMap = ({ zoom, data, rescalePositionsViz, tacticHighlighted }) => {
           />
         ))}
       </g>
+      {/* <rect className={styles.viewBox}
+          width={miniMapStyle.width / zoom.k}
+          height={miniMapStyle.height / zoom.k}
+          x={-zoom.x * j}
+          y={-zoom.y * j}
+        ></rect>
+      <circle className={styles.viewBox} r={miniMapStyle.height/2  / zoom.k} cx={(-zoom.x * j + miniMapStyle.width/2)} cy={(-zoom.y * j + miniMapStyle.height/2)} /> */}
     </svg>
   );
 };

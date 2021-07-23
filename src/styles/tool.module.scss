@@ -203,8 +203,9 @@
   border: 1px solid var(--cognac-primer);
   background-color: var(--light-grey-primer);
 
-  rect {
+  .viewBox {
     fill: var(--white-primer);
     stroke: var(--cognac-primer);
+    fill-opacity: 0.5;
   }
 }

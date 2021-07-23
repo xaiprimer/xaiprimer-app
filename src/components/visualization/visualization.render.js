@@ -15,20 +15,29 @@ let data,
 // d3 selections
 let svg, g, contour, cluster, item, tactic, link;
 // scales
-const _k = 4
-const radius = d3.scaleSqrt().domain([0, 1]).range([0, 0.8*_k]);
-const side = d3.scaleSqrt().domain([0, 1]).range([0, 5*_k]);
+const _k = 4;
+const radius = d3
+  .scaleSqrt()
+  .domain([0, 1])
+  .range([0, 0.8 * _k]);
+const side = d3
+  .scaleSqrt()
+  .domain([0, 1])
+  .range([0, 5 * _k]);
 const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elements within the project gliph, size is in percentage. By default is set as if there is a single medium in every gliph
-const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 4*_k]);
+const linkDistance = d3
+  .scaleSqrt()
+  .domain([0, 1])
+  .range([0, 4 * _k]);
 // functions
-let setMode, setTooltip, setZoomState, zoom;
+let setMode, setTooltip, setZoomState, setTacticHighlighted, zoom;
 const zoomed = (e) => {
   setTooltip(null);
   setZoomState(e.transform);
   const { x, y, k } = e.transform;
   g.attr("transform", `translate(${x},${y}) scale(${k})`);
-  document.documentElement.style.setProperty('--stroke-width', 1/k);
-  document.documentElement.style.setProperty('--label-size', 10/k);
+  document.documentElement.style.setProperty("--stroke-width", 1 / k);
+  document.documentElement.style.setProperty("--label-size", 10 / k);
   const previousMode = zoomMode;
   if (k <= zoomValues.clusters) {
     zoomMode = "clusters";
@@ -93,22 +102,21 @@ const makeContours = (data) => {
   const maxY = d3.max(dataContour, (d) => d[1]);
 
   // contours react to screen size
-  const bandwidthScale = d3.scaleLinear().domain([720,2160]).range([15, 35])
-  const thresholdsScale = d3.scaleLinear().domain([720,2160]).range([6, 10])
+  const bandwidthScale = d3.scaleLinear().domain([720, 2160]).range([15, 35]);
+  const thresholdsScale = d3.scaleLinear().domain([720, 2160]).range([6, 10]);
 
   const contours = d3
     .contourDensity()
     .size([maxX, maxY])
     .bandwidth(bandwidthScale(d3.min([width, height])))
-    .thresholds(thresholdsScale(d3.min([width, height])))
-    (dataContour);
+    .thresholds(thresholdsScale(d3.min([width, height])))(dataContour);
 
   contour
     .data(contours)
     .join("path")
     .attr("transform", `translate(${extent_x[0]}, ${extent_y[0]})`)
     .attr("stroke", "#ccc")
-    .attr("stroke-width","var(--stroke-width)")
+    .attr("stroke-width", "var(--stroke-width)")
     .attr("stroke-linejoin", "round")
     .attr("fill", "#fff")
     .attr("fill-opacity", 0.35)
@@ -359,8 +367,10 @@ const simulation = d3
     d3
       .forceCollide()
       .radius((d) => {
-        const _radius = !d.category ? Math.sqrt(2 * Math.pow(side(d.size || 1), 2)) / 2 : radius(d.size)*0.85
-        return _radius
+        const _radius = !d.category
+          ? Math.sqrt(2 * Math.pow(side(d.size || 1), 2)) / 2
+          : radius(d.size) * 0.85;
+        return _radius;
       })
       .iterations(1)
   )
@@ -407,7 +417,14 @@ const setZoom = (options) => {
   }
   svg.transition().duration(duration).call(zoom.transform, newZoom);
 };
-const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
+const initialize = (
+  element,
+  _data,
+  _setMode,
+  _setTooltip,
+  _setZoomState,
+  _setTacticHighlighted
+) => {
   console.log("initialize visualization");
 
   // Initialize variables
@@ -416,10 +433,15 @@ const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
   setTooltip = _setTooltip;
   setMode = _setMode;
   setZoomState = _setZoomState;
+  setTacticHighlighted = _setTacticHighlighted;
   zoom = d3.zoom().on("zoom", zoomed);
   svg = d3.select(element).call(zoom);
   g = svg.append("g");
-  contour = g.append("g").classed("contours", true).style("transform-origin", "0 0").selectAll("path");
+  contour = g
+    .append("g")
+    .classed("contours", true)
+    .style("transform-origin", "0 0")
+    .selectAll("path");
   link = g.append("g").classed("g-links", true).selectAll(".link");
   cluster = g.append("g").classed("g-clusters", true).selectAll(".cluster");
   item = g.append("g").classed("g-items", true).selectAll(".item");
@@ -450,7 +472,7 @@ const update = (nodes, links) => {
     .append("path")
     .classed("link", true)
     .attr("stroke", "var(--dark-grey-primer)")
-    .attr("stroke-width","var(--stroke-width)")
+    .attr("stroke-width", "var(--stroke-width)")
     .attr("fill", "none")
     .style("opacity", "0")
     .merge(link);
@@ -546,7 +568,7 @@ const update = (nodes, links) => {
     .enter()
     .append("g")
     .classed("tactic", true)
-    .attr("stroke-width","var(--stroke-width)")
+    .attr("stroke-width", "var(--stroke-width)")
     .style("opacity", "0")
     .on("click", (e, d) => {
       const data = {
@@ -554,6 +576,7 @@ const update = (nodes, links) => {
         posX: e.pageX,
         posY: e.pageY,
       };
+      setTacticHighlighted(d.title)
       return setTooltip(data);
     })
     .merge(tactic);
@@ -568,7 +591,9 @@ const update = (nodes, links) => {
     )
     .join("circle")
     .attr("r", (d) => radius(d.size))
-    .attr("fill", (d) => (d.category === "medium" ? "var(--white-primer)" : "var(--grey-primer)"))
+    .attr("fill", (d) =>
+      d.category === "medium" ? "var(--white-primer)" : "var(--grey-primer)"
+    )
     .attr("stroke", "var(--black-primer)");
 
   tactic
@@ -592,4 +617,12 @@ const destroy = (element) => {
   d3.select(element).selectAll("*").remove();
 };
 
-export { initialize, update, switchRender, setZoom, zoomValues, destroy };
+export {
+  initialize,
+  update,
+  switchRender,
+  setZoom,
+  zoomValues,
+  rescalePositions,
+  destroy,
+};

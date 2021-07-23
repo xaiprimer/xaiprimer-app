@@ -21,9 +21,10 @@ const side = d3.scaleSqrt().domain([0, 1]).range([0, 5*_k]);
 const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elements within the project gliph, size is in percentage. By default is set as if there is a single medium in every gliph
 const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 4*_k]);
 // functions
-let setMode, setTooltip, zoom;
+let setMode, setTooltip, setZoomState, zoom;
 const zoomed = (e) => {
   setTooltip(null);
+  setZoomState(e.transform);
   const { x, y, k } = e.transform;
   g.attr("transform", `translate(${x},${y}) scale(${k})`);
   document.documentElement.style.setProperty('--stroke-width', 1/k);
@@ -406,7 +407,7 @@ const setZoom = (options) => {
   }
   svg.transition().duration(duration).call(zoom.transform, newZoom);
 };
-const initialize = (element, _data, _setMode, _setTooltip) => {
+const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
   console.log("initialize visualization");
 
   // Initialize variables
@@ -414,6 +415,7 @@ const initialize = (element, _data, _setMode, _setTooltip) => {
   data = _data;
   setTooltip = _setTooltip;
   setMode = _setMode;
+  setZoomState = _setZoomState;
   zoom = d3.zoom().on("zoom", zoomed);
   svg = d3.select(element).call(zoom);
   g = svg.append("g");

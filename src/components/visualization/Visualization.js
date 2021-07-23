@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import ClassNames from "classnames";
+import * as d3 from "d3";
 
 import * as styles from "../../styles/tool.module.scss";
 import data from "./data-primer.json";
@@ -11,36 +12,34 @@ import {
   destroy as destroyViz,
 } from "./visualization.render.js";
 import Tools from "./Tools";
+import MiniMap from "./MiniMap";
 import Collection from "./Collection";
 import Tooltip from "./Tooltip";
 
 const Visualization = () => {
   const svgEl = useRef();
   const [explorationMode, setExplorationMode] = useState("clusters");
+  const [zoom, setZoom] = useState(d3.zoomIdentity);
   const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
 
   useEffect(() => {
     destroyViz(svgEl.current);
-    initViz(
-      svgEl.current,
-      data,
-      setExplorationMode,
-      setTooltip
-    );
+    initViz(svgEl.current, data, setExplorationMode, setTooltip, setZoom);
   }, []);
 
   const changeVizMode = (mode) => {
-    setZoomViz({scale:zoomValuesViz[mode]});
+    setZoomViz({ scale: zoomValuesViz[mode] });
   };
 
   return (
     <>
       <svg
-        className={ClassNames(styles.visualizationSvg, styles[explorationMode])}
+        className={ClassNames("main-viz", styles.visualizationSvg, styles[explorationMode])}
         ref={svgEl}
         style={{ width: "100%", height: "calc(100vh - 56px)" }}
       ></svg>
+      <MiniMap zoom={zoom} />
       <Tools
         changeVizMode={changeVizMode}
         explorationMode={explorationMode}

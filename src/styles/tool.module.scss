@@ -195,3 +195,16 @@
     width: 100%;
   }
 }
+
+.miniMap {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border: 1px solid var(--cognac-primer);
+  background-color: var(--light-grey-primer);
+
+  rect {
+    fill: var(--white-primer);
+    stroke: var(--cognac-primer);
+  }
+}

@@ -333,7 +333,7 @@ const switchRender = (mode, setCoordinates) => {
 const setZoom = (options) => {
   let newZoom = d3.zoomIdentity;
   let oldZoom = d3.zoomTransform(g.node());
-  const { translation, scale } = options;
+  const { translation, scale, duration=7500 } = options;
   if (Array.isArray(translation)) {
     const [x, y] = translation;
     newZoom = newZoom.translate(x, y);
@@ -347,8 +347,7 @@ const setZoom = (options) => {
     const { k } = oldZoom;
     newZoom = newZoom.scale(k);
   }
-  // const [_x, _y] = [width / 2 / 1, height / 2 / 1];
-  svg.transition().duration(1000).call(zoom.transform, newZoom);
+  svg.transition().duration(duration).call(zoom.transform, newZoom);
 };
 const initialize = (element, _data, _setMode, _setTooltip) => {
   console.log("initialize visualization");
@@ -371,6 +370,7 @@ const initialize = (element, _data, _setMode, _setTooltip) => {
 
   svg.attr("viewbox", `0 0 ${width} ${height}`);
   switchRender("clusters");
+  setZoom({ translation: [width / 2, height / 2], scale: zoomValues.clusters, duration:0 });
 };
 const update = (nodes, links) => {
   // console.log("update");

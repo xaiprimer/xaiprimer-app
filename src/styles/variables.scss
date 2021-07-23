@@ -1,2 +1,16 @@
 $panels-width: max(100vw/4, 280px);
 $tooltips-width: 280px;
+$clusters-bg: #F8F6F2;
+$projects-bg: #FEF7EB;
+$networks-bg: #FFF4DE;
+
+html {
+    --stroke-width: 1;
+    --label-size: 10;
+    --dark-grey-primer: #777777;
+    --black-primer: black;
+    --grey-primer: #E5E5E5;
+    --white-primer: #FAFAFA;
+    --cognac-primer: #D35907;
+    --light-grey-primer: #F2F2F2;
+  }

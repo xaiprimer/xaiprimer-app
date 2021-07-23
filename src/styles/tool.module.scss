@@ -1,9 +1,8 @@
 @import "variables.scss";
 
 .viz {
-  background-color: #f9f9f9;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 56px);
   position: relative;
 
   display: grid;
@@ -16,6 +15,15 @@
     grid-column-end: -1;
     grid-row-start: 1;
     grid-row-end: -1;
+    &.clusters {
+      background-color: $clusters-bg;
+    }
+    &.projects {
+      background-color: $projects-bg;
+    }
+    &.networks {
+      background-color: $networks-bg;
+    }
   }
 
   .tools {
@@ -25,7 +33,9 @@
     grid-row-end: 3;
     overflow: hidden;
     display: flex;
+    pointer-events: none;
     .panel {
+      pointer-events: all;
       background-color: #ffffff;
       border: 1px solid black;
       overflow: hidden;
@@ -34,7 +44,7 @@
       width: 100%;
 
       &.open {
-        height: 100%;
+        height: fit-content;
       }
 
       .panelHeader {
@@ -181,7 +191,21 @@
     }
   }
 
-  .legendImg{
+  .legendImg {
     width: 100%;
+  }
+}
+
+.miniMap {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border: 1px solid var(--cognac-primer);
+  background-color: var(--light-grey-primer);
+
+  .viewBox {
+    fill: var(--white-primer);
+    stroke: var(--cognac-primer);
+    fill-opacity: 0.5;
   }
 }

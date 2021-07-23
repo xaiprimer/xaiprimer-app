@@ -7,7 +7,7 @@ import {
   BsFilm as VideoInterview,
   BsBoxArrowInUpRight as OutLink,
 } from "react-icons/bs";
-const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
+const Tooltip = ({ data, close, collection, updateCollection }) => {
   const { posX, posY } = data;
   // const [w, h] = viewport;
   const positioning = {
@@ -16,7 +16,7 @@ const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
   };
 
   const addToCollection = (data) => {
-    if (collection.indexOf(data) < 0) {
+    if (collection.map(d=>d.title).indexOf(data.title) < 0) {
       updateCollection(collection.concat(data));
     }
   };
@@ -80,7 +80,7 @@ const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
       )}
       {(updateCollection) && (
         <>
-          {collection.indexOf(data) < 0 && (
+          {collection.map(d=>d.title).indexOf(data.title) < 0 && (
             <div
               className={styles.addToCollection}
               onClick={() => addToCollection(data)}
@@ -88,7 +88,7 @@ const Tooltip = ({ data, close, collection, updateCollection, viewport }) => {
               Add to collection
             </div>
           )}
-          {collection.indexOf(data) !== -1 && (
+          {collection.map(d=>d.title).indexOf(data.title) !== -1 && (
             <div className={styles.addedToCollection}>Added to collection</div>
           )}
         </>

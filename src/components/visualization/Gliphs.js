@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 
+const showAnticollision = false;
+
 const exploration = d3
   .scaleOrdinal()
   .domain(["guided", "open ended", "mixed"])
@@ -12,12 +14,12 @@ const scenario = d3
   .unknown("#E5E5E5");
 
 const cluster = (parent, data) => {
-  const cluster = d3
+  const g_treemap = d3
     .select(parent)
-    .append("g")
-    .selectAll(".cluster")
+    // .append("g")
+    .selectAll(".g_treemap")
     .data(data)
-    .join((enter) => enter.append("g").classed("cluster", true))
+    .join((enter) => enter.append("g").classed("g_treemap", true))
     .attr(
       "transform",
       (d) => `translate(-${d.side / 2},-${d.side / 2 - (d.side * 1) / 5})`
@@ -38,13 +40,16 @@ const cluster = (parent, data) => {
   // console.log("cluster data", data);
 
   // anti collision circle
-  // d3.select(parent)
-  //   .selectAll("circle")
-  //   .data(data, (d) => d.id)
-  //   .join("circle")
-  //   .attr("r", (d) => d.r)
-  //   .attr("stroke", "grey")
-  //   .attr("fill", "none");
+  if (showAnticollision) {
+    d3.select(parent)
+      .selectAll("circle")
+      .data(data, (d) => d.id)
+      .join("circle")
+      .attr("r", (d) => d.r)
+      .attr("stroke", "grey")
+      .attr("stroke-width", "var(--stroke-width)")
+      .attr("fill", "none");
+  }
 
   d3.select(parent)
     .selectAll(".mostRecurrentExpl")
@@ -53,13 +58,14 @@ const cluster = (parent, data) => {
     .attr("fill", "none")
     .attr("stroke", (d) => exploration("guided"))
     .attr("stroke-width", 3)
+    .attr("stroke-width", "var(--stroke-width)")
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.side)
     .attr("x", (d) => -0.5 * d.side)
     .attr("y", (d) => -0.5 * d.side);
 
   // render treemap scenarios
-  const leaf = cluster
+  const leaf = g_treemap
     .selectAll("g")
     .data((d) => d.root.leaves())
     .join("g")
@@ -91,6 +97,7 @@ const cluster = (parent, data) => {
     .join((enter) => enter.append("rect").classed("exploration", true))
     .attr("fill", (d) => exploration(d.exploration))
     .attr("stroke", "#000")
+    .attr("stroke-width", "var(--stroke-width)")
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.side / 5)
     .attr("x", (d) => -0.5 * d.side)
@@ -118,15 +125,18 @@ const project = (parent, data, mediumSize) => {
     ];
     return { ...d, mediaHeight, borderHeight, userGroups, taskElements };
   });
-  // console.log(data, mediumSize);
-  // // anti collision circle
-  // d3.select(parent)
-  //   .selectAll("circle")
-  //   .data(data, (d) => d.id)
-  //   .join("circle")
-  //   .attr("r", (d) => d.r)
-  //   .attr("stroke", "grey")
-  //   .attr("fill", "none");
+
+  // anti collision circle
+  if (showAnticollision) {
+    d3.select(parent)
+      .selectAll("circle")
+      .data(data, (d) => d.id)
+      .join("circle")
+      .attr("r", (d) => d.r)
+      .attr("stroke", "grey")
+      .attr("stroke-width", "var(--stroke-width)")
+      .attr("fill", "none");
+  }
 
   const gliph = d3
     .select(parent)
@@ -148,7 +158,11 @@ const project = (parent, data, mediumSize) => {
     .join((enter) => enter.append("rect").classed("border", true))
     .attr("fill", "#FFFFFF")
     .attr("stroke", "#000000")
-    .attr("stroke-width", d=>d.path==="iterative"?4:1)
+    // .attr("stroke-width", d=>d.path==="iterative"?4:1)
+    .attr(
+      "stroke-width",
+      (d) => `calc(var(--stroke-width) * ${d.path === "iterative" ? 2 : 1})`
+    )
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.borderHeight);
 
@@ -158,6 +172,7 @@ const project = (parent, data, mediumSize) => {
     .join((enter) => enter.append("rect").classed("exploration", true))
     .attr("fill", (d) => exploration(d.exploration))
     .attr("stroke", "#000000")
+    .attr("stroke-width", "var(--stroke-width)")
     .attr("width", (d) => d.side)
     .attr("height", (d) => d.side * 0.07);
 
@@ -172,6 +187,7 @@ const project = (parent, data, mediumSize) => {
     .join((enter) => enter.append("rect").classed("nonSoCosaSono", true))
     .attr("fill", (d) => (d.value ? "#000" : "#fff"))
     .attr("stroke", "#000000")
+    .attr("stroke-width", "var(--stroke-width)")
     .attr("width", (d) => (d.side - d.side * 0.21) / 3)
     .attr("height", (d) => d.side * 0.07)
     .attr("y", (d) => d.side * 0.14)
@@ -201,15 +217,16 @@ const project = (parent, data, mediumSize) => {
     .attr("cy", (d) => d.borderHeight)
     .attr("cx", (d, i) => d.side * 0.175 + ((d.side - d.side * 0.35) / 3) * i)
     .attr("fill", (d) => (d.isPresent ? "#000" : "#fff"))
-    .attr("stroke", "#000");
+    .attr("stroke", "#000")
+    .attr("stroke-width", "var(--stroke-width)");
 
   d3.select(parent)
     .selectAll("text")
     .data(data, (d) => d.id)
     .join("text")
     .attr("fill", "black")
-    .attr("font-size", 30)
-    .attr("y", 10)
+    .attr("font-size", "var(--label-size)")
+    // .attr("y", 0)
     .attr("text-anchor", "middle")
     .text((d) => d.id.toUpperCase());
 };

@@ -16,7 +16,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
   };
 
   const addToCollection = (data) => {
-    if (collection.indexOf(data) < 0) {
+    if (collection.map(d=>d.title).indexOf(data.title) < 0) {
       updateCollection(collection.concat(data));
     }
   };
@@ -80,7 +80,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
       )}
       {(updateCollection) && (
         <>
-          {collection.indexOf(data) < 0 && (
+          {collection.map(d=>d.title).indexOf(data.title) < 0 && (
             <div
               className={styles.addToCollection}
               onClick={() => addToCollection(data)}
@@ -88,7 +88,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
               Add to collection
             </div>
           )}
-          {collection.indexOf(data) !== -1 && (
+          {collection.map(d=>d.title).indexOf(data.title) !== -1 && (
             <div className={styles.addedToCollection}>Added to collection</div>
           )}
         </>

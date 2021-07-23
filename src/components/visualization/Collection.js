@@ -92,7 +92,7 @@ const Collection = ({ collection, updateCollection }) => {
         >
           <div className={styles.header}>
             <h5 className={ClassNames("text-uppercase", styles.title)}>Explainable AI tactics</h5>
-            <div className={styles.elementsCounter}><p>{collection.filter((d) => d.category === "tactic").length}</p></div>
+            <div className={styles.elementsCounter}><p>{collection.filter((d) => d.category === "tactic" || d.category === "medium").length}</p></div>
             {tacticsPanel && (
               <CloseIcon
                 className={styles.closeBtn}
@@ -106,14 +106,14 @@ const Collection = ({ collection, updateCollection }) => {
               />
             )}
           </div>
-          {collection.filter((d) => d.category === "tactic").length === 0 && (
+          {collection.filter((d) => d.category === "tactic" || d.category === "medium").length === 0 && (
             <p>
               Use the tooltip to add an a tactic to this collection and download
               your record.
             </p>
           )}
           {collection
-            .filter((d) => d.category === "tactic")
+            .filter((d) => d.category === "tactic" || d.category === "medium")
             .map((d, i) => (
               <Tooltip key={"coll" + i} data={d} close={() => removeItem(d)} />
             ))}

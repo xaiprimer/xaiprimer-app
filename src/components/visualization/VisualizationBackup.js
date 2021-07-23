@@ -16,7 +16,7 @@ const Visualization = () => {
   const [explorationMode, setExplorationMode] = useState("clusters");
   const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
-  // # const [vizViewport, setVizViewport] = useState([0, 0]);
+  const [vizViewport, setVizViewport] = useState([0, 0]);
 
   useEffect(() => {
     let zoomLevel = 0, initialScale = 1, initialTranslation = [0,0];

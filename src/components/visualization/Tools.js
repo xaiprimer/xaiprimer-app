@@ -14,7 +14,7 @@ import Clusters from "../../images/clusters.png";
 import Projects from "../../images/projects.png";
 import Tactics from "../../images/tact.png";
 
-const Tools = ({ explorationMode, setExplorationMode }) => {
+const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
   const [panel, openPanel] = useState(true);
   const togglePanel = () => {
     openPanel(!panel);
@@ -43,17 +43,32 @@ const Tools = ({ explorationMode, setExplorationMode }) => {
         <div>
           <Tabs
             activeKey={explorationMode}
-            onSelect={(k) => setExplorationMode(k)}
+            onSelect={(k) => {
+              setExplorationMode(k);
+              changeVizMode(k);
+            }}
             id="explorationMode"
           >
             <Tab eventKey="clusters" title="Clusters">
-              <img src={Clusters} className={styles.legendImg} alt="legend"></img>
+              <img
+                src={Clusters}
+                className={styles.legendImg}
+                alt="legend"
+              ></img>
             </Tab>
             <Tab eventKey="projects" title="Projects">
-              <img src={Projects} className={styles.legendImg} alt="legend"></img>
+              <img
+                src={Projects}
+                className={styles.legendImg}
+                alt="legend"
+              ></img>
             </Tab>
             <Tab eventKey="networks" title="Networks">
-              <img src={Tactics} className={styles.legendImg} alt="legend"></img>
+              <img
+                src={Tactics}
+                className={styles.legendImg}
+                alt="legend"
+              ></img>
             </Tab>
           </Tabs>
         </div>

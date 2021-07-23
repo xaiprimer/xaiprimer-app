@@ -5,9 +5,14 @@ let data,
   bbox,
   width,
   height,
-  zoomLevel = 0;
+  zoomMode = "clusters", // modes can be 3: "clusters", "projects" and "networks"
+  zoomValues = {
+    clusters: 1,
+    projects: 2,
+    networks: 3,
+  };
 // d3 selections
-let svg, g0, g, cluster, item, tactic, link;
+let svg, g, cluster, item, tactic, link;
 // scales
 // # const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
 const radius = d3.scaleSqrt().domain([0, 1]).range([0, 1]);
@@ -15,40 +20,36 @@ const side = d3.scaleSqrt().domain([0, 1]).range([0, 5]);
 const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elements within the project gliph, size is in percentage. By default is set as if there is a single medium in every gliph
 const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 1]);
 // functions
-let setMode, setPrevMode, setTooltip, zoom;
+let setMode, setTooltip, zoom;
 const zoomed = (e) => {
   setTooltip(null);
   const { x, y, k } = e.transform;
   g.attr("transform", `translate(${x},${y}) scale(${k})`);
-  // console.log(x, y, k);
-
-  const previousZoom = zoomLevel;
-
-  if (previousZoom !== zoomLevel) {
-    switch (previousZoom) {
-      case 0:
-        // setPrevMode("clusters")
+  const previousMode = zoomMode;
+  if (k <= zoomValues.clusters) {
+    zoomMode = "clusters";
+  } else if (k <= zoomValues.projects) {
+    zoomMode = "projects";
+  } else {
+    zoomMode = "networks";
+  }
+  if (previousMode !== zoomMode) {
+    switch (zoomMode) {
+      case "clusters":
+        switchRender("clusters");
+        setMode("clusters");
         break;
-      case 1:
-        // setPrevMode("projects")
+      case "projects":
+        switchRender("projects", previousMode === "clusters");
+        setMode("projects");
         break;
-      case 2:
-        // setPrevMode("networks")
+      case "networks":
+        switchRender("networks");
+        setMode("networks");
         break;
       default:
         console.log("😱 no case matched. Don't update visualization.");
     }
-  }
-
-  if (k <= 1) {
-    zoomLevel = 0;
-    setMode("clusters");
-  } else if (k <= 2) {
-    zoomLevel = 1;
-    setMode("projects");
-  } else {
-    zoomLevel = 2;
-    setMode("networks");
   }
 };
 const linkArc = (d) => {
@@ -309,8 +310,7 @@ const simulation = d3
   .velocityDecay(0.65)
   .alphaDecay(0.01)
   .stop();
-
-const switchRender = (mode, previousZoom) => {
+const switchRender = (mode, setCoordinates) => {
   switch (mode) {
     case "clusters":
       // console.log("update, clusters");
@@ -318,7 +318,7 @@ const switchRender = (mode, previousZoom) => {
       break;
     case "projects":
       // console.log("update, projects");
-      const projects = makeItems(data, previousZoom === 0);
+      const projects = makeItems(data, setCoordinates);
       update(projects, []);
       break;
     case "networks":
@@ -330,19 +330,35 @@ const switchRender = (mode, previousZoom) => {
       console.log("😱 no case matched. Don't update visualization.");
   }
 };
-const initialize = (element, _data, _mode, _setMode, _setPrevMode, _setTooltip) => {
-  console.log("initialize visualization", _mode);
-  // console.log(element, _data, mode);
+const setZoom = (options) => {
+  const _zoom = d3.zoomTransform(g.node());
+  const { translation, scale } = options;
+  if (Array.isArray(translation)) {
+    const [x, y] = translation;
+    _zoom.translate(x, y);
+  }
+  if (!isNaN(scale)) {
+    _zoom.scale(scale);
+  }
+  console.log("id",d3.zoomIdentity);
+  console.log("g",d3.zoomTransform(g.node()))
+  console.log(_zoom)
+  // const [_x, _y] = [(width / 2) / 1, (height / 2) / 1];
+  svg
+    .transition()
+    .duration(1000)
+    .call(zoom.transform, _zoom);
+};
+const initialize = (element, _data, _setMode, _setTooltip) => {
+  console.log("initialize visualization");
 
   // Initialize variables
   data = _data;
-  setMode = _setMode;
   setTooltip = _setTooltip;
-  setPrevMode = _setPrevMode;
+  setMode = _setMode;
   zoom = d3.zoom().on("zoom", zoomed);
   svg = d3.select(element).call(zoom);
-  g0 = svg.append("g");
-  g = g0.append("g");
+  g = svg.append("g");
   link = g.append("g").classed("g-links", true).selectAll(".link");
   cluster = g.append("g").classed("g-clusters", true).selectAll(".cluster");
   item = g.append("g").classed("g-items", true).selectAll(".item");
@@ -351,9 +367,9 @@ const initialize = (element, _data, _mode, _setMode, _setPrevMode, _setTooltip) 
   bbox = svg.node().getBoundingClientRect();
   width = bbox.width;
   height = bbox.height;
-  g0.attr("transform", `translate(${width/2}, ${height/2})`);
 
-  switchRender(_mode)
+  svg.attr("viewbox", `0 0 ${width} ${height}`);
+  switchRender("clusters");
 };
 const update = (nodes, links) => {
   console.log("update");
@@ -507,4 +523,4 @@ const destroy = (element) => {
   d3.select(element).selectAll("*").remove();
 };
 
-export { initialize, update, switchRender, destroy };
+export { initialize, update, switchRender, setZoom, zoomValues, destroy };

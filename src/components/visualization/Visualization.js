@@ -6,7 +6,8 @@ import * as styles from "../../styles/tool.module.scss";
 import data from "./data-primer.json";
 import {
   initialize as initViz,
-  switchRender as switchRenderViz,
+  setZoom as setZoomViz,
+  zoomValues as zoomValuesViz,
   destroy as destroyViz,
 } from "./visualization.render.js";
 import Tools from "./Tools";
@@ -15,19 +16,23 @@ import Tooltip from "./Tooltip";
 
 const Visualization = () => {
   const svgEl = useRef();
-  const [prevMode, setPrevMode] = useState(null);
   const [explorationMode, setExplorationMode] = useState("clusters");
   const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
 
   useEffect(() => {
     destroyViz(svgEl.current);
-    initViz(svgEl.current, data, explorationMode, setExplorationMode, setPrevMode, setTooltip);
-  },[]);
+    initViz(
+      svgEl.current,
+      data,
+      setExplorationMode,
+      setTooltip
+    );
+  }, []);
 
-  useEffect(() => {
-    switchRenderViz(explorationMode);
-  }, [explorationMode]);
+  const changeVizMode = (mode) => {
+    setZoomViz({scale:zoomValuesViz[mode]});
+  };
 
   return (
     <>
@@ -37,6 +42,7 @@ const Visualization = () => {
         style={{ width: "100%", height: "100%" }}
       ></svg>
       <Tools
+        changeVizMode={changeVizMode}
         explorationMode={explorationMode}
         setExplorationMode={setExplorationMode}
       />

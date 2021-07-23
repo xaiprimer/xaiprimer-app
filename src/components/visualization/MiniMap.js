@@ -15,7 +15,7 @@ const MiniMap = ({ zoom }) => {
         height={miniMapStyle.height / zoom.k}
         x={zoom.x * j}
         y={zoom.y * j}
-        transform={`translate(${-miniMapStyle.width/2},${-miniMapStyle.height/2})`}
+        // transform={`translate(${-miniMapStyle.width/2},${-miniMapStyle.height/2})`}
       ></rect>
     </svg>
   );

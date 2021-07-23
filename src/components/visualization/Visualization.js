@@ -39,7 +39,7 @@ const Visualization = () => {
       <svg
         className={ClassNames(styles.visualizationSvg, styles[explorationMode])}
         ref={svgEl}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "calc(100vh - 56px)" }}
       ></svg>
       <Tools
         changeVizMode={changeVizMode}

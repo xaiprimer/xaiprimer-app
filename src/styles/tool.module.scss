@@ -2,7 +2,7 @@
 
 .viz {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 56px);
   position: relative;
 
   display: grid;
@@ -33,7 +33,9 @@
     grid-row-end: 3;
     overflow: hidden;
     display: flex;
+    pointer-events: none;
     .panel {
+      pointer-events: all;
       background-color: #ffffff;
       border: 1px solid black;
       overflow: hidden;

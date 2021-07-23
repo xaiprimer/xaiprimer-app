@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import { cluster as renderCluster, project as renderProject } from "./Gliphs";
 // values
 let data,
+  originalData,
   bbox,
   width,
   height,
@@ -12,19 +13,20 @@ let data,
     networks: 3,
   };
 // d3 selections
-let svg, g, cluster, item, tactic, link;
+let svg, g, contour, cluster, item, tactic, link;
 // scales
-// # const xy = d3.scaleLinear().domain([0, 1]).range([0, 100]);
-const radius = d3.scaleSqrt().domain([0, 1]).range([0, 1]);
-const side = d3.scaleSqrt().domain([0, 1]).range([0, 5]);
+const _k = 4
+const radius = d3.scaleSqrt().domain([0, 1]).range([0, 1*_k]);
+const side = d3.scaleSqrt().domain([0, 1]).range([0, 5*_k]);
 const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elements within the project gliph, size is in percentage. By default is set as if there is a single medium in every gliph
-const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 1]);
+const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 1*_k]);
 // functions
 let setMode, setTooltip, zoom;
 const zoomed = (e) => {
   setTooltip(null);
   const { x, y, k } = e.transform;
   g.attr("transform", `translate(${x},${y}) scale(${k})`);
+  document.documentElement.style.setProperty('--stroke-width', 1/k);
   const previousMode = zoomMode;
   if (k <= zoomValues.clusters) {
     zoomMode = "clusters";
@@ -58,6 +60,57 @@ const linkArc = (d) => {
     M${d.source.x},${d.source.y}
     A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
   `;
+};
+const rescalePositions = (data, _width = width, _height = height) => {
+  const value = _width > _height ? _height / 2 : _width / 2;
+  const scale = d3
+    .scaleLinear()
+    .domain(d3.extent(data, (d) => Number(_width > _height ? d._y : d._x)))
+    .range([-value * 0.8, value * 0.8]);
+  return data.map((d) => ({ ...d, _x: scale(d._x), _y: scale(d._y) }));
+};
+const makeContours = (data) => {
+  const extent_x = d3.extent(data, (d) => Number(d._x));
+  const extent_y = d3.extent(data, (d) => Number(d._y));
+
+  const cont_x = d3
+    .scaleLinear()
+    .domain(extent_x)
+    .range([0, extent_x[1] - extent_x[0]]);
+  const cont_y = d3
+    .scaleLinear()
+    .domain(extent_y)
+    .range([0, extent_y[1] - extent_y[0]]);
+
+  let dataContour = data.map((d) => [
+    cont_x(Number(d._x)),
+    cont_y(Number(d._y)),
+  ]);
+
+  const maxX = d3.max(dataContour, (d) => d[0]);
+  const maxY = d3.max(dataContour, (d) => d[1]);
+
+  // contours react to screen size
+  const bandwidthScale = d3.scaleLinear().domain([720,2160]).range([15, 35])
+  const thresholdsScale = d3.scaleLinear().domain([720,2160]).range([6, 10])
+
+  const contours = d3
+    .contourDensity()
+    .size([maxX, maxY])
+    .bandwidth(bandwidthScale(d3.min([width, height])))
+    .thresholds(thresholdsScale(d3.min([width, height])))
+    (dataContour);
+
+  contour
+    .data(contours)
+    .join("path")
+    .attr("transform", `translate(${extent_x[0]}, ${extent_y[0]})`)
+    .attr("stroke", "#ccc")
+    .attr("stroke-width","var(--stroke-width)")
+    .attr("stroke-linejoin", "round")
+    .attr("fill", "#fff")
+    .attr("fill-opacity", 0.35)
+    .attr("d", d3.geoPath());
 };
 function makeClusters(data) {
   const data_expl = data
@@ -298,14 +351,14 @@ const simulation = d3
       .id((d) => d.id)
       .distance((d) => linkDistance(d.target.size))
   )
-  .force("charge", d3.forceManyBody().strength(-200))
-  .force(
-    "collide",
-    d3
-      .forceCollide()
-      .radius((d) => (!d.category ? side(d.size || 1) : radius(d.size)))
-      .iterations(1)
-  )
+  // .force("charge", d3.forceManyBody().strength(-200))
+  // .force(
+  //   "collide",
+  //   d3
+  //     .forceCollide()
+  //     .radius((d) => (!d.category ? side(d.size || 1) : radius(d.size)))
+  //     .iterations(1)
+  // )
   .on("tick", ticked)
   .velocityDecay(0.65)
   .alphaDecay(0.01)
@@ -333,7 +386,7 @@ const switchRender = (mode, setCoordinates) => {
 const setZoom = (options) => {
   let newZoom = d3.zoomIdentity;
   let oldZoom = d3.zoomTransform(g.node());
-  const { translation, scale, duration=7500 } = options;
+  const { translation, scale, duration = 1000 } = options;
   if (Array.isArray(translation)) {
     const [x, y] = translation;
     newZoom = newZoom.translate(x, y);
@@ -353,12 +406,14 @@ const initialize = (element, _data, _setMode, _setTooltip) => {
   console.log("initialize visualization");
 
   // Initialize variables
+  originalData = JSON.parse(JSON.stringify(_data));
   data = _data;
   setTooltip = _setTooltip;
   setMode = _setMode;
   zoom = d3.zoom().on("zoom", zoomed);
   svg = d3.select(element).call(zoom);
   g = svg.append("g");
+  contour = g.append("g").classed("contours", true).style("transform-origin", "0 0").selectAll("path");
   link = g.append("g").classed("g-links", true).selectAll(".link");
   cluster = g.append("g").classed("g-clusters", true).selectAll(".cluster");
   item = g.append("g").classed("g-items", true).selectAll(".item");
@@ -369,8 +424,14 @@ const initialize = (element, _data, _setMode, _setTooltip) => {
   height = bbox.height;
 
   svg.attr("viewbox", `0 0 ${width} ${height}`);
+  data = rescalePositions(data);
+  makeContours(data); // need to pass original data
   switchRender("clusters");
-  setZoom({ translation: [width / 2, height / 2], scale: zoomValues.clusters, duration:0 });
+  setZoom({
+    translation: [width / 2, height / 2],
+    scale: zoomValues.clusters,
+    duration: 0,
+  });
 };
 const update = (nodes, links) => {
   // console.log("update");

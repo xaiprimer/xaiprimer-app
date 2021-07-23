@@ -16,10 +16,10 @@ let data,
 let svg, g, contour, cluster, item, tactic, link;
 // scales
 const _k = 4
-const radius = d3.scaleSqrt().domain([0, 1]).range([0, 1*_k]);
+const radius = d3.scaleSqrt().domain([0, 1]).range([0, 0.8*_k]);
 const side = d3.scaleSqrt().domain([0, 1]).range([0, 5*_k]);
 const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elements within the project gliph, size is in percentage. By default is set as if there is a single medium in every gliph
-const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 1*_k]);
+const linkDistance = d3.scaleSqrt().domain([0, 1]).range([0, 4*_k]);
 // functions
 let setMode, setTooltip, zoom;
 const zoomed = (e) => {
@@ -27,6 +27,7 @@ const zoomed = (e) => {
   const { x, y, k } = e.transform;
   g.attr("transform", `translate(${x},${y}) scale(${k})`);
   document.documentElement.style.setProperty('--stroke-width', 1/k);
+  document.documentElement.style.setProperty('--label-size', 10/k);
   const previousMode = zoomMode;
   if (k <= zoomValues.clusters) {
     zoomMode = "clusters";
@@ -351,14 +352,17 @@ const simulation = d3
       .id((d) => d.id)
       .distance((d) => linkDistance(d.target.size))
   )
-  // .force("charge", d3.forceManyBody().strength(-200))
-  // .force(
-  //   "collide",
-  //   d3
-  //     .forceCollide()
-  //     .radius((d) => (!d.category ? side(d.size || 1) : radius(d.size)))
-  //     .iterations(1)
-  // )
+  .force("charge", d3.forceManyBody().strength(-5))
+  .force(
+    "collide",
+    d3
+      .forceCollide()
+      .radius((d) => {
+        const _radius = !d.category ? Math.sqrt(2 * Math.pow(side(d.size || 1), 2)) / 2 : radius(d.size)*0.85
+        return _radius
+      })
+      .iterations(1)
+  )
   .on("tick", ticked)
   .velocityDecay(0.65)
   .alphaDecay(0.01)
@@ -443,7 +447,8 @@ const update = (nodes, links) => {
     .enter()
     .append("path")
     .classed("link", true)
-    .attr("stroke", "#FF451D")
+    .attr("stroke", "var(--dark-grey-primer)")
+    .attr("stroke-width","var(--stroke-width)")
     .attr("fill", "none")
     .style("opacity", "0")
     .merge(link);
@@ -539,6 +544,7 @@ const update = (nodes, links) => {
     .enter()
     .append("g")
     .classed("tactic", true)
+    .attr("stroke-width","var(--stroke-width)")
     .style("opacity", "0")
     .on("click", (e, d) => {
       const data = {
@@ -560,8 +566,8 @@ const update = (nodes, links) => {
     )
     .join("circle")
     .attr("r", (d) => radius(d.size))
-    .attr("fill", (d) => (d.category === "medium" ? "#FFFFFF" : "#E5E5E5"))
-    .attr("stroke", "#FF451D");
+    .attr("fill", (d) => (d.category === "medium" ? "var(--white-primer)" : "var(--grey-primer)"))
+    .attr("stroke", "var(--black-primer)");
 
   tactic
     .selectAll("text")
@@ -571,8 +577,7 @@ const update = (nodes, links) => {
     )
     .join("text")
     .attr("fill", "black")
-    .attr("font-size", 10)
-    .attr("y", 4)
+    .attr("font-size", "var(--label-size)")
     .attr("text-anchor", "middle")
     .text((d) => d.title.toUpperCase());
 

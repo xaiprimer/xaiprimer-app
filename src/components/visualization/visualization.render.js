@@ -463,7 +463,7 @@ const initialize = (
   width = bbox.width;
   height = bbox.height;
 
-  zoom = d3.zoom().translateExtent([[0, 0],[width, height]]).on("zoom", zoomed);
+  zoom = d3.zoom().scaleExtent([1,10]).translateExtent([[0, 0],[width, height]]).on("zoom", zoomed);
 
   svg.attr("viewbox", `0 0 ${width} ${height}`).call(zoom);
   g.attr("transform", `translate(${width / 2}, ${height / 2})`);

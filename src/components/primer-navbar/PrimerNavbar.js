@@ -13,7 +13,7 @@ const PrimerNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="w-100 justify-content-end">
-            <Link bsStyle="nav-link" className={styles.customNavbarLinks} to="/">Home</Link>
+            <Link className={styles.customNavbarLinks} to="/">Home</Link>
             <Link className={styles.customNavbarLinks} to="/tool">Tool</Link>
             <Link className={styles.customNavbarLinks} to="/toolBackup">Tool Old</Link>
             <Link className={styles.customNavbarLinks} to="/submit">submit</Link>

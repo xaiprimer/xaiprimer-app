@@ -35,7 +35,7 @@ const linkDistance = d3
   .domain([0, 1])
   .range([0, 4 * _k]);
 // functions
-let setMode, setTooltip, setZoomState, setTacticHighlighted, zoom;
+let setMode, setTooltip, setZoomState, zoom;
 const zoomed = (e) => {
   setTooltip(null);
   setZoomState(e.transform);
@@ -435,8 +435,7 @@ const initialize = (
   _data,
   _setMode,
   _setTooltip,
-  _setZoomState,
-  _setTacticHighlighted
+  _setZoomState
 ) => {
   console.log("initialize visualization");
 
@@ -446,9 +445,8 @@ const initialize = (
   setTooltip = _setTooltip;
   setMode = _setMode;
   setZoomState = _setZoomState;
-  setTacticHighlighted = _setTacticHighlighted;
-  zoom = d3.zoom().on("zoom", zoomed);
-  svg = d3.select(element).call(zoom);
+  
+  svg = d3.select(element);
   g0 = svg.append("g");
   g = g0.append("g");
   contour = g
@@ -465,7 +463,9 @@ const initialize = (
   width = bbox.width;
   height = bbox.height;
 
-  svg.attr("viewbox", `0 0 ${width} ${height}`);
+  zoom = d3.zoom().translateExtent([[0, 0],[width, height]]).on("zoom", zoomed);
+
+  svg.attr("viewbox", `0 0 ${width} ${height}`).call(zoom);
   g.attr("transform", `translate(${width / 2}, ${height / 2})`);
   data = rescalePositions(data);
   makeContours(data); // need to pass original data
@@ -515,8 +515,8 @@ const initialize = (
     .data(data)
     .join("circle")
     .attr("r", 1)
-    .attr("cx", (d) => d._x*factor + mm_w/2)
-    .attr("cy", (d) => d._y*factor + mm_h/2);
+    .attr("cx", (d) => d._x * factor + mm_w / 2)
+    .attr("cy", (d) => d._y * factor + mm_h / 2);
 };
 const update = (nodes, links) => {
   // console.log("update");
@@ -633,7 +633,15 @@ const update = (nodes, links) => {
         posX: e.pageX,
         posY: e.pageY,
       };
-      setTacticHighlighted(d.title);
+      minimap
+        .selectAll("circle")
+        .attr("fill", "black")
+        .attr("r", 1)
+        .filter(
+          (dd) => dd.tactics.includes(d.title) || dd.media.includes(d.title)
+        )
+        .attr("fill", "#D35907")
+        .attr("r", 1.5);
       return setTooltip(data);
     })
     .merge(tactic);

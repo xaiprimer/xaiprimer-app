@@ -1,6 +1,6 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "@fontsource/inter/index.css";
-@import "@fontsource/crimson-text/index.css";
+@import "@fontsource/spectral/index.css";
 @import "variables.scss";
 
 html {
@@ -22,19 +22,19 @@ h1 {
 }
 
 h2 {
-  font-family: crimson text, sans-serif;
+  font-family: spectral, sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 1.125rem;
-  line-height: 2rem;
+  font-size: 1.175rem;
+  line-height: 1.5rem;
   margin: 0;
 }
 
 h3 {
-  font-family: inter, sans-serif;
-  font-style: medium;
-  font-weight: 600;
-  font-size: 1.125rem;
+  font-family: spectral, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.312rem;
   line-height: 1.3625rem;
   margin: 0;
 }
@@ -49,11 +49,11 @@ h4 {
 }
 
 h5 {
-  font-family: crimson text, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.212rem;
+  font-family: spectral, serif;
+  font-weight: 800;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  line-height: 1rem;
   margin: 0;
 }
 
@@ -65,3 +65,12 @@ p {
   line-height: 1rem;
   margin: 0;
 }
+
+a{
+  color:var(--cognac-primer);
+
+:hover{
+  color:var(--yellow-primer);
+}
+
+  }

@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 
 import * as styles from "../styles/tool.module.scss";
+
 import Visualization from "../components/visualization/Visualization";
 
 import PrimerNavbar from "../components/primer-navbar/PrimerNavbar";

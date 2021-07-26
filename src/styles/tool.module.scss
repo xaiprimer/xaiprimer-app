@@ -36,7 +36,7 @@
     pointer-events: none;
     .panel {
       pointer-events: all;
-      background-color: #ffffff;
+      background-color: var(--white-primer);;
       border: 1px solid black;
       overflow: hidden;
       transition: height 0.15s ease;
@@ -47,6 +47,7 @@
         height: fit-content;
       }
 
+
       .panelHeader {
         height: 38px;
         width: 100%;
@@ -55,6 +56,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 10px;
+
 
         .closeBtn {
           font-size: 2rem;
@@ -66,7 +68,6 @@
           }
         }
       }
-    }
 
     .buttonsTest {
       grid-column-start: 2;
@@ -75,6 +76,23 @@
       grid-row-end: 3;
       background-color: #ffffff;
       border: 1px solid black;
+    }
+
+    }
+
+    .clusters {
+      background-color: $clusters-bg;
+    }
+    .projects {
+      background-color: $projects-bg;
+    }
+    .networks {
+      background-color: $networks-bg;
+    }
+
+    .legend{
+      width:100%;
+      padding-left:3px;
     }
   }
 
@@ -189,10 +207,6 @@
       text-align: center;
       cursor: not-allowed;
     }
-  }
-
-  .legendImg {
-    width: 100%;
   }
 }
 

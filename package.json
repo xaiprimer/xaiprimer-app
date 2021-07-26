@@ -19,6 +19,7 @@
   "dependencies": {
     "@fontsource/crimson-text": "^4.5.0",
     "@fontsource/inter": "^4.5.0",
+    "@fontsource/spectral": "^4.5.0",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@popperjs/core": "^2.9.2",

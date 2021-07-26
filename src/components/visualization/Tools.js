@@ -8,11 +8,11 @@ import {
   BsArrowBarDown as OpenPanelIcon,
 } from "react-icons/bs";
 import { Tabs, Tab } from "react-bootstrap";
-import classNames from "classnames";
+import classNames from "classnames"
 
-import Clusters from "../../images/clusters.png";
-import Projects from "../../images/projects.png";
-import Tactics from "../../images/tact.png";
+import Clusters from "../../images/clusters.svg";
+import Projects from "../../images/projects.svg";
+import Tactics from "../../images/tact.svg";
 
 const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
   const [panel, openPanel] = useState(true);
@@ -49,24 +49,24 @@ const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
             }}
             id="explorationMode"
           >
-            <Tab eventKey="clusters" title="Clusters">
+            <Tab eventKey="clusters" title="Clusters" className={ClassNames(styles.clusters)}>
               <img
                 src={Clusters}
-                className={styles.legendImg}
+                className={ClassNames(styles.legend)}
                 alt="legend"
               ></img>
             </Tab>
-            <Tab eventKey="projects" title="Projects">
+            <Tab eventKey="projects" title="Projects" className={ClassNames(styles.projects)}>
               <img
                 src={Projects}
-                className={styles.legendImg}
+                className={ClassNames(styles.legend)}
                 alt="legend"
               ></img>
             </Tab>
-            <Tab eventKey="networks" title="Networks">
+            <Tab eventKey="networks" title="Networks" className={ClassNames(styles.networks)}>
               <img
                 src={Tactics}
-                className={styles.legendImg}
+                className={ClassNames(styles.legend)}
                 alt="legend"
               ></img>
             </Tab>

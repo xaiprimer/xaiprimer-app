@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ClassNames from "classnames";
 import * as d3 from "d3";
 
@@ -13,7 +13,6 @@ import {
   rescalePositions as rescalePositionsViz,
 } from "./visualization.render.js";
 import Tools from "./Tools";
-import MiniMap from "./MiniMap";
 import Collection from "./Collection";
 import Tooltip from "./Tooltip";
 
@@ -24,10 +23,18 @@ const Visualization = () => {
   const [tacticHighlighted, setTacticHighlighted] = useState(null);
   const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
+  const [viewBoxArr, setViewBoxArr] = useState([]);
 
   useEffect(() => {
     destroyViz(svgEl.current);
-    initViz(svgEl.current, data, setExplorationMode, setTooltip, setZoom, setTacticHighlighted);
+    initViz(
+      svgEl.current,
+      data,
+      setExplorationMode,
+      setTooltip,
+      setZoom,
+      setTacticHighlighted
+    );
   }, []);
 
   const changeVizMode = (mode) => {
@@ -43,15 +50,7 @@ const Visualization = () => {
           styles[explorationMode]
         )}
         ref={svgEl}
-        style={{ width: "100%", height: "calc(100vh - 56px)" }}
       ></svg>
-      <MiniMap
-        zoom={zoom}
-        data={data}
-        mainMap = {svgEl.current}
-        rescalePositionsViz={rescalePositionsViz}
-        tacticHighlighted={tacticHighlighted}
-      />
       <Tools
         changeVizMode={changeVizMode}
         explorationMode={explorationMode}
@@ -61,7 +60,10 @@ const Visualization = () => {
       {tooltip && (
         <Tooltip
           data={tooltip}
-          close={() => {setTooltip(null); setTacticHighlighted(null)}}
+          close={() => {
+            setTooltip(null);
+            setTacticHighlighted(null);
+          }}
           collection={collection}
           updateCollection={updateCollection}
         />

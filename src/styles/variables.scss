@@ -1,10 +1,11 @@
-$panels-width: max(100vw/4, 280px);
+// $panels-width: max(100vw/4, 280px);
 $tooltips-width: 280px;
 $clusters-bg: #F8F6F2;
 $projects-bg: #FEF7EB;
 $networks-bg: #FFF2D9;
 
 html {
+    --panels-width: max(25vw, 280px);
     --stroke-width: 1;
     --label-size: 10;
     --dark-grey-primer: #777777;

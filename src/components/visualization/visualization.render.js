@@ -11,9 +11,14 @@ let data,
     clusters: 1,
     projects: 2,
     networks: 3,
-  };
+  },
+  mm_w = d3.max([width / 4, 280]),
+  mm_h,
+  mm_x,
+  mm_y,
+  factor;
 // d3 selections
-let svg, g, contour, cluster, item, tactic, link;
+let svg, g0, g, contour, cluster, item, tactic, link, minimap;
 // scales
 const _k = 4;
 const radius = d3
@@ -30,12 +35,20 @@ const linkDistance = d3
   .domain([0, 1])
   .range([0, 4 * _k]);
 // functions
-let setMode, setTooltip, setZoomState, setTacticHighlighted, zoom;
+let setMode, setTooltip, setZoomState, zoom;
 const zoomed = (e) => {
   setTooltip(null);
   setZoomState(e.transform);
   const { x, y, k } = e.transform;
-  g.attr("transform", `translate(${x},${y}) scale(${k})`);
+  g0.attr("transform", `translate(${x},${y}) scale(${k})`);
+
+  minimap
+    .select(".mm-view")
+    .attr("width", (width * factor) / k)
+    .attr("height", (height * factor) / k)
+    .attr("x", -((x * factor) / k))
+    .attr("y", -((y * factor) / k));
+
   document.documentElement.style.setProperty("--stroke-width", 1 / k);
   document.documentElement.style.setProperty("--label-size", 10 / k);
   const previousMode = zoomMode;
@@ -422,8 +435,7 @@ const initialize = (
   _data,
   _setMode,
   _setTooltip,
-  _setZoomState,
-  _setTacticHighlighted
+  _setZoomState
 ) => {
   console.log("initialize visualization");
 
@@ -433,10 +445,10 @@ const initialize = (
   setTooltip = _setTooltip;
   setMode = _setMode;
   setZoomState = _setZoomState;
-  setTacticHighlighted = _setTacticHighlighted;
-  zoom = d3.zoom().on("zoom", zoomed);
-  svg = d3.select(element).call(zoom);
-  g = svg.append("g");
+  
+  svg = d3.select(element);
+  g0 = svg.append("g");
+  g = g0.append("g");
   contour = g
     .append("g")
     .classed("contours", true)
@@ -451,15 +463,60 @@ const initialize = (
   width = bbox.width;
   height = bbox.height;
 
-  svg.attr("viewbox", `0 0 ${width} ${height}`);
+  zoom = d3.zoom().translateExtent([[0, 0],[width, height]]).on("zoom", zoomed);
+
+  svg.attr("viewbox", `0 0 ${width} ${height}`).call(zoom);
+  g.attr("transform", `translate(${width / 2}, ${height / 2})`);
   data = rescalePositions(data);
   makeContours(data); // need to pass original data
   switchRender("clusters");
-  setZoom({
-    translation: [width / 2, height / 2],
-    scale: zoomValues.clusters,
-    duration: 0,
-  });
+  // setZoom({
+  //   translation: [width / 2, height / 2],
+  //   scale: zoomValues.clusters,
+  //   duration: 0,
+  // });
+
+  // g.append("rect").attr("width", width).attr("height", height)
+
+  factor = mm_w / width;
+  mm_h = height * factor;
+
+  mm_x = width - mm_w - 20;
+  mm_y = height - mm_h - 20;
+
+  svg
+    .append("clipPath")
+    .attr("id", "minimap-clipPath")
+    .append("rect")
+    .attr("width", mm_w)
+    .attr("height", mm_h)
+    .attr("x", mm_x)
+    .attr("y", mm_y);
+
+  minimap = svg.append("g").attr("transform", `translate(${mm_x}, ${mm_y})`);
+  minimap
+    .append("rect")
+    .attr("width", mm_w)
+    .attr("height", mm_h)
+    .attr("fill", "white");
+
+  minimap
+    .append("rect")
+    .classed("mm-view", true)
+    // .attr("clip-path", "url(#minimap-clipPath)")
+    .attr("width", mm_w)
+    .attr("height", mm_h)
+    .attr("fill", "white")
+    .attr("stroke", "#D35907")
+    .attr("fill-opacity", 0.5);
+
+  minimap
+    .selectAll("circle")
+    .data(data)
+    .join("circle")
+    .attr("r", 1)
+    .attr("cx", (d) => d._x * factor + mm_w / 2)
+    .attr("cy", (d) => d._y * factor + mm_h / 2);
 };
 const update = (nodes, links) => {
   // console.log("update");
@@ -576,7 +633,15 @@ const update = (nodes, links) => {
         posX: e.pageX,
         posY: e.pageY,
       };
-      setTacticHighlighted(d.title)
+      minimap
+        .selectAll("circle")
+        .attr("fill", "black")
+        .attr("r", 1)
+        .filter(
+          (dd) => dd.tactics.includes(d.title) || dd.media.includes(d.title)
+        )
+        .attr("fill", "#D35907")
+        .attr("r", 1.5);
       return setTooltip(data);
     })
     .merge(tactic);

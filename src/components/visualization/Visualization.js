@@ -48,6 +48,7 @@ const Visualization = () => {
       <MiniMap
         zoom={zoom}
         data={data}
+        mainMap = {svgEl.current}
         rescalePositionsViz={rescalePositionsViz}
         tacticHighlighted={tacticHighlighted}
       />

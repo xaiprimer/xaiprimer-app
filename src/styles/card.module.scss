@@ -2,9 +2,10 @@
 
 .box {
     background-color:var(--white-primer);
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 5px 5px;
+    border:1px solid var(--black-primer);
     overflow: hidden;
-    max-height: 60vh;
+    max-height:50vh;
     -webkit-box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.3);
   }
@@ -23,4 +24,25 @@
   
   .grid > div {
     flex-basis: calc(33% - 20px);
+  }
+
+  .cover{
+      border-bottom:1px solid var(--black-primer);
+    //   display:none;
+  }
+
+  .cardButton{
+      margin-top:2em;
+      border-radius:0px;
+      width: 100%;
+      color:var(--cognac-primer);
+      border:1px solid var(--black-primer);
+      background-color:var(--white-primer);
+      transition: 0.5s;
+  }
+
+  .cardButton:hover, .cardButton:active, .cardButton:visited, .cardButton:focus{
+      background-color: var(--cognac-primer);
+      border:1px solid var(--black-primer);
+
   }

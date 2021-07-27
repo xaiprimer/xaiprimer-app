@@ -13,11 +13,12 @@ const IndexPage = () => {
       <main>
         <Row>
           <Col></Col>
-          <Col xs={8}>
+          <Col xs={7}>
             <h1>
               The XAI primer lets you explore XAI strategies and applications to
               support designers conceptualising and developing new projects{" "}
             </h1>
+            <Row></Row>
             <div className="introText">
               <h2 className="intro">
                 Explore the ideation space as if you are visiting an art gallery.

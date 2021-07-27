@@ -7,7 +7,7 @@ import * as styles from "../../styles/card.module.scss";
 
 const PrimerCard = () => {
   const cardInfo = [
-    { image: "https://raw.githubusercontent.com/bea92/xaiprimer-app/beatgo-restart/src/images/tour0.png", title: "Guided Tour 1", text: "Lorem Ipsum" },
+    { image: "https://raw.githubusercontent.com/bea92/xaiprimer-app/beatgo-restart/src/images/tour1.png", title: "Guided Tour 1", text: "Lorem Ipsum" },
     { image: "https://raw.githubusercontent.com/bea92/xaiprimer-app/beatgo-restart/src/images/tour2.png", title: "Guided Tour 2", text: "Lorem Ipsum" },
     { image: "https://raw.githubusercontent.com/bea92/xaiprimer-app/beatgo-restart/src/images/tour3.png", title: "Guided Tour3", text: "Lorem Ipsum" },
   ];

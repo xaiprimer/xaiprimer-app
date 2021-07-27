@@ -48,6 +48,7 @@ const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
               changeVizMode(k);
             }}
             id="explorationMode"
+            className={ClassNames(styles.customTabs)}
           >
             <Tab eventKey="clusters" title="Clusters" className={ClassNames(styles.clusters)}>
               <img

@@ -1,11 +1,25 @@
+@import "variables.scss";
 
 
 .customNavbar{ 
-    background-color: red;
+    font-weight: 600;
+    text-transform: lowercase;
+    position: sticky !important;
+
+    a {
+        text-decoration: none;
+        transition: 1s transform ease;
+    }
+
+    a:hover{
+        border-bottom:1px solid black;
+    }
 
     .customNavbarLinks{
-        color:blue;
-    
+        color: var(--black-primer);
+        margin: 0 1em 0 1em;
         }
+
+
     
 }

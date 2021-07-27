@@ -1,6 +1,8 @@
 import * as React from "react";
 import PrimerNavbar from "../components/primer-navbar/PrimerNavbar";
-import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
+import PrimerCard from "../components/primer-card/PrimerCard";
+
+import { Row, Col } from "react-bootstrap";
 
 // markup
 const IndexPage = () => {
@@ -12,17 +14,28 @@ const IndexPage = () => {
         <Row>
           <Col></Col>
           <Col xs={8}>
-            <h1>The XAI Primer introduction page</h1>
+            <h1>
+              The XAI primer lets you explore XAI strategies and applications to
+              support designers conceptualising and developing new projects{" "}
+            </h1>
+            <div className="introText">
+              <h2 className="intro">
+                Explore the ideation space as if you are visiting an art gallery.
+               </h2>
+               <h2 className="intro">
+                 The <strong>PROJECTION</strong> view lets you explore the correlation between
+                tactics, strategies suitable for biulding XAI products and case
+                studies.</h2>
+                <h2 className="intro"> 
+                <strong>Guided tours</strong> provide curated and critical readings of
+                the visualisation
+              </h2>
+            </div>
+            <PrimerCard></PrimerCard>
           </Col>
           <Col></Col>
         </Row>
-        <Row>
-          <Col></Col>
-          <Col sm>Guided Tour 1</Col>
-          <Col sm>Guided Tour 2</Col>
-          <Col sm>Guided Tour 3</Col>
-          <Col></Col>
-        </Row>
+       
       </main>
     </>
   );

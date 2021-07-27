@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby"
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import PrimerLogo from '../../assets/primer-logo.component.svg';
 
 import * as styles from "../../styles/navbar.module.scss";

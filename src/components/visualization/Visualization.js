@@ -2,15 +2,22 @@ import React from "react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ClassNames from "classnames";
 import * as d3 from "d3";
-
+import {
+  // BsChevronContract as CloseIcon,
+  // BsChevronExpand as OpenIcon,
+  BsX as CloseIcon,
+  // BsArrowBarDown as OpenCollectionIcon,
+} from "react-icons/bs";
 import * as styles from "../../styles/tool.module.scss";
 import data from "./data-primer.json";
+import tours from "./guided-tours.json";
 import {
   initialize as initViz,
   setZoom as setZoomViz,
   zoomValues as zoomValuesViz,
   destroy as destroyViz,
   rescalePositions as rescalePositionsViz,
+  makeTourStep as makeTourStepViz
 } from "./visualization.render.js";
 import Tools from "./Tools";
 import Collection from "./Collection";
@@ -36,23 +43,31 @@ const Visualization = () => {
       setZoom,
       setTacticHighlighted
     );
+
+    setTimeout(()=>{
+      makeTourStepViz(tours[0].steps[0])
+    }, 1000)
+
+    setTimeout(()=>{
+      makeTourStepViz(tours[0].steps[1])
+    }, 7000)
   }, []);
 
   const pressedKeys = [];
   const openSearch = () => {
-    console.log(pressedKeys)
+    // console.log(pressedKeys);
     const hasC = pressedKeys.indexOf("c") !== -1;
     const hasSpace = pressedKeys.indexOf(" ") !== -1;
-    setSearch(hasC && hasSpace);
+    if (hasC && hasSpace) setSearch(true);
   };
   const downHandler = ({ key, repeat }) => {
-    console.log(key, repeat, search)
-    if (repeat) return;
+    // console.log("key", key, "repeat", repeat, "search", search)
+    if (repeat || search) return;
     pressedKeys.push(key);
     openSearch();
   };
   const upHandler = ({ key }) => {
-    console.log(key, search)
+    // console.log("key", key, "search", search)
     if (search) return;
     const index = pressedKeys.indexOf(key);
     if (index !== -1) pressedKeys.splice(index, 1);
@@ -69,12 +84,23 @@ const Visualization = () => {
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   const changeVizMode = (mode) => {
-    setZoomViz({ scale: zoomValuesViz[mode] });
+    setZoomViz({ k: zoomValuesViz[mode] });
   };
 
   return (
     <>
-      {search && <h1 style={{position:"absolute"}}>Search</h1>}
+      {search && (
+        <form className={styles.searchBar}>
+          <label>
+            Search:
+            <input
+              type="text"
+              onChange={(e)=>console.log(e.target.value)}
+            />
+          </label>
+          <CloseIcon onClick={()=>setSearch(false)} />
+        </form>
+      )}
       <svg
         className={ClassNames(
           "main-viz",

@@ -6,6 +6,7 @@ import {
   // BsChevronExpand as OpenIcon,
   BsX as ClosePanelIcon,
   BsArrowBarDown as OpenPanelIcon,
+  BsMap as ToursIcon
 } from "react-icons/bs";
 import { Tabs, Tab } from "react-bootstrap";
 import classNames from "classnames";
@@ -44,11 +45,15 @@ const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
           <Tabs
             activeKey={explorationMode}
             onSelect={(k) => {
+              if (k === "tours") return;
               setExplorationMode(k);
               changeVizMode(k);
             }}
             id="explorationMode"
           >
+            <Tab eventKey="tours" title={<ToursIcon/>}>
+              Tours
+            </Tab>
             <Tab eventKey="clusters" title="Clusters">
               <img
                 src={Clusters}

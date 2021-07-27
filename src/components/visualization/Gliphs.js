@@ -102,6 +102,16 @@ const cluster = (parent, data) => {
     .attr("height", (d) => d.side / 5)
     .attr("x", (d) => -0.5 * d.side)
     .attr("y", (d) => -0.5 * d.side);
+
+    g_treemap
+      .selectAll("text")
+      .data(data, (d) => d.id)
+      .join("text")
+      .attr("fill", "black")
+      .attr("font-size", "var(--label-size)")
+      .attr("y", -20)
+      .attr("text-anchor", "middle")
+      .text((d) => d.id);
 };
 
 const project = (parent, data, mediumSize) => {

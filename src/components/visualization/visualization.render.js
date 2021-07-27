@@ -8,9 +8,9 @@ let data,
   height,
   zoomMode = "clusters", // modes can be 3: "clusters", "projects" and "networks"
   zoomValues = {
-    clusters: 1,
-    projects: 2,
-    networks: 3,
+    clusters: 2,
+    projects: 4,
+    networks: 7,
   },
   mm_w = d3.max([width / 4, 280]),
   mm_h,
@@ -77,6 +77,38 @@ const zoomed = (e) => {
         console.log("😱 no case matched. Don't update visualization.");
     }
   }
+};
+const setZoom = ({ k, x, y, duration = 1000 }) => {
+  const oldZoom = d3.zoomTransform(g.node());
+  let newZoom;
+  if (!x || !y) {
+    newZoom = svg.transition().duration(duration).call(zoom.scaleTo, k);
+    return;
+  }
+  newZoom = new d3.ZoomTransform(k, x, y);
+  svg.transition().duration(duration).call(zoom.transform, newZoom);
+};
+const zoomToSelection = ({ dataSelection, k, duration }) => {
+  // console.log(dataSelection);
+
+  let [x0, x1] = d3.extent(dataSelection, (d) => d._x);
+  let [y0, y1] = d3.extent(dataSelection, (d) => d._y);
+
+  // because of initial translation
+  x0 += width / 2;
+  x1 += width / 2;
+  y0 += height / 2;
+  y1 += height / 2;
+
+  let bbox_width = x1 - x0;
+  let bbox_height = y1 - y0;
+
+  k = k ? k : 1 / Math.max((x1 - x0) / width, (y1 - y0) / height);
+  const [x, y] = [
+    -(x0 * k + (bbox_width * k - width) / 2),
+    -(y0 * k + (bbox_height * k - height) / 2),
+  ];
+  setZoom({ x, y, k, duration });
 };
 const linkArc = (d) => {
   const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
@@ -346,6 +378,10 @@ function makeNetworks(data) {
 
   return { nodes: data.concat(flatTactics, flatMedia), links: flatLinks };
 }
+const makeTourStep = ({ ids, k, duration }) => {
+  const dataSelection = data.filter((d) => ids.indexOf(d.id) !== -1);
+  zoomToSelection({ dataSelection, k, duration });
+};
 // simulation
 const ticked = () => {
   cluster.attr("transform", (d) => `translate(${d.x}, ${d.y})`);
@@ -411,32 +447,7 @@ const switchRender = (mode, setCoordinates) => {
       console.log("😱 no case matched. Don't update visualization.");
   }
 };
-const setZoom = (options) => {
-  let newZoom = d3.zoomIdentity;
-  let oldZoom = d3.zoomTransform(g.node());
-  const { translation, scale, duration = 1000 } = options;
-  if (Array.isArray(translation)) {
-    const [x, y] = translation;
-    newZoom = newZoom.translate(x, y);
-  } else {
-    const { x, y } = oldZoom;
-    newZoom = newZoom.translate(x, y);
-  }
-  if (!isNaN(scale)) {
-    newZoom = newZoom.scale(scale);
-  } else {
-    const { k } = oldZoom;
-    newZoom = newZoom.scale(k);
-  }
-  svg.transition().duration(duration).call(zoom.transform, newZoom);
-};
-const initialize = (
-  element,
-  _data,
-  _setMode,
-  _setTooltip,
-  _setZoomState
-) => {
+const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
   console.log("initialize visualization");
 
   // Initialize variables
@@ -445,7 +456,7 @@ const initialize = (
   setTooltip = _setTooltip;
   setMode = _setMode;
   setZoomState = _setZoomState;
-  
+
   svg = d3.select(element);
   g0 = svg.append("g");
   g = g0.append("g");
@@ -463,20 +474,20 @@ const initialize = (
   width = bbox.width;
   height = bbox.height;
 
-  zoom = d3.zoom().scaleExtent([1,10]).translateExtent([[0, 0],[width, height]]).on("zoom", zoomed);
+  zoom = d3
+    .zoom()
+    .scaleExtent([1, 10])
+    .translateExtent([
+      [0, 0],
+      [width, height],
+    ])
+    .on("zoom", zoomed);
 
   svg.attr("viewbox", `0 0 ${width} ${height}`).call(zoom);
   g.attr("transform", `translate(${width / 2}, ${height / 2})`);
   data = rescalePositions(data);
   makeContours(data); // need to pass original data
   switchRender("clusters");
-  // setZoom({
-  //   translation: [width / 2, height / 2],
-  //   scale: zoomValues.clusters,
-  //   duration: 0,
-  // });
-
-  // g.append("rect").attr("width", width).attr("height", height)
 
   factor = mm_w / width;
   mm_h = height * factor;
@@ -484,26 +495,17 @@ const initialize = (
   mm_x = width - mm_w - 20;
   mm_y = height - mm_h - 20;
 
-  svg
-    .append("clipPath")
-    .attr("id", "minimap-clipPath")
-    .append("rect")
-    .attr("width", mm_w)
-    .attr("height", mm_h)
-    .attr("x", mm_x)
-    .attr("y", mm_y);
-
   minimap = svg.append("g").attr("transform", `translate(${mm_x}, ${mm_y})`);
   minimap
     .append("rect")
     .attr("width", mm_w)
     .attr("height", mm_h)
-    .attr("fill", "white");
+    .attr("stroke", "#D35907")
+    .attr("fill", "var(--light-grey-primer)");
 
   minimap
     .append("rect")
     .classed("mm-view", true)
-    // .attr("clip-path", "url(#minimap-clipPath)")
     .attr("width", mm_w)
     .attr("height", mm_h)
     .attr("fill", "white")
@@ -689,5 +691,6 @@ export {
   setZoom,
   zoomValues,
   rescalePositions,
+  makeTourStep,
   destroy,
 };

@@ -15,11 +15,20 @@ import Clusters from "../../images/clusters.png";
 import Projects from "../../images/projects.png";
 import Tactics from "../../images/tact.png";
 
-const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
+const Tools = ({ changeVizMode, explorationMode, setExplorationMode, makeTourStepViz, tours }) => {
   const [panel, openPanel] = useState(true);
   const togglePanel = () => {
     openPanel(!panel);
   };
+
+  // setTimeout(() => {
+  //   makeTourStepViz(tours[0].steps[0]);
+  // }, 1000);
+
+  // setTimeout(() => {
+  //   makeTourStepViz(tours[0].steps[1]);
+  // }, 7000);
+
   return (
     <div className={classNames(styles.tools)}>
       <div className={ClassNames(styles.panel, { [styles.open]: panel })}>
@@ -45,14 +54,14 @@ const Tools = ({ changeVizMode, explorationMode, setExplorationMode }) => {
           <Tabs
             activeKey={explorationMode}
             onSelect={(k) => {
-              if (k === "tours") return;
               setExplorationMode(k);
               changeVizMode(k);
             }}
             id="explorationMode"
           >
             <Tab eventKey="tours" title={<ToursIcon/>}>
-              Tours
+              <h5>Take a guided tour</h5>
+              {tours.map(d=><h6 key={d.id} onClick={()=>{makeTourStepViz(d.steps[0])}}>{d.title}</h6>)}
             </Tab>
             <Tab eventKey="clusters" title="Clusters">
               <img

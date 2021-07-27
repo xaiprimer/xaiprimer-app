@@ -17,7 +17,7 @@ import {
   zoomValues as zoomValuesViz,
   destroy as destroyViz,
   rescalePositions as rescalePositionsViz,
-  makeTourStep as makeTourStepViz
+  makeTourStep as makeTourStepViz,
 } from "./visualization.render.js";
 import Tools from "./Tools";
 import Collection from "./Collection";
@@ -43,14 +43,6 @@ const Visualization = () => {
       setZoom,
       setTacticHighlighted
     );
-
-    setTimeout(()=>{
-      makeTourStepViz(tours[0].steps[0])
-    }, 1000)
-
-    setTimeout(()=>{
-      makeTourStepViz(tours[0].steps[1])
-    }, 7000)
   }, []);
 
   const pressedKeys = [];
@@ -84,6 +76,7 @@ const Visualization = () => {
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   const changeVizMode = (mode) => {
+    mode = mode !== "tours" ? mode : "clusters";
     setZoomViz({ k: zoomValuesViz[mode] });
   };
 
@@ -93,12 +86,9 @@ const Visualization = () => {
         <form className={styles.searchBar}>
           <label>
             Search:
-            <input
-              type="text"
-              onChange={(e)=>console.log(e.target.value)}
-            />
+            <input type="text" onChange={(e) => console.log(e.target.value)} />
           </label>
-          <CloseIcon onClick={()=>setSearch(false)} />
+          <CloseIcon onClick={() => setSearch(false)} />
         </form>
       )}
       <svg
@@ -113,6 +103,8 @@ const Visualization = () => {
         changeVizMode={changeVizMode}
         explorationMode={explorationMode}
         setExplorationMode={setExplorationMode}
+        makeTourStepViz={makeTourStepViz}
+        tours={tours}
       />
       <Collection collection={collection} updateCollection={updateCollection} />
       {tooltip && (

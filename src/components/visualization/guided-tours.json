@@ -1,12 +1,13 @@
 [
     {
+        "id":"tour-1",
         "title": "Explanations for Lay Users",
         "steps": [
             {
                 "ids": ["P18","P30","P31","P39","P21","P22","P25","P29","P34","P38"],
                 "k": 2,
                 "text": "Explanation Strategies for lay users",
-                "duration":5000
+                "duration":4000
             },
             {
                 "ids": ["P18","P30","P31","P39","P21","P22","P25","P29","P34","P38"],

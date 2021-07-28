@@ -1,5 +1,6 @@
 import React from "react";
 import ClassNames from "classnames";
+import {Link} from "gatsby"
 import * as styles from "../../styles/visualization.module.scss";
 import {
   BsX,
@@ -7,6 +8,8 @@ import {
   BsFilm as VideoInterview,
   BsBoxArrowInUpRight as OutLink,
 } from "react-icons/bs";
+
+
 const Tooltip = ({ data, close, collection, updateCollection }) => {
   const { posX, posY } = data;
   // const [w, h] = viewport;
@@ -58,7 +61,8 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
             className={ClassNames(styles.supplemental, {
               disabled: data.designProcess !== "" ? true : false,
             })}
-            href={data.designProcess}
+            href={<Link to="/about"></Link>}
+            // href={data.designProcess}
             target="_blank"
             rel="noreferrer"
           >
@@ -69,7 +73,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
             className={ClassNames(styles.supplemental, {
               disabled: data.videoInterview !== "" ? true : false,
             })}
-            href={data.videoInterview}
+            href={data.designProcess}
             target="_blank"
             rel="noreferrer"
           >

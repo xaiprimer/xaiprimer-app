@@ -230,7 +230,7 @@ const project = (parent, data, mediumSize) => {
     .attr("stroke", "#000")
     .attr("stroke-width", "var(--stroke-width)");
 
-  d3.select(parent)
+  gliph
     .selectAll("text")
     .data(data, (d) => d.id)
     .join("text")

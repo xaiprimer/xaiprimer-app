@@ -1,19 +1,59 @@
 [
-    {
-        "id":"tour-1",
-        "title": "Explanations for Lay Users",
-        "steps": [
-            {
-                "ids": ["P18","P30","P31","P39","P21","P22","P25","P29","P34","P38"],
-                "k": 2,
-                "text": "Explanation Strategies for lay users",
-                "duration":4000
-            },
-            {
-                "ids": ["P18","P30","P31","P39","P21","P22","P25","P29","P34","P38"],
-                "k": 4,
-                "text": "These clusters of projects are visually detached from the others."
-            }
-        ]
-    }
+  {
+    "id": "tour-1",
+    "title": "Explanations for Lay Users",
+    "steps": [
+      {
+        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
+        "k": 2,
+        "text": "<p>Explanation Strategies for lay users</p>"
+      },
+      {
+        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
+        "k": 4,
+        "text": "<p>These clusters of projects are visually <strong>detached</strong> from the others.</p>"
+      },
+      {
+        "ids": ["P22", "P25", "P29", "P34"],
+        "k": 4,
+        "text": "<p>All of them are addressed to the <strong>lay public</strong> i.e. users who are not experts in artificial intelligence neither domain experts.</p><p>From the interaction standpoint, guided exploration and  linear path are shared characteristics.</p>"
+      },
+      {
+        "ids": ["P22", "P25", "P29", "P34"],
+        "k": 5,
+        "text": "<p>This group of projects exploits only one type of explanation tactics: the metaphorical narrative.</p><p>Indeed, it gatheres together two documentaries, one video and one storytelling dissemination website.</p>"
+      },
+      {
+        "ids": ["P18", "P21", "P30", "P31", "P38", "P39"],
+        "k": 5,
+        "text": "<p>Together with metaphohrical narrative, explanation by example is another tactic used for explaining AI to lay users. </p>"
+      }
+    ]
+  },
+  {
+    "id": "tour-2",
+    "title": "Interactive Articles",
+    "steps": [
+      {
+        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
+        "k": 2,
+        "text": "<p><strong>Interactive Articles</strong> as triggers for deductive strategies</p>"
+      },
+      {
+        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
+        "k": 3,
+        "text": "<p>These groups of projects are characterized by the use of the <strong>same presentation format</strong>. In fact, most are Interactive Articles.</p>"
+      },
+      {
+        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52"],
+        "k": 3,
+        "text": "<p>From an interaction standpoint, everyone prefers a <strong>linear path and a guided exploration</strong>.</p>"
+      },
+      {
+        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52"],
+        "k": 4.1,
+        "text": "<p><strong>Drill down story, Define and Describe, Overview First</strong> are the most shared explanation strategies, in combination with visuals.</p>"
+      }
+    ]
+  }
 ]

@@ -10,6 +10,7 @@ const IndexPage = () => {
     <>
       <PrimerNavbar />
       <title>The XAI Primer</title>
+      <body>
       <main>
         <Row>
           <Col></Col>
@@ -36,8 +37,11 @@ const IndexPage = () => {
           </Col>
           <Col></Col>
         </Row>
-       
+        <footer>
+        <p>The XAI Primer 2021</p>
+      </footer>  
       </main>
+      </body>
     </>
   );
 };

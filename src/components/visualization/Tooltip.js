@@ -61,7 +61,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
             className={ClassNames(styles.supplemental, {
               disabled: data.designProcess !== "" ? true : false,
             })}
-            href={<Link to="/about"></Link>}
+            href={data.designProcesss}
             // href={data.designProcess}
             target="_blank"
             rel="noreferrer"

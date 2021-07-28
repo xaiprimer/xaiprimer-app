@@ -1,6 +1,7 @@
 import * as React from "react";
 import PrimerNavbar from "../components/primer-navbar/PrimerNavbar";
 import PrimerCard from "../components/primer-card/PrimerCard";
+import PrimerFooter from "../components/primer-footer/PrimerFooter";
 
 import { Row, Col } from "react-bootstrap";
 
@@ -37,9 +38,7 @@ const IndexPage = () => {
           </Col>
           <Col></Col>
         </Row>
-        <footer>
-        <p>The XAI Primer 2021</p>
-      </footer>  
+        <PrimerFooter />
       </main>
       </body>
     </>

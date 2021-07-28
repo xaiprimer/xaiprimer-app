@@ -17,22 +17,13 @@ const IndexPage = () => {
           <Col></Col>
           <Col xs={7}>
             <h1>
-              The XAI primer lets you explore XAI strategies and applications to
-              support designers conceptualising and developing new projects{" "}
+              The XAI Primer is the result of an interdisciplinary collaboration
             </h1>
             <Row></Row>
             <div className="introText">
               <h2 className="intro">
                 Explore the ideation space as if you are visiting an art gallery.
                </h2>
-               <h2 className="intro">
-                 The <strong>PROJECTION</strong> view lets you explore the correlation between
-                tactics, strategies suitable for biulding XAI products and case
-                studies.</h2>
-                <h2 className="intro"> 
-                <strong>Guided tours</strong> provide curated and critical readings of
-                the visualisation
-              </h2>
             </div>
           </Col>
           <Col></Col>

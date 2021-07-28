@@ -11,6 +11,7 @@ body {
   margin: 0;
   height: auto;
   font-family: inter, sans-serif;
+  background-color: var(--white-primer);
 }
 
 main{
@@ -21,16 +22,16 @@ main{
 h1 {
   font-family: inter, sans-serif;
   font-style: medium;
-  font-weight: 600;
+  font-weight: 200;
   font-size: 3.375rem;
   line-height: 3.875rem;
   margin: 0;
 }
 
 h2 {
-  font-family: spectral, sans-serif;
+  font-family: spectral, serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: normal;
   font-size: 1.175rem;
   line-height: 1.75rem;
   margin: 0;
@@ -48,7 +49,7 @@ strong{
 h3 {
   font-family: spectral, sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100;
   font-size: 1.312rem;
   line-height: 1.4rem;
   margin: 0;
@@ -85,7 +86,7 @@ a{
   color:var(--cognac-primer);
 
 :hover{
-  color:var(--yellow-primer);
+  color:var(--blue-primer);
 }
 
   }
@@ -93,9 +94,27 @@ a{
 //index 
 
   .intro {
-    font-weight:100;
     font-size: 1.6rem;
     line-height: 2.4rem;
+    margin: 0;
+    
+  }
+
+  .intro h1 {
+    font-family: spectral, serif;
+    font-style: medium;
+    font-weight: 200;
+    font-size: 3.375rem;
+    line-height: 3.875rem;
+    margin: 0;
+  }
+
+  .intro h2 {
+    font-family: inter, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.175rem;
+    line-height: 1.75rem;
     margin: 0;
   }
   
@@ -103,5 +122,22 @@ a{
     margin-top:1em;
   }
 
+  .actionButton{
+    margin-top:2em;
+    border-radius:0px;
+    width: 50%;
+    align-content: center;
+    color:var(--cognac-primer);
+    border:1px solid var(--black-primer);
+    background-color:var(--white-primer);
+    transition: 0.5s;
+}
+
+.actionButton:hover, .actionButton:active, .actionButton:visited, .actionButton:focus{
+    background-color: var(--cognac-primer);
+    border:1px solid var(--black-primer);
+
+}
+  
 
   

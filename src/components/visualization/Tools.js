@@ -33,9 +33,9 @@ const Tools = ({ changeVizMode, explorationMode, setExplorationMode, makeTourSte
     <div className={classNames(styles.tools)}>
       <div className={ClassNames(styles.panel, { [styles.open]: panel })}>
         <div className={ClassNames(styles.panelHeader)}>
-          <h3 className={ClassNames("text-uppercase", styles.title)}>
+          <h4 className={ClassNames("text-uppercase", styles.title)}>
             Exploration modes
-          </h3>
+          </h4>
           <div></div>
           {panel && (
             <ClosePanelIcon

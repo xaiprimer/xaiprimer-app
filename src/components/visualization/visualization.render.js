@@ -500,7 +500,7 @@ const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
     .append("rect")
     .attr("width", mm_w)
     .attr("height", mm_h)
-    .attr("stroke", "#D35907")
+    .attr("stroke", "var(--cognac-primer)")
     .attr("fill", "var(--light-grey-primer)");
 
   minimap
@@ -509,7 +509,7 @@ const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
     .attr("width", mm_w)
     .attr("height", mm_h)
     .attr("fill", "white")
-    .attr("stroke", "#D35907")
+    .attr("stroke", "var(--cognac-primer)")
     .attr("fill-opacity", 0.5);
 
   minimap
@@ -642,7 +642,7 @@ const update = (nodes, links) => {
         .filter(
           (dd) => dd.tactics.includes(d.title) || dd.media.includes(d.title)
         )
-        .attr("fill", "#D35907")
+        .attr("fill", "var(--cognac-primer")
         .attr("r", 1.5);
       return setTooltip(data);
     })

@@ -6,8 +6,8 @@
   flex-direction: column;
   width: $tooltips-width;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
-  background-color: #ffffff;
-  padding: 10px 10px;
+  background-color: var(--white-primer);
+  padding: 10px 10px 0 10px;
 
   .closeBtn {
     top: 10px;
@@ -15,9 +15,9 @@
     position: absolute;
     font-size: 2rem;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0px;
     &:hover {
-      background-color:red;
+      background-color:var(--light-grey-primer);
     }
   }
 
@@ -33,8 +33,8 @@
   .tags-container {
     margin: 5px -3px 5px;
     .tag {
-      background-color: #777777;
-      color: #ffffff;
+      background-color: var(--dark-grey-primer);
+      color: var(--white-primer);
       height: 20px;
       border-radius: 10px;
       display: inline-flex;
@@ -58,28 +58,28 @@
   }
 
   .addToCollection {
-    background-color: #000;
+    background-color: var(--black-primer);
     height: 42px;
     width: calc(100% + 20px);
     display: flex;
     margin: 0 -10px;
-    color: white;
+    color: var(--white-primer);
     text-align: center;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     &:hover {
-      background-color: #444;
+      background-color: var(--dark-grey-primer);
     }
   }
   .addedToCollection {
-    background-color: #666;
+    background-color: var(--dark-grey-primer);
     bottom:0;
     height: 42px;
     width: calc(100% + 20px);
     display: flex;
     margin: 0 -10px;
-    color: white;
+    color: var(--white-primer);
     text-align: center;
     align-items: center;
     justify-content: center;

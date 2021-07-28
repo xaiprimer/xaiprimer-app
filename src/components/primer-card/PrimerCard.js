@@ -19,7 +19,7 @@ const PrimerCard = () => {
         <Card.Body>
           <Card.Title><h3>{card.title}</h3></Card.Title>
           <Card.Text><h4>{card.text}</h4></Card.Text>
-          <Button className={styles.cardButton} variant="primary">Take the tour</Button>
+          <Button className={styles.cardButton} variant="primary"><h4>Take the tour</h4></Button>
         </Card.Body>
       </Card>
     );

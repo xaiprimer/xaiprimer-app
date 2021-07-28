@@ -5,13 +5,13 @@ const showAnticollision = false;
 const exploration = d3
   .scaleOrdinal()
   .domain(["guided", "open ended", "mixed"])
-  .range(["#000", "#fff", "#777777"])
+  .range(["#222222", "#F2F2F2", "#777777"])
   .unknown("#777777");
 const scenario = d3
   .scaleOrdinal()
   .domain(["exhibition", "desktop", "mobile", "multiple"])
-  .range(["#FF451D", "#3479FF", "#FFC200", "#E5E5E5"])
-  .unknown("#E5E5E5");
+  .range(["#FF531D", "#6474FF", "#FFC200", "#ebebeb"])
+  .unknown("#ebebeb");
 
 const cluster = (parent, data) => {
   const g_treemap = d3
@@ -166,8 +166,8 @@ const project = (parent, data, mediumSize) => {
     .selectAll(".border")
     .data(data, (d) => d.id)
     .join((enter) => enter.append("rect").classed("border", true))
-    .attr("fill", "#FFFFFF")
-    .attr("stroke", "#000000")
+    .attr("fill", "#FAFAFA")
+    .attr("stroke", "#222")
     // .attr("stroke-width", d=>d.path==="iterative"?4:1)
     .attr(
       "stroke-width",
@@ -195,7 +195,7 @@ const project = (parent, data, mediumSize) => {
       }))
     )
     .join((enter) => enter.append("rect").classed("nonSoCosaSono", true))
-    .attr("fill", (d) => (d.value ? "#000" : "#fff"))
+    .attr("fill", (d) => (d.value ? "#222" : "#f2f2f2"))
     .attr("stroke", "#000000")
     .attr("stroke-width", "var(--stroke-width)")
     .attr("width", (d) => (d.side - d.side * 0.21) / 3)
@@ -226,8 +226,8 @@ const project = (parent, data, mediumSize) => {
     .attr("r", (d) => d.side * 0.07)
     .attr("cy", (d) => d.borderHeight)
     .attr("cx", (d, i) => d.side * 0.175 + ((d.side - d.side * 0.35) / 3) * i)
-    .attr("fill", (d) => (d.isPresent ? "#000" : "#fff"))
-    .attr("stroke", "#000")
+    .attr("fill", (d) => (d.isPresent ? "#222" : "#fafafa"))
+    .attr("stroke", "#222")
     .attr("stroke-width", "var(--stroke-width)");
 
   d3.select(parent)

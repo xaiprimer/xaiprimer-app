@@ -39,20 +39,20 @@
     .panel {
       pointer-events: all;
       background-color: var(--white-primer);
-      border: 1px solid black;
+      border: 1px solid var(--black-primer);
       overflow: hidden;
       transition: height 0.15s ease;
       height: 40px;
       width: 100%;
 
       .nav-link.active{
-        border:1px solid black;
+        border:1px solid var(--black-primer);;
       }
 
       &.open {
         height: fit-content;
         .customTabs {
-          border-bottom: 1px solid black;
+          border-bottom: 1px solid var(--black-primer);;
         }
         .customTabs a {
           border-bottom: transparent;
@@ -78,7 +78,7 @@
 
         .closeBtn {
           font-size: 2rem;
-          border-radius: 5px;
+          border-radius: 0px;
           padding: 0.3rem;
           cursor: pointer;
           &:hover {
@@ -99,7 +99,7 @@
       grid-row-start: 2;
       grid-row-end: 3;
       background-color: var(--white-primer);
-      border: 1px solid black;
+      border: 1px solid var(--black-primer);;
     }
   }
 
@@ -109,7 +109,7 @@
     grid-row-start: 2;
     grid-row-end: 3;
     background-color: var(--white-primer);
-    border: 1px solid black;
+    border: 1px solid var(--black-primer);
     overflow: hidden;
     display: grid;
     grid-template-rows: 40px auto 40px;
@@ -155,7 +155,7 @@
       .closeBtn,
       svg {
         font-size: 2rem;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 0.3rem;
 
         &:hover {
@@ -208,7 +208,7 @@
     }
 
     .download {
-      background-color: black;
+      background-color: var(--black-primer);
       color: var(--white-primer);
       margin: 0 -10px;
       text-align: center;

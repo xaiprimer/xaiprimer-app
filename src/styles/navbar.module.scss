@@ -4,7 +4,13 @@
 .customNavbar{ 
     font-weight: 600;
     text-transform: lowercase;
-    position: sticky !important;
+    position: sticky;
+    border-bottom: 1px solid black;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    z-index:99999;
+    top:0;
+    left:0;
 
     a {
         text-decoration: none;
@@ -16,7 +22,7 @@
     }
 
     .customNavbarLinks{
-        color: var(--black-primer);
+        color: black;
         margin: 0 1em 0 1em;
         }
 

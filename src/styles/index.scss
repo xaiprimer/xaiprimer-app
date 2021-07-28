@@ -21,8 +21,7 @@ main{
 
 h1 {
   font-family: inter, sans-serif;
-  font-style: medium;
-  font-weight: 200;
+  font-weight: 600;
   font-size: 3.375rem;
   line-height: 3.875rem;
   margin: 0;
@@ -97,26 +96,15 @@ a{
     font-size: 1.6rem;
     line-height: 2.4rem;
     margin: 0;
+  }
+
+  .gradient{
+    background: -webkit-linear-gradient( #FFC200, #FF531D,#6474F4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     
   }
 
-  .intro h1 {
-    font-family: spectral, serif;
-    font-style: medium;
-    font-weight: 200;
-    font-size: 3.375rem;
-    line-height: 3.875rem;
-    margin: 0;
-  }
-
-  .intro h2 {
-    font-family: inter, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.175rem;
-    line-height: 1.75rem;
-    margin: 0;
-  }
   
   .introText *{
     margin-top:1em;
@@ -127,14 +115,14 @@ a{
     border-radius:0px;
     width: 50%;
     align-content: center;
-    color:var(--cognac-primer);
-    border:1px solid var(--black-primer);
+    color:var(--red-primer);
+    border:1px solid var(--red-primer);
     background-color:var(--white-primer);
     transition: 0.5s;
 }
 
 .actionButton:hover, .actionButton:active, .actionButton:visited, .actionButton:focus{
-    background-color: var(--cognac-primer);
+    background-color: var(--red-primer);
     border:1px solid var(--black-primer);
 
 }

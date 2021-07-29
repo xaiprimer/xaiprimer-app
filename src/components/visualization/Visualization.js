@@ -103,6 +103,7 @@ const Visualization = () => {
         changeVizMode={changeVizMode}
         explorationMode={explorationMode}
         setExplorationMode={setExplorationMode}
+        setZoomViz={setZoomViz}
         makeTourStepViz={makeTourStepViz}
         tours={tours}
       />

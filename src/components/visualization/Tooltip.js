@@ -57,12 +57,12 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
       {data.category !== "tactic" && (
         <>
           <h5 className="text-uppercase">Supplemental material</h5>
-          <a
+        
+            <a
             className={ClassNames(styles.supplemental, {
               disabled: data.designProcess !== "" ? true : false,
             })}
-            href={data.designProcesss}
-            // href={data.designProcess}
+            href={"design-process-" + data.id}
             target="_blank"
             rel="noreferrer"
           >
@@ -73,7 +73,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
             className={ClassNames(styles.supplemental, {
               disabled: data.videoInterview !== "" ? true : false,
             })}
-            href={data.designProcess}
+            href={"design-process-" + data.id}
             target="_blank"
             rel="noreferrer"
           >

@@ -8,15 +8,13 @@ html {
 }
 
 body {
-  margin: 0;
   height: auto;
   font-family: inter, sans-serif;
   background-color: var(--white-primer);
 }
 
 main{
-  margin-top:8em;
-
+  padding: var(--navigation-height) 3em 0 3em;
 }
 
 h1 {
@@ -99,8 +97,8 @@ a{
 //index and other pages
 
   .intro {
-    font-size: 1.6rem;
-    line-height: 2.4rem;
+    font-size: 2rem;
+    line-height: 2.8rem;
     margin: 0;
   }
 

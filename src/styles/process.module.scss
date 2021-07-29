@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+.processBoxFix{
+    height: 100%;
+    overflow-y: hidden;
+    position:fixed;
+    padding: var(--navigation-height) 3em 0 3em;
+}
+
+.processBoxScroll{
+    border-left: 1px solid var(--black-primer);
+    height: 100%;
+    padding: calc(var(--navigation-height)*3) 3em 0 3em;
+}
+
+.processTitle{
+    position:sticky;
+    font-weight: lighter;
+    right:0;
+    top:calc((var(--navigation-height)) + (var(--alert-heigth)) + 2em);
+
+    h1{
+        font-weight: 500;
+    }
+
+    h2{
+        font-weight: 500;
+    }
+}
+

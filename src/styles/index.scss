@@ -69,7 +69,10 @@ h5 {
   font-size: 0.875rem;
   text-transform: uppercase;
   line-height: 1rem;
-  margin: 0;
+}
+
+h6{
+  margin: 0.5em 0 0.5em 0;
 }
 
 p {
@@ -82,7 +85,9 @@ p {
 }
 
 a{
-  color:var(--cognac-primer);
+
+  color:var(--red-primer);
+  text-decoration: none;
 
 :hover{
   color:var(--blue-primer);
@@ -90,7 +95,8 @@ a{
 
   }
 
-//index 
+
+//index and other pages
 
   .intro {
     font-size: 1.6rem;
@@ -102,7 +108,6 @@ a{
     background: -webkit-linear-gradient( #FFC200, #FF531D,#6474F4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    
   }
 
   
@@ -113,17 +118,20 @@ a{
   .actionButton{
     margin-top:2em;
     border-radius:0px;
-    width: 50%;
-    align-content: center;
-    color:var(--red-primer);
-    border:1px solid var(--red-primer);
+    width: 100%;
+    border-radius: 100px;
+    color:var(--black-primer);
+    border:1px solid var(--black-primer);
     background-color:var(--white-primer);
+    box-shadow: 0px 3px 3px 0px var(--cognac-primer);
     transition: 0.5s;
+    text-transform: uppercase;
 }
 
 .actionButton:hover, .actionButton:active, .actionButton:visited, .actionButton:focus{
     background-color: var(--red-primer);
     border:1px solid var(--black-primer);
+    box-shadow: 0px 3px 3px 0px var(--cognac-primer);
 
 }
   

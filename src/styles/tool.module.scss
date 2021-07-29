@@ -46,27 +46,23 @@
       height: 40px;
       width: 100%;
 
-      .nav-link.active{
-        border:1px solid var(--black-primer);;
+      .nav-link.active {
+        border: 1px solid var(--black-primer);
       }
 
       &.open {
         height: fit-content;
         .customTabs {
-          border-bottom: 1px solid var(--black-primer);;
+          border-bottom: 1px solid var(--black-primer);
         }
         .customTabs a {
           border-bottom: transparent;
         }
-
-
       }
-
 
       a {
         color: var(--cognac-primer);
       }
-
 
       .panelHeader {
         height: 38px;
@@ -91,7 +87,6 @@
       .legend {
         width: 100%;
       }
-
     }
 
     .buttonsTest {
@@ -100,7 +95,7 @@
       grid-row-start: 2;
       grid-row-end: 3;
       background-color: var(--white-primer);
-      border: 1px solid var(--black-primer);;
+      border: 1px solid var(--black-primer);
     }
   }
 
@@ -109,6 +104,47 @@
     bottom: 20px;
     left: 50%;
     transform: translate(-50%, 0);
+    border: 1px solid var(--cognac-primer);
+    border-radius: 100px;
+    background-color: var(--light-grey-primer);
+    box-shadow: 0px 3px 15px 0px var(--cognac-primer);
+
+    & .toursButton {
+      background-color: var(--light-grey-primer);
+      border-radius: 100px;
+      text-transform: uppercase;
+      color: var(--cognac-primer);
+      border-color: var(--light-grey-primer);
+    }
+  }
+
+  .toursBox {
+    max-width: 400px;
+    padding: 10px;
+    color: var(--cognac-primer);
+    border:1px solid var(--cognac-primer);
+    background-color: var(--white-primer);
+    position: absolute;
+    bottom: 100px;
+    left: 51%;
+    transform: translate(-50%, 0);
+    margin-top: 2em;
+
+  }
+
+  .toursText{
+    color:var(--cognac-primer);
+    filter:none !important;
+  }
+
+
+
+  .listTour {
+    margin-top: 1em;
+  }
+
+  ul {
+    list-style-type: circle;
   }
 
   .collection {
@@ -224,19 +260,26 @@
     }
   }
 
-  .legendImg {
+  .legend {
     width: 100%;
+    margin-top: 1em;
   }
 
   .searchBar {
     position: fixed;
     top: 50%;
     left: 50%;
+    background-color: var(--light-grey-primer);
+    border-radius: 100px;
+    text-transform: uppercase;
+    color: var(--cognac-primer);
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-
-    background-color: var(--light-grey-primer);
     padding: 10px;
-    box-shadow: 0px 15px 30px 0px #41464b;
+    box-shadow: 0px 15px 30px 0px var(--cognac-primer);
+  }
+
+  .customTab {
+    padding: 10px;
   }
 }

@@ -6,27 +6,27 @@
       {
         "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
         "k": 2,
-        "text": "<p>Explanation Strategies for lay users</p>"
+        "text": "<h2>Explanation Strategies for lay users</h2>"
       },
       {
         "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
         "k": 4,
-        "text": "<p>These clusters of projects are visually <strong>detached</strong> from the others.</p>"
+        "text": "<h2>These clusters of projects are visually <strong>detached</strong> from the others.</h2>"
       },
       {
         "ids": ["P22", "P25", "P29", "P34"],
         "k": 4,
-        "text": "<p>All of them are addressed to the <strong>lay public</strong> i.e. users who are not experts in artificial intelligence neither domain experts.</p><p>From the interaction standpoint, guided exploration and  linear path are shared characteristics.</p>"
+        "text": "<h2>All of them are addressed to the <strong>lay public</strong> i.e. users who are not experts in artificial intelligence neither domain experts.</h2><h2>From the interaction standpoint, guided exploration and  linear path are shared characteristics.</h2>"
       },
       {
         "ids": ["P22", "P25", "P29", "P34"],
         "k": 5,
-        "text": "<p>This group of projects exploits only one type of explanation tactics: the metaphorical narrative.</p><p>Indeed, it gatheres together two documentaries, one video and one storytelling dissemination website.</p>"
+        "text": "<h2>This group of projects exploits only one type of explanation tactics: the metaphorical narrative.</h2><h2>Indeed, it gatheres together two documentaries, one video and one storytelling dissemination website.</h2>"
       },
       {
         "ids": ["P18", "P21", "P30", "P31", "P38", "P39"],
         "k": 5,
-        "text": "<p>Together with metaphohrical narrative, explanation by example is another tactic used for explaining AI to lay users. </p>"
+        "text": "<h2>Together with metaphohrical narrative, explanation by example is another tactic used for explaining AI to lay users. </h2>"
       }
     ]
   },
@@ -37,22 +37,22 @@
       {
         "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
         "k": 2,
-        "text": "<p><strong>Interactive Articles</strong> as triggers for deductive strategies</p>"
+        "text": "<h2><strong>Interactive Articles</strong> as triggers for deductive strategies</h2>"
       },
       {
         "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
         "k": 3,
-        "text": "<p>These groups of projects are characterized by the use of the <strong>same presentation format</strong>. In fact, most are Interactive Articles.</p>"
+        "text": "<h2>These groups of projects are characterized by the use of the <strong>same presentation format</strong>. In fact, most are Interactive Articles.</h2>"
       },
       {
         "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52"],
         "k": 3,
-        "text": "<p>From an interaction standpoint, everyone prefers a <strong>linear path and a guided exploration</strong>.</p>"
+        "text": "<h2>From an interaction standpoint, everyone prefers a <strong>linear path and a guided exploration</strong>.</h2>"
       },
       {
         "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52"],
         "k": 4.1,
-        "text": "<p><strong>Drill down story, Define and Describe, Overview First</strong> are the most shared explanation strategies, in combination with visuals.</p>"
+        "text": "<h2><strong>Drill down story, Define and Describe, Overview First</strong> are the most shared explanation strategies, in combination with visuals.</h2>"
       }
     ]
   }

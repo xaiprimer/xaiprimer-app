@@ -14,12 +14,6 @@
     padding: calc(var(--navigation-height)) 0em 3em 3em;
 }
 
-.processContent h2, .processBoxScroll h2{
-    font-size: 1.6rem;
-    line-height: 2.3rem;
-    margin-bottom:1em;
-    font-family:inter;
-}
 
 .processContent h4, .processBoxScroll h4{
     font-size: 1.225rem;
@@ -27,7 +21,7 @@
     font-family:spectral;
 }
 
-.processContent h5, .processBoxScroll h5{
+.processContent h5, .processBoxScroll h5, .processBoxFix h5{
     font-weight: 800;
     font-size: 0.875rem;
     font-family:spectral;
@@ -76,6 +70,25 @@
 .processCarousel{
 z-index:0;
 }
+
+
+.tags-container {
+    margin: 0;
+    .tag {
+      background-color: var(--dark-grey-primer);
+      color: var(--white-primer);
+      height: 20px;
+      border-radius: 10px;
+      display: inline-flex;
+      padding: 0px 10px;
+      margin: 3px;
+      align-items: center;
+      justify-content: center;
+      p {
+        margin: 0;
+      }
+    }
+  }
 
 // Fix controls 
 

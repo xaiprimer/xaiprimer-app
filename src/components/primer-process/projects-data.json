@@ -1,0 +1,34 @@
+{
+  "project": [
+    {
+      "link": "https://interconnectedata.it/menu"
+    },
+    {
+      "title": "Interconnected"
+    },
+    {
+      "quotes": "Interconnected is a project that relates IOT devices with personal data"
+    },
+    {
+      "author": "Andrea Elena Febres Medina"
+    },
+    {
+      "year": "2020"
+    },
+    {
+      "tactics": "drill-down story; explanation by example"
+    },
+    {
+      "media": "visualisation;video"
+    },
+    {
+      "end_users": "Broad audience of non-techinical people interested in IOT looking for tools helping to understand how IOT works in realtion to personal data. People belonging to this audience are bot skeptical users and people who fear iot can steal private information"
+    },
+    {
+      "objectives": "To talk to general audience about an unknown topic;to give tools for understanding;to generate awareness among the general audience"
+    },
+    {
+      "challenges": "Simplification, understanding the topic as a non expert and finally communicating thhe essence to the general public"
+    }
+  ]
+}

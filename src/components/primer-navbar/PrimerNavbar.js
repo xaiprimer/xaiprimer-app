@@ -10,6 +10,7 @@ const PrimerNavbar = () => {
     <Navbar bg="light" expand="lg" className={styles.customNavbar}>
       <Container fluid>
         <Navbar.Brand as="div"><Link to="/"><PrimerLogo/></Link></Navbar.Brand>
+        <h4 className={"text-uppercase"}>The XAI Primer</h4>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="w-100 justify-content-end">

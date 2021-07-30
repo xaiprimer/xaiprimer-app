@@ -30,6 +30,7 @@
 
 .processTitle{
     position:sticky;
+    margin-top:10px;
     font-weight: lighter;
     grid-column: 2fr;
     right:0;
@@ -70,6 +71,14 @@
 .processCarousel{
 z-index:0;
 }
+
+.processCarousel a, button, span{
+    color:var(--cognac-primer);
+    bottom:-110%;
+    opacity:100%;
+    margin:px 0 10px 0;
+    display:none;
+    }
 
 
 .tags-container {

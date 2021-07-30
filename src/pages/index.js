@@ -15,7 +15,7 @@ const IndexPage = () => {
         <main>
           <Row>
             <Col></Col>
-            <Col xs={7}>
+            <Col xs={6}>
               <h1 className="gradient">
                 The <span>Explainable Artificial Intelligence</span> Primer lets you explore XAI strategies and applications
                 to support designers conceptualising and developing new projects{" "}

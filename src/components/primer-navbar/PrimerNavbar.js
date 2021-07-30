@@ -16,7 +16,6 @@ const PrimerNavbar = () => {
           <Nav className="w-100 justify-content-end">
             <Link className={styles.customNavbarLinks} to="/">Home</Link>
             <Link className={styles.customNavbarLinks} to="/tool">Tool</Link>
-            <Link className={styles.customNavbarLinks} to="/toolBackup">Tool Old</Link>
             <Link className={styles.customNavbarLinks} to="/submit">submit</Link>
             <Link className={styles.customNavbarLinks} to="/about">about</Link>
           </Nav>

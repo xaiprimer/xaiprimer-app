@@ -88,14 +88,15 @@ const Tools = ({
                 <h5>Take a guided tour</h5>
                 <p>Explore the space taking a thematic tour.</p>
                 {tours.map((d) => (
-                  <ul className={styles.listTour}><h6
-                    key={d.id}
-                    onClick={() => {
-                      goOnTour(d);
-                    }}
-                  >
-                    {d.title}
-                  </h6></ul>
+                  <ul key={d.id} className={styles.listTour}>
+                    <h6
+                      onClick={() => {
+                        goOnTour(d);
+                      }}
+                    >
+                      {d.title}
+                    </h6>
+                  </ul>
                 ))}
               </Tab>
               <Tab
@@ -153,7 +154,11 @@ const Tools = ({
             >
               {"<"}
             </Button>
-            <Button variant="light" onClick={() => exitTour()} className={styles.toursButton}>
+            <Button
+              variant="light"
+              onClick={() => exitTour()}
+              className={styles.toursButton}
+            >
               End Tour
             </Button>
             <Button

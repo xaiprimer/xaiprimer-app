@@ -89,10 +89,14 @@ const setZoom = ({ k, x, y, duration = 1000 }) => {
   svg.transition().duration(duration).call(zoom.transform, newZoom);
 };
 const zoomToSelection = ({ dataSelection, k, duration }) => {
-  // console.log(dataSelection);
+  // need to match the selection through id with the data stored in this component
+  // the reason is that _x and _y positions are rescaled according to screen size
+  const selectionMatched = data.filter((d) =>
+    dataSelection.map((d) => d.id).indexOf(d.id) !== -1
+  );
 
-  let [x0, x1] = d3.extent(dataSelection, (d) => d._x);
-  let [y0, y1] = d3.extent(dataSelection, (d) => d._y);
+  let [x0, x1] = d3.extent(selectionMatched, (d) => d._x);
+  let [y0, y1] = d3.extent(selectionMatched, (d) => d._y);
 
   // because of initial translation
   x0 += width / 2;
@@ -690,6 +694,7 @@ export {
   switchRender,
   setZoom,
   zoomValues,
+  zoomToSelection,
   rescalePositions,
   makeTourStep,
   destroy,

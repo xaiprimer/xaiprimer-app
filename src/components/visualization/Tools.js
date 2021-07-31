@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ClassNames from "classnames";
 import * as styles from "../../styles/tool.module.scss";
 import { Button, ButtonGroup } from "react-bootstrap";

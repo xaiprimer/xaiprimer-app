@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { cluster as renderCluster, project as renderProject } from "./Gliphs";
 // values
 let data,
-  originalData,
+  // originalData,
   bbox,
   width,
   height,
@@ -85,19 +85,22 @@ const zoomed = (e) => {
   }
 };
 const setZoom = ({ k, x, y, duration = 1000, highlighted = [] }) => {
-  const oldZoom = d3.zoomTransform(g.node());
+  // const oldZoom = d3.zoomTransform(g.node());
   let newZoom;
   if (!x || !y) {
     newZoom = svg.transition().duration(duration).call(zoom.scaleTo, k);
     return;
   }
   newZoom = new d3.ZoomTransform(k, x, y);
-  highlighted = highlighted.map((d) => d.id);
+
   svg
     .transition()
     .duration(duration)
     .on("end", () => {
-      setTimeout(highlightElementsById(highlighted), 350);
+      if (!!highlighted.length) {
+        highlighted = highlighted.map((d) => d.id);
+        setTimeout(highlightElementsById(highlighted), 350);
+      }
     })
     .call(zoom.transform, newZoom);
 };
@@ -468,7 +471,7 @@ const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
   console.log("initialize visualization");
 
   // Initialize variables
-  originalData = JSON.parse(JSON.stringify(_data));
+  // originalData = JSON.parse(JSON.stringify(_data));
   data = _data;
   setTooltip = _setTooltip;
   setMode = _setMode;

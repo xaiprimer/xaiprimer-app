@@ -468,7 +468,7 @@ const switchRender = (mode, setCoordinates) => {
   }
 };
 const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
-  console.log("initialize visualization");
+  // console.log("initialize visualization");
 
   // Initialize variables
   // originalData = JSON.parse(JSON.stringify(_data));

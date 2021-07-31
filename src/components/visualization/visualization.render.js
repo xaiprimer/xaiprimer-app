@@ -36,6 +36,12 @@ const linkDistance = d3
   .range([0, 4 * _k]);
 // functions
 let setMode, setTooltip, setZoomState, zoom;
+const highlightElementsById = (highlightedIds) => {
+  item
+    .transition()
+    .duration(250)
+    .style("opacity", (d) => (highlightedIds.indexOf(d.id) === -1 ? 0.3 : 1));
+};
 const zoomed = (e) => {
   setTooltip(null);
   setZoomState(e.transform);
@@ -78,7 +84,7 @@ const zoomed = (e) => {
     }
   }
 };
-const setZoom = ({ k, x, y, duration = 1000 }) => {
+const setZoom = ({ k, x, y, duration = 1000, highlighted = [] }) => {
   const oldZoom = d3.zoomTransform(g.node());
   let newZoom;
   if (!x || !y) {
@@ -86,13 +92,20 @@ const setZoom = ({ k, x, y, duration = 1000 }) => {
     return;
   }
   newZoom = new d3.ZoomTransform(k, x, y);
-  svg.transition().duration(duration).call(zoom.transform, newZoom);
+  highlighted = highlighted.map((d) => d.id);
+  svg
+    .transition()
+    .duration(duration)
+    .on("end", () => {
+      setTimeout(highlightElementsById(highlighted), 350);
+    })
+    .call(zoom.transform, newZoom);
 };
-const zoomToSelection = ({ dataSelection, k, duration }) => {
+const zoomToSelection = ({ dataSelection, k, duration, highlighted }) => {
   // need to match the selection through id with the data stored in this component
   // the reason is that _x and _y positions are rescaled according to screen size
-  const selectionMatched = data.filter((d) =>
-    dataSelection.map((d) => d.id).indexOf(d.id) !== -1
+  const selectionMatched = data.filter(
+    (d) => dataSelection.map((d) => d.id).indexOf(d.id) !== -1
   );
 
   let [x0, x1] = d3.extent(selectionMatched, (d) => d._x);
@@ -112,7 +125,7 @@ const zoomToSelection = ({ dataSelection, k, duration }) => {
     -(x0 * k + (bbox_width * k - width) / 2),
     -(y0 * k + (bbox_height * k - height) / 2),
   ];
-  setZoom({ x, y, k, duration });
+  setZoom({ x, y, k, duration, highlighted });
 };
 const linkArc = (d) => {
   const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
@@ -695,6 +708,7 @@ export {
   setZoom,
   zoomValues,
   zoomToSelection,
+  highlightElementsById,
   rescalePositions,
   makeTourStep,
   destroy,

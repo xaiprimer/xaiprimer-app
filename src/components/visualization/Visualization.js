@@ -12,7 +12,8 @@ import {
   destroy as destroyViz,
   // rescalePositions as rescalePositionsViz,
   makeTourStep as makeTourStepViz,
-  zoomToSelection as zoomToSelectionViz
+  zoomToSelection as zoomToSelectionViz,
+  highlightElementsById as highlightElementsByIdViz
 } from "./visualization.render.js";
 import Tools from "./Tools";
 import Collection from "./Collection";
@@ -48,7 +49,7 @@ const Visualization = () => {
 
   return (
     <>
-      <SearchBar data={data} focus={zoomToSelectionViz} />
+      <SearchBar data={data} focus={zoomToSelectionViz} highlightById={highlightElementsByIdViz} />
       <svg
         className={ClassNames(
           "main-viz",

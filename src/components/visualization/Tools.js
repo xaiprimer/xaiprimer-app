@@ -40,7 +40,6 @@ const Tools = ({
   const moveTour = (direction) => {
     const delta = direction === "prev" ? -1 : +1;
     tourStep = tourStep + delta;
-    console.log(tourStep);
     makeTourStepViz(activeTour.steps[tourStep]);
   };
 

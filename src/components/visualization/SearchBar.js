@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ClassNames from "classnames";
-import { Typeahead } from "react-bootstrap-typeahead";
+import { ClearButton, Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import * as styles from "../../styles/tool.module.scss";
 import {
@@ -11,7 +11,7 @@ import {
   // BsArrowBarDown as OpenCollectionIcon,
 } from "react-icons/bs";
 
-const SearchBar = ({ data, focus }) => {
+const SearchBar = ({ data, focus, highlightById }) => {
   const [search, setSearch] = useState(false);
   const pressedKeys = [];
   const openSearch = () => {
@@ -44,23 +44,48 @@ const SearchBar = ({ data, focus }) => {
   }, []); // Empty array ensures that effect is only run on mount and unmount
   return (
     <>
-      {search && (
-        <form className={styles.searchBar}>
+      {true && (
+        <form
+          className={ClassNames(styles.searchBar, { [styles.hidden]: !search })}
+        >
           <SearchIcon className={styles.icon} />
           <Typeahead
             id="searchBarTypeahead"
             placeholder="Search by project title or author"
             onChange={(selected) => {
               setSearch(false);
-              focus({dataSelection: selected, k:4})
+              focus({ dataSelection: selected, k: 4, highlighted: selected });
+            }}
+            onInputChange={(text) => {
+              if (text === "") {
+                setSearch(false);
+                highlightById(data.map((d) => d.id));
+              }
             }}
             autoFocus={true}
             defaultOpen={false}
             labelKey="title"
-            filterBy={['title', 'authors']}
+            filterBy={["title", "authors"]}
             options={data}
-          />
-          <CloseIcon className={ClassNames(styles.icon, styles.closeBtn)} style={{fontSize: "2rem"}} onClick={() => setSearch(false)} />
+          >
+            {({ onClear, selected }) => (
+              <div className="rbt-aux">
+                {/* {!!selected.length && <ClearButton onClick={onClear} />} */}
+                {!!selected.length && (
+                  <CloseIcon
+                    aria-label="Clear"
+                    type="button"
+                    className={ClassNames(styles.icon,styles.closeBtn)}
+                    style={{ fontSize: "2rem" }}
+                    onClick={() => {
+                      onClear();
+                      setSearch(false);
+                    }}
+                  />
+                )}
+              </div>
+            )}
+          </Typeahead>
         </form>
       )}
     </>

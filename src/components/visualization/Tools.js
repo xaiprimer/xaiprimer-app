@@ -77,7 +77,7 @@ const Tools = ({
                 changeVizMode(k);
               }}
               id="explorationMode"
-              className={styles.tour}
+              // className={styles.tour}
             >
               <Tab
                 eventKey="tours"
@@ -88,12 +88,19 @@ const Tools = ({
                 <p>Explore the space taking a thematic tour.</p>
                 {tours.map((d) => (
                   <ul key={d.id} className={styles.listTour}>
-                    <h6
-                      onClick={() => {
-                        goOnTour(d);
-                      }}
-                    >
-                      {d.title}
+                    <h6>
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => {
+                          goOnTour(d);
+                        }}
+                        onKeyDown={() => {
+                          return;
+                        }}
+                      >
+                        {d.title}
+                      </span>
                     </h6>
                   </ul>
                 ))}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ClassNames from "classnames";
-import { ClearButton, Typeahead } from "react-bootstrap-typeahead";
+import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import * as styles from "../../styles/tool.module.scss";
 import {
@@ -20,18 +20,21 @@ const SearchBar = ({ data, focus, highlightById }) => {
     const hasSpace = pressedKeys.indexOf(" ") !== -1;
     if (hasC && hasSpace) setSearch(true);
   };
+
   const downHandler = ({ key, repeat }) => {
     // console.log("key", key, "repeat", repeat, "search", search)
     if (repeat || search) return;
     pressedKeys.push(key);
     openSearch();
   };
+
   const upHandler = ({ key }) => {
     // console.log("key", key, "search", search)
     if (search) return;
     const index = pressedKeys.indexOf(key);
     if (index !== -1) pressedKeys.splice(index, 1);
   };
+
   // Add event listeners
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
@@ -41,7 +44,7 @@ const SearchBar = ({ data, focus, highlightById }) => {
       window.removeEventListener("keydown", downHandler);
       window.removeEventListener("keyup", upHandler);
     };
-  }, [downHandler, upHandler]); // Empty array ensures that effect is only run on mount and unmount
+  }, []); // Empty array ensures that effect is only run on mount and unmount
   return (
     <>
       {true && (
@@ -62,7 +65,7 @@ const SearchBar = ({ data, focus, highlightById }) => {
                 highlightById(data.map((d) => d.id));
               }
             }}
-            autoFocus={true}
+            // autoFocus={true}
             defaultOpen={false}
             labelKey="title"
             filterBy={["title", "authors"]}

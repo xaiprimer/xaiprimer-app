@@ -28,7 +28,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
     <div className={styles.tooltip} style={positioning}>
       {data.title && (
         <h2 className="fst-italic" style={{ width: "calc(100% - 30px)" }}>
-          {data.title} <a href={data.link} target="_blank" rel="noreferrer"><OutLink/></a>
+          {data.title} <a aria-label="Outbond link" href={data.link} target="_blank" rel="noreferrer"><OutLink/></a>
         </h2>
       )}
       {data.authors && (
@@ -57,29 +57,24 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
       {data.category !== "tactic" && (
         <>
           <h5 className="text-uppercase">Supplemental material</h5>
-          <a
-            className={ClassNames(styles.supplemental, {
-              disabled: data.designProcess !== "" ? true : false,
-            })}
-            href={data.designProcesss}
-            // href={data.designProcess}
+          <Link
+            className={ClassNames(styles.supplemental)}
+            to={`/design-process-${data.id}`}
             target="_blank"
             rel="noreferrer"
           >
             <DesignProcess />
             <p>Explore the design process</p>
-          </a>
-          <a
-            className={ClassNames(styles.supplemental, {
-              disabled: data.videoInterview !== "" ? true : false,
-            })}
-            href={data.designProcess}
+          </Link>
+          <Link
+            className={ClassNames(styles.supplemental)}
+            to={`/video-interview-${data.id}`}
             target="_blank"
             rel="noreferrer"
           >
             <VideoInterview />
             <p>Watch the video interview</p>
-          </a>
+          </Link>
         </>
       )}
       {(updateCollection) && (
@@ -88,6 +83,9 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
             <div
               className={styles.addToCollection}
               onClick={() => addToCollection(data)}
+              onKeyDown={() => {return;}}
+              role="button"
+              tabIndex={0} 
             >
               Add to collection
             </div>

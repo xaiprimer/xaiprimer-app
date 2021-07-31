@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ClassNames from "classnames";
 import * as d3 from "d3";
 import * as styles from "../../styles/tool.module.scss";
@@ -13,7 +13,7 @@ import {
   // rescalePositions as rescalePositionsViz,
   makeTourStep as makeTourStepViz,
   zoomToSelection as zoomToSelectionViz,
-  highlightElementsById as highlightElementsByIdViz
+  highlightElementsById as highlightElementsByIdViz,
 } from "./visualization.render.js";
 import Tools from "./Tools";
 import Collection from "./Collection";
@@ -23,12 +23,12 @@ import SearchBar from "./SearchBar";
 const Visualization = () => {
   const svgEl = useRef();
   const [explorationMode, setExplorationMode] = useState("clusters");
-  const [zoom, setZoom] = useState(d3.zoomIdentity);
-  const [tacticHighlighted, setTacticHighlighted] = useState(null);
+  // const [zoom, setZoom] = useState(d3.zoomIdentity);
+  const setZoom = useState(d3.zoomIdentity)[1];
+  // const [tacticHighlighted, setTacticHighlighted] = useState(null);
+  const setTacticHighlighted = useState(null)[1];
   const [tooltip, setTooltip] = useState(null);
   const [collection, updateCollection] = useState([]);
-  const [viewBoxArr, setViewBoxArr] = useState([]);
-  
 
   useEffect(() => {
     destroyViz(svgEl.current);
@@ -40,7 +40,7 @@ const Visualization = () => {
       setZoom,
       setTacticHighlighted
     );
-  }, []);
+  }, [setZoom, setTacticHighlighted]);
 
   const changeVizMode = (mode) => {
     mode = mode !== "tours" ? mode : "clusters";
@@ -49,7 +49,11 @@ const Visualization = () => {
 
   return (
     <>
-      <SearchBar data={data} focus={zoomToSelectionViz} highlightById={highlightElementsByIdViz} />
+      <SearchBar
+        data={data}
+        focus={zoomToSelectionViz}
+        highlightById={highlightElementsByIdViz}
+      />
       <svg
         className={ClassNames(
           "main-viz",

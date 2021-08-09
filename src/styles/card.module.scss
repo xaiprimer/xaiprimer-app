@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .box {
-    background-color:var(--white-primer);
+    background-color:white;
     border-radius: 0px;
     border:1px solid var(--black-primer);
     overflow: hidden;
@@ -31,13 +31,14 @@
 
   }
 
+
   .cardButton{
       margin-top:2em;
       border-radius:0px;
       width: 100%;
       border-radius: 100px;
       color:var(--black-primer);
-      border:1px solid var(--black-primer);
+      border:1px solid var(--white-primer);
       background-color:var(--white-primer);
       box-shadow: 0px 3px 10px 0px var(--cognac-primer);
       transition: 0.5s;
@@ -45,7 +46,8 @@
   }
 
   .cardButton:hover, .cardButton:active, .cardButton:visited, .cardButton:focus{
-      background-color: var(--black-primer);
+      background-color: var(--cognac-primer);
+      border:1px solid var(--black-primer);
       box-shadow: 0px 3px 3px 0px var(--cognac-primer);
 
   }

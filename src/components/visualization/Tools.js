@@ -86,8 +86,8 @@ const Tools = ({
               >
                 <h5>Take a guided tour</h5>
                 <p>Explore the space taking a thematic tour.</p>
-                {tours.map((d) => (
-                  <ul key={d.id} className={styles.listTour}>
+                <ul>{tours.map((d) => (
+                  <li key={d.id} className={styles.listTour}>
                     <h6>
                       <span
                         role="button"
@@ -101,9 +101,10 @@ const Tools = ({
                       >
                         {d.title}
                       </span>
-                    </h6>
-                  </ul>
-                ))}
+                      </h6>
+                      </li>
+                 
+                ))} </ul>
               </Tab>
               <Tab
                 eventKey="clusters"

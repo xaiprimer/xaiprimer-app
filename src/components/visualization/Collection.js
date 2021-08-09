@@ -143,7 +143,7 @@ const Collection = ({ collection, updateCollection }) => {
         >
           <div className={styles.header}>
             <h5 className={ClassNames("text-uppercase", styles.title)}>
-              Artifacts/Applications
+              ArtWorks/Applications
             </h5>
             <div className={styles.elementsCounter}>
               <p>{collection.filter((d) => !d.category).length}</p>

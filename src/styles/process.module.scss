@@ -72,12 +72,12 @@
 z-index:0;
 }
 
-.processCarousel a, button, span{
+.processCarousel a, button{
     color:var(--cognac-primer);
     bottom:-110%;
     opacity:100%;
     margin:px 0 10px 0;
-    display:none;
+    display:blck;
     }
 
 
@@ -105,4 +105,7 @@ section{
     padding: var(--navigation-height) 0em 0em 0em
 }
 
+.processMain{
+    padding: var(--navigation-height) 0em 0em 0em
+}
 

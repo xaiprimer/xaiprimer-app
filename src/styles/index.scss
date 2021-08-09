@@ -13,8 +13,8 @@ body {
   background-color: var(--white-primer);
 }
 
-main{
-  padding: var(--navigation-height) 3em 0 3em;
+main {
+  padding: 6em 0em 6em 0em;
 }
 
 h1 {
@@ -34,13 +34,12 @@ h2 {
   margin: 0;
 }
 
-
-strong{
-  font-weight:500;
+strong {
+  font-weight: 500;
   font-family: inter, sans-serif;
   text-transform: uppercase;
   font-size: 1.25rem;
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 h3 {
@@ -69,8 +68,9 @@ h5 {
   line-height: 1rem;
 }
 
-h6{
+h6 {
   margin: 0.5em 0 0.5em 0;
+  font-family: spectral, serif;
 }
 
 p {
@@ -82,55 +82,64 @@ p {
   margin: 0;
 }
 
-a{
-
-  color:var(--red-primer);
+a {
+  color: var(--red-primer);
   text-decoration: none;
 
-:hover{
-  color:var(--blue-primer);
-}
-
+  :hover {
+    color: var(--blue-primer);
   }
-
+}
 
 //index and other pages
 
-  .intro {
-    font-size: 2rem;
-    line-height: 2.8rem;
-    margin: 0;
-  }
-
-  .gradient{
-    background: -webkit-linear-gradient( #FFC200, #FF531D,#6474F4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  
-  .introText *{
-    margin-top:1em;
-  }
-
-  .actionButton{
-    margin-top:2em;
-    border-radius:0px;
-    width: 100%;
-    border-radius: 100px;
-    color:var(--black-primer);
-    border:1px solid var(--black-primer);
-    background-color:var(--white-primer);
-    box-shadow: 0px 3px 3px 0px var(--cognac-primer);
-    transition: 0.5s;
-    text-transform: uppercase;
+.intro {
+  font-size: 2rem;
+  line-height: 2.8rem;
+  margin: 0;
+  margin-bottom:2em;
 }
 
-.actionButton:hover, .actionButton:active, .actionButton:visited, .actionButton:focus{
-    background-color: var(--red-primer);
-    border:1px solid var(--black-primer);
-    box-shadow: 0px 3px 3px 0px var(--cognac-primer);
+.gradient {
+  background: -webkit-linear-gradient(#ffc200, #ff531d, #6474f4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
+.about{
+  background-image: linear-gradient(var(--white-primer), #ffc200,#ff531d);
+}
+
+hr {
+  margin-bottom: 20px;
+  opacity:1;
+  color:var(--blue-primer);
+}
+
+.references{
+  margin-bottom:2em;
+}
+
+.actionButton {
+  margin-top: 2em;
+  border-radius: 0px;
+  width: 100%;
+  border-radius: 100px;
+  color: var(--black-primer);
+  border: 1px solid var(--white-primer);
+  background-color: var(--white-primer);
+  box-shadow: 0px 3px 3px 0px var(--cognac-primer);
+  transition: 0.5s;
+  text-transform: uppercase;
+}
+
+.actionButton:hover,
+.actionButton:active,
+.actionButton:visited,
+.actionButton:focus {
+  background-color: var(--cognac-primer);
+  border: 1px solid var(--black-primer);
+  box-shadow: 0px 3px 3px 0px var(--cognac-primer);
 }
 
 .video-responsive {
@@ -147,7 +156,3 @@ a{
   width: 100%;
   position: absolute;
 }
-
-  
-
-  

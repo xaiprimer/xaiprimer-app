@@ -14,10 +14,16 @@ const IndexPage = () => {
         <main>
           <Row>
             <Col></Col>
-            <Col xs={7}>
+            <Col xs={6}>
               <h1>Do you think your project could be part of the primer?</h1>
               <h1>Do you have new strategies to add?</h1>
-              <Button className={"actionButton"}><h4>Contact us</h4></Button>
+            </Col>
+            <Col></Col>
+          </Row>
+          <Row>
+          <Col></Col>
+            <Col lg={3}>
+            <Button className={"actionButton"}><h4>Contact us</h4></Button>
             </Col>
             <Col></Col>
           </Row>

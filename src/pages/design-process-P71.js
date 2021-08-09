@@ -25,7 +25,7 @@ const IndexPage = () => {
       <PrimerAlert />
       <title>Project Page Sample</title>
       <body>
-        <main>
+        <main className={styles.processMain}>
           <Row>
             <Col xs={12} md={12} lg={5}>
               <div>

@@ -1,6 +1,6 @@
 [
   {
-    "id": "tour-1",
+    "id": "tour1",
     "title": "Explanations for Lay Users",
     "steps": [
       {
@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": "tour-2",
+    "id": "tour2",
     "title": "Interactive Articles",
     "steps": [
       {
@@ -56,7 +56,7 @@
       }
     ]
   },{
-    "id": "tour-3",
+    "id": "tour3",
     "title": "Overview",
     "steps": [
       {

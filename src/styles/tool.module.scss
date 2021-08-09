@@ -75,11 +75,12 @@
 
         .closeBtn {
           font-size: 2rem;
-          border-radius: 0px;
           padding: 0.3rem;
           cursor: pointer;
+          border-radius: 5px;
+          transition: 0.5s;
           &:hover {
-            background-color: #eee;
+            background-color:var(--light-grey-primer);
           }
         }
       }
@@ -141,7 +142,7 @@
   }
 
   ul {
-    list-style-type: circle;
+    list-style-type: circle !important;
   }
 
   .collection {
@@ -180,10 +181,13 @@
 
       .title {
         justify-self: start;
+        align-items: center;
+        vertical-align: middle;
       }
 
       .elementsCounter {
-        background-color: rgba(0, 0, 0, 0.15);
+        background-color: var(--white-primer);
+        border:1px solid var(--cognac-primer);
         display: inline-flex;
         width: 1.5rem;
         height: 1.5rem;
@@ -198,9 +202,12 @@
         font-size: 2rem;
         border-radius: 0px;
         padding: 0.3rem;
+        border-radius: 5px;
+        transition: 0.5s;
 
         &:hover {
-          background-color: #eee;
+          background-color:var(--light-grey-primer);
+          color:var(--black-primer);
         }
       }
     }
@@ -214,15 +221,15 @@
 
       .group {
         width: 100%;
-        background-color: var(--white-primer);
+        background-color: white;
         overflow: hidden;
         height: 40px;
         height: 40px;
         transition: height 0.15s ease;
         box-sizing: border-box;
-        border-radius: 7px;
-        background-color: #fff;
-        border: 1px solid #666;
+        border-radius: 0px;
+        background-color:var(--white-primer);
+        border: 1px solid var(--cognac-primer);
         padding: 0 10px;
         margin-bottom: 10px;
 
@@ -230,8 +237,8 @@
           overflow: scroll;
           height: calc(100% - 60px);
           color: #000;
-          border: 1px solid #ccc;
-          background-color: #f5f5f5;
+          border: 1px solid var(--cognac-primer);
+          background-color:var(--white-primer);
           padding-bottom: 3px;
         }
 
@@ -329,4 +336,5 @@
   .closeBtn {
     cursor: pointer;
   }
+
 }

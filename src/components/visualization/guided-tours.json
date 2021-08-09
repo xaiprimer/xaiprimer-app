@@ -55,5 +55,35 @@
         "text": "<h2><strong>Drill down story, Define and Describe, Overview First</strong> are the most shared explanation strategies, in combination with visuals.</h2>"
       }
     ]
+  },{
+    "id": "tour-3",
+    "title": "Overview",
+    "steps": [
+      {
+        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
+        "k": 2,
+        "text": "<h2>Explanation Strategies for lay users</h2>"
+      },
+      {
+        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
+        "k": 4,
+        "text": "<h2>These clusters of projects are visually <strong>detached</strong> from the others.</h2>"
+      },
+      {
+        "ids": ["P22", "P25", "P29", "P34"],
+        "k": 4,
+        "text": "<h2>All of them are addressed to the <strong>lay public</strong> i.e. users who are not experts in artificial intelligence neither domain experts.</h2><h2>From the interaction standpoint, guided exploration and  linear path are shared characteristics.</h2>"
+      },
+      {
+        "ids": ["P22", "P25", "P29", "P34"],
+        "k": 5,
+        "text": "<h2>This group of projects exploits only one type of explanation tactics: the metaphorical narrative.</h2><h2>Indeed, it gatheres together two documentaries, one video and one storytelling dissemination website.</h2>"
+      },
+      {
+        "ids": ["P18", "P21", "P30", "P31", "P38", "P39"],
+        "k": 5,
+        "text": "<h2>Together with metaphohrical narrative, explanation by example is another tactic used for explaining AI to lay users. </h2>"
+      }
+    ]
   }
 ]

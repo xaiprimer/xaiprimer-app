@@ -11,15 +11,11 @@ import Carousel from "react-bootstrap/Carousel";
 
 import * as styles from "../styles/process.module.scss";
 
-import ProcessP7101 from "../images/interconnected/processP7101.png";
 import ProcessP7102 from "../images/interconnected/processP7102.png";
-import ProcessP7103 from "../images/interconnected/processP7103.png";
 import ProcessP7104 from "../images/interconnected/processP7104.png";
-import ProcessP7105 from "../images/interconnected/processP7105.png";
-import ProcessP7106 from "../images/interconnected/processP7106.png";
 import ProcessP7107 from "../images/interconnected/processP7107.png";
 
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col} from "react-bootstrap";
 
 // markup
 const IndexPage = () => {

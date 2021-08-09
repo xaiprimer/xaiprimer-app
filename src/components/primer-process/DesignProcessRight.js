@@ -1,8 +1,6 @@
 import React from "react";
 import data from "./projects-data.json";
-import { Row, Col, Button } from "react-bootstrap";
-
-import * as styles from "../../styles/process.module.scss";
+import { Col } from "react-bootstrap";
 
 const DesignProcessRight = () => (
   <div>

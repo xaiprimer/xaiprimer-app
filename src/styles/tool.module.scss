@@ -122,22 +122,19 @@
     max-width: 400px;
     padding: 10px;
     color: var(--cognac-primer);
-    border:1px solid var(--cognac-primer);
+    border: 1px solid var(--cognac-primer);
     background-color: var(--white-primer);
     position: absolute;
     bottom: 100px;
     left: 51%;
     transform: translate(-50%, 0);
     margin-top: 2em;
-
   }
 
-  .toursText{
-    color:var(--cognac-primer);
-    filter:none !important;
+  .toursText {
+    color: var(--cognac-primer);
+    filter: none !important;
   }
-
-
 
   .listTour {
     margin-top: 1em;
@@ -267,19 +264,69 @@
 
   .searchBar {
     position: fixed;
-    top: 50%;
+    top: 35%;
     left: 50%;
-    background-color: var(--light-grey-primer);
+    background-color: var(--white-primer);
     border-radius: 100px;
     text-transform: uppercase;
     color: var(--cognac-primer);
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-    padding: 10px;
-    box-shadow: 0px 15px 30px 0px var(--cognac-primer);
+    box-shadow: 0px 20px 50px 0px var(--cognac-primer);
+
+    width: 50%;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    
+    &.hidden {
+      visibility: hidden;
+    }
+
+    .icon {
+      font-size: 1.5rem;
+      margin: 1.5rem;
+      &:hover {
+        background-color: #eee;
+      }
+    }
+
+    .closeBtn {
+      pointer-events: all;
+    }
+
+    :global .rbt {
+      border: none;
+      background-color: transparent;
+      flex-grow: 2;
+      padding: 0;
+      margin: 0;
+      font-size: 1.2rem;
+
+      :global .form-control {
+        background-color: transparent;
+        border: none;
+         &:focus {
+           box-shadow: none;
+           border: none;
+         }
+      }
+
+      :global .rbt-aux {
+        width: auto;
+      }
+    }
   }
 
   .customTab {
     padding: 10px;
+  }
+
+  .closeBtn {
+    cursor: pointer;
   }
 }

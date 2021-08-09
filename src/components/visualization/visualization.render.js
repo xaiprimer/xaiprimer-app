@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { cluster as renderCluster, project as renderProject } from "./Gliphs";
 // values
 let data,
-  originalData,
+  // originalData,
   bbox,
   width,
   height,
@@ -36,6 +36,12 @@ const linkDistance = d3
   .range([0, 4 * _k]);
 // functions
 let setMode, setTooltip, setZoomState, zoom;
+const highlightElementsById = (highlightedIds) => {
+  item
+    .transition()
+    .duration(250)
+    .style("opacity", (d) => (highlightedIds.indexOf(d.id) === -1 ? 0.3 : 1));
+};
 const zoomed = (e) => {
   setTooltip(null);
   setZoomState(e.transform);
@@ -78,21 +84,35 @@ const zoomed = (e) => {
     }
   }
 };
-const setZoom = ({ k, x, y, duration = 1000 }) => {
-  const oldZoom = d3.zoomTransform(g.node());
+const setZoom = ({ k, x, y, duration = 1000, highlighted = [] }) => {
+  // const oldZoom = d3.zoomTransform(g.node());
   let newZoom;
   if (!x || !y) {
     newZoom = svg.transition().duration(duration).call(zoom.scaleTo, k);
     return;
   }
   newZoom = new d3.ZoomTransform(k, x, y);
-  svg.transition().duration(duration).call(zoom.transform, newZoom);
-};
-const zoomToSelection = ({ dataSelection, k, duration }) => {
-  // console.log(dataSelection);
 
-  let [x0, x1] = d3.extent(dataSelection, (d) => d._x);
-  let [y0, y1] = d3.extent(dataSelection, (d) => d._y);
+  svg
+    .transition()
+    .duration(duration)
+    .on("end", () => {
+      if (!!highlighted.length) {
+        highlighted = highlighted.map((d) => d.id);
+        setTimeout(highlightElementsById(highlighted), 350);
+      }
+    })
+    .call(zoom.transform, newZoom);
+};
+const zoomToSelection = ({ dataSelection, k, duration, highlighted }) => {
+  // need to match the selection through id with the data stored in this component
+  // the reason is that _x and _y positions are rescaled according to screen size
+  const selectionMatched = data.filter(
+    (d) => dataSelection.map((d) => d.id).indexOf(d.id) !== -1
+  );
+
+  let [x0, x1] = d3.extent(selectionMatched, (d) => d._x);
+  let [y0, y1] = d3.extent(selectionMatched, (d) => d._y);
 
   // because of initial translation
   x0 += width / 2;
@@ -108,7 +128,7 @@ const zoomToSelection = ({ dataSelection, k, duration }) => {
     -(x0 * k + (bbox_width * k - width) / 2),
     -(y0 * k + (bbox_height * k - height) / 2),
   ];
-  setZoom({ x, y, k, duration });
+  setZoom({ x, y, k, duration, highlighted });
 };
 const linkArc = (d) => {
   const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
@@ -448,10 +468,10 @@ const switchRender = (mode, setCoordinates) => {
   }
 };
 const initialize = (element, _data, _setMode, _setTooltip, _setZoomState) => {
-  console.log("initialize visualization");
+  // console.log("initialize visualization");
 
   // Initialize variables
-  originalData = JSON.parse(JSON.stringify(_data));
+  // originalData = JSON.parse(JSON.stringify(_data));
   data = _data;
   setTooltip = _setTooltip;
   setMode = _setMode;
@@ -690,6 +710,8 @@ export {
   switchRender,
   setZoom,
   zoomValues,
+  zoomToSelection,
+  highlightElementsById,
   rescalePositions,
   makeTourStep,
   destroy,

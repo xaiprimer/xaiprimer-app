@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ClassNames from "classnames";
 import * as styles from "../../styles/tool.module.scss";
 import { Button, ButtonGroup } from "react-bootstrap";
@@ -40,7 +40,6 @@ const Tools = ({
   const moveTour = (direction) => {
     const delta = direction === "prev" ? -1 : +1;
     tourStep = tourStep + delta;
-    console.log(tourStep);
     makeTourStepViz(activeTour.steps[tourStep]);
   };
 
@@ -78,7 +77,7 @@ const Tools = ({
                 changeVizMode(k);
               }}
               id="explorationMode"
-              className={styles.tour}
+              // className={styles.tour}
             >
               <Tab
                 eventKey="tours"
@@ -88,14 +87,22 @@ const Tools = ({
                 <h5>Take a guided tour</h5>
                 <p>Explore the space taking a thematic tour.</p>
                 {tours.map((d) => (
-                  <ul className={styles.listTour}><h6
-                    key={d.id}
-                    onClick={() => {
-                      goOnTour(d);
-                    }}
-                  >
-                    {d.title}
-                  </h6></ul>
+                  <ul key={d.id} className={styles.listTour}>
+                    <h6>
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => {
+                          goOnTour(d);
+                        }}
+                        onKeyDown={() => {
+                          return;
+                        }}
+                      >
+                        {d.title}
+                      </span>
+                    </h6>
+                  </ul>
                 ))}
               </Tab>
               <Tab
@@ -153,7 +160,11 @@ const Tools = ({
             >
               {"<"}
             </Button>
-            <Button variant="light" onClick={() => exitTour()} className={styles.toursButton}>
+            <Button
+              variant="light"
+              onClick={() => exitTour()}
+              className={styles.toursButton}
+            >
               End Tour
             </Button>
             <Button

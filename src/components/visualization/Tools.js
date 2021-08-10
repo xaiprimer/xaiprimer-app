@@ -9,10 +9,12 @@ import {
   BsArrowBarDown as OpenPanelIcon,
   BsMap as ToursIcon,
 } from "react-icons/bs";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab, Col, Row } from "react-bootstrap";
 import classNames from "classnames";
 
+import Clusters01 from "../../images/clusters-01.svg";
 import Clusters from "../../images/clusters.svg";
+import Clusters02 from "../../images/clusters-02.svg";
 import Projects from "../../images/projects.svg";
 import Tactics from "../../images/tact.svg";
 let tourStep = 0;
@@ -86,25 +88,26 @@ const Tools = ({
               >
                 <h5>Take a guided tour</h5>
                 <p>Explore the space taking a thematic tour.</p>
-                <ul>{tours.map((d) => (
-                  <li key={d.id} className={styles.listTour}>
-                    <h6>
-                      <span
-                        role="button"
-                        tabIndex={0}
-                        onClick={() => {
-                          goOnTour(d);
-                        }}
-                        onKeyDown={() => {
-                          return;
-                        }}
-                      >
-                        {d.title}
-                      </span>
+                <ul>
+                  {tours.map((d) => (
+                    <li key={d.id} className={styles.listTour}>
+                      <h6>
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => {
+                            goOnTour(d);
+                          }}
+                          onKeyDown={() => {
+                            return;
+                          }}
+                        >
+                          {d.title}
+                        </span>
                       </h6>
-                      </li>
-                 
-                ))} </ul>
+                    </li>
+                  ))}{" "}
+                </ul>
               </Tab>
               <Tab
                 eventKey="clusters"
@@ -112,23 +115,154 @@ const Tools = ({
                 className={styles.customTab}
               >
                 <h5>How to read the visualization</h5>
-                <img
-                  src={Clusters}
-                  className={styles.legend}
-                  alt="legend"
-                ></img>
+                <div>
+                  <Row className={styles.boxLegend}>
+                    <h6>Position</h6>
+                    <p className={styles.textLegend}>
+                      Glyphs representing clusters of projects are positioned
+                      according to their similarity, using UMAP projection.
+                    </p>
+                  </Row>
+                  <Row className={styles.boxLegend}>
+                    <Col>
+                      <h6 className={styles.subtitleLegend}>Color</h6>
+                      <p className={styles.textLegend}>Scenario</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>Usage</p>
+                        </em>
+                      </small>
+                      <div className={styles.colorLegend}>
+                        <ul>
+                          <li>
+                            <span className={styles.exhibition}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.desktop}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.mobile}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.multiple}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Col>
+                    <Col>
+                      <h6 className={styles.subtitleLegend}>Size</h6>
+                      <p className={styles.textLegend}>Projects</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>sum of projects</p>
+                        </em>
+                      </small>
+                      <img
+                        src={Clusters01}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                    </Col>
+                    <Col>
+                      <h6 className={styles.subtitleLegend}>Components</h6>
+                      <p className={styles.textLegend}>Explorations</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>
+                            Recurrent exploration
+                          </p>
+                        </em>
+                      </small>
+                      <img
+                        src={Clusters02}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                    </Col>
+                  </Row>
+                </div>
               </Tab>
+
               <Tab
                 eventKey="projects"
                 title="Projects"
                 className={styles.customTab}
               >
                 <h5>How to read the visualization</h5>
-                <img
-                  src={Projects}
-                  className={styles.legend}
-                  alt="legend"
-                ></img>
+                <div>
+                  <Row className={styles.boxLegend}>
+                    <h6>Position</h6>
+                    <p className={styles.textLegend}>
+                      Glyphs representing clusters of projects are positioned
+                      according to their similarity, using UMAP projection.
+                    </p>
+                  </Row>
+                  <Row className={styles.boxLegend}>
+                    <Col>
+                      <h6 className={styles.subtitleLegend}>Color</h6>
+                      <p className={styles.textLegend}>Scenario</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>Usage</p>
+                        </em>
+                      </small>
+                      <div className={styles.colorLegend}>
+                        <ul>
+                          <li>
+                            <span className={styles.exhibition}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.desktop}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.mobile}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.multiple}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Col>
+                    <Col>
+                      <h6 className={styles.subtitleLegend}>Size</h6>
+                      <p className={styles.textLegend}>Projects</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>sum of projects</p>
+                        </em>
+                      </small>
+                      <img
+                        src={Clusters01}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                    </Col>
+                    <Col>
+                      <h6 className={styles.subtitleLegend}>Components</h6>
+                      <p className={styles.textLegend}>Explorations</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>
+                            Recurrent exploration
+                          </p>
+                        </em>
+                      </small>
+                      <img
+                        src={Clusters02}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                    </Col>
+                  </Row>
+                </div>
               </Tab>
               <Tab
                 eventKey="networks"

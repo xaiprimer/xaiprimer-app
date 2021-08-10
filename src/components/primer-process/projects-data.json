@@ -19,7 +19,7 @@
       "tactics": "drill-down story; explanation by example"
     },
     {
-      "media": "visualisation;video"
+      "media": "visualisation; video"
     },
     {
       "end_users": "Broad audience of non-techinical people interested in IOT looking for tools helping to understand how IOT works in realtion to personal data. People belonging to this audience are bot skeptical users and people who fear iot can steal private information"

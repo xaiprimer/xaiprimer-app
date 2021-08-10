@@ -98,6 +98,13 @@ a {
   line-height: 2.8rem;
   margin: 0;
   margin-bottom:2em;
+  z-index:1;
+  position:relative;
+}
+
+.foreText{
+  position:relative;
+  z-index:1;
 }
 
 .gradient {
@@ -106,8 +113,26 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
-.about{
-  background-image: linear-gradient(var(--white-primer), #ffc200,#ff531d);
+.floatingSquare{
+  background-image: linear-gradient(#ffc200, #ff531d, #6474f4);
+  position:absolute;
+  width: 80vh;
+  height: 80vh;
+  margin:3em 3em 4em 4em;
+  z-index:0;
+  border-radius: 100%;
+  filter: blur(50px);
+}
+
+.floatingSquareSmall{
+  background-image: linear-gradient(#ffc200, #ff531d, #6474f4);
+  position:absolute;
+  width: 40vh;
+  height: 40vh;
+  margin:3em 3em 4em 4em;
+  z-index:0;
+  border-radius: 100%;
+  filter: blur(30px);
 }
 
 hr {

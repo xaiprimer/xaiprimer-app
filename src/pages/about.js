@@ -16,14 +16,15 @@ const IndexPage = () => {
           <Row>
             <Col></Col>
             <Col xs={6}>
-              <h1>
+            <div className="floatingSquare"></div>
+              <h1 className="foreText">
                 We propose an exploratory interface depicting both XAI
                 strategies and applications to support designers conceptualizing
                 and developing new projects.
               </h1>
               <br></br>
               <Row></Row>
-              <div className="introText">
+              <div>
                 <h2 className="intro">
                   Explainable Artificial Intelligence (XAI) processes typically
                   combine various explanation and verification strategies to
@@ -41,6 +42,7 @@ const IndexPage = () => {
                   a source of inspiration
                 </h2>
               </div>
+              
             </Col>
             <Col></Col>
           </Row>
@@ -51,7 +53,8 @@ const IndexPage = () => {
             <Col xs={6}>
               <section className="references">
                 <h2 className="intro">References</h2>
-                <ul>
+                <div className="floatingSquareSmall"></div>
+                <ul className="foreText">
                   <li><h3>
                     Mennatallah El-Assady, Wolfgang Jentner, RebeccaKehlbeck,
                     Udo Schlegel, Rita Sevastjanova, FabianSperrle, Thilo
@@ -71,32 +74,6 @@ const IndexPage = () => {
             </Col>
             <Col></Col>
             </Row>
-            <Row>
-          <hr></hr>
-          <Col></Col>
-            <Col xs={6}>
-              <section className="references">
-                <h2 className="intro">References</h2>
-                <ul>
-                  <li><h3>
-                    Mennatallah El-Assady, Wolfgang Jentner, RebeccaKehlbeck,
-                    Udo Schlegel, Rita Sevastjanova, FabianSperrle, Thilo
-                    Spinner, and Daniel Keim. 2019.Towards XAI : Structuring the
-                    Processes of Explanations. InProc. of ACM CHI Workshop
-                    onHuman-Centered Machine Learning Beatrice Gobbo. 2020.
-                    </h3></li>
-
-                  <li><h3>
-                    Explaining AI Through CriticalReflection Artifacts - On the
-                    Role of Communication Design Within XAI. InAdvanced Visual
-                    Interfaces. AVI2020 Workshops, AVI-BDA and ITAVIS,Ischia,
-                    Italy,Vol. 12585. Springer, 184–188
-                    </h3></li>
-                </ul>
-              </section>
-            </Col>
-            <Col></Col>
-          </Row>
           <PrimerFooter />
         </main>
       </body>

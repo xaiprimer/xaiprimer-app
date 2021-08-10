@@ -24,7 +24,7 @@ const _k = 4;
 const radius = d3
   .scaleSqrt()
   .domain([0, 1])
-  .range([0, 0.8 * _k]);
+  .range([0, 0.6 * _k]);
 const side = d3
   .scaleSqrt()
   .domain([0, 1])
@@ -33,7 +33,7 @@ const medium = d3.scaleLinear().domain([0, 1]).range([0, 0.58]); // to size elem
 const linkDistance = d3
   .scaleSqrt()
   .domain([0, 1])
-  .range([0, 4 * _k]);
+  .range([0, 2 * _k]);
 // functions
 let setMode, setTooltip, setZoomState, zoom;
 const highlightElementsById = (highlightedIds) => {
@@ -430,7 +430,7 @@ const simulation = d3
       .id((d) => d.id)
       .distance((d) => linkDistance(d.target.size))
   )
-  .force("charge", d3.forceManyBody().strength(-5))
+  .force("charge", d3.forceManyBody().strength(-2))
   .force(
     "collide",
     d3
@@ -438,7 +438,7 @@ const simulation = d3
       .radius((d) => {
         const _radius = !d.category
           ? Math.sqrt(2 * Math.pow(side(d.size || 1), 2)) / 2
-          : radius(d.size) * 0.85;
+          : radius(d.size) * 0.9;
         return _radius;
       })
       .iterations(1)

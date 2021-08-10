@@ -14,7 +14,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "dev-m": "gatsby develop -H 0.0.0.0 -p 8000 -o",
-    "dev-m-clean": "gatsby clean && gatsby develop -H 0.0.0.0 -p 8000 -o"
+    "dev-m-clean": "gatsby clean && gatsby develop -H 0.0.0.0 -p 8000 -o",
+    "deploy": "gatsby clean && gatsby build --prefix-paths && gh-pages -d public"
   },
   "dependencies": {
     "@fontsource/crimson-text": "^4.5.0",
@@ -45,5 +46,8 @@
     "sass": "^1.35.2",
     "sharp": "^0.28.3",
     "typeface-spectral": "^1.1.13"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }

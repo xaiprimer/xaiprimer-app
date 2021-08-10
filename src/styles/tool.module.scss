@@ -261,7 +261,7 @@
   }
 
   .legend {
-    width: 200%;
+    width: 100%;
     margin-top: 1em;
   }
 
@@ -297,6 +297,15 @@
     background-color: var(--light-grey-primer);
   }
 
+.strategy {
+  background-color: var(--grey-primer);
+}
+
+.medium {
+  background-color: var(--white-primer);
+}
+
+
 
   .textLegend {
     font-size: 0.7rem !important;
@@ -313,6 +322,7 @@
 
 .subtitleLegend{
     color:var(--cognac-primer);
+    margin-top:1em;
   }
 
   .boxLegend {

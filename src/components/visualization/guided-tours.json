@@ -5,16 +5,50 @@
     "steps": [
       {
         "ids": [],
-        "k":1,
+        "k": 1,
         "text": "<h2>The XAI Primer showcases a selection of Explainable Artificial Intelligence artworks from different domains. Projects have been coded and dispayed according to their similarity.</h2>"
       },
       {
-        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
+        "ids": [
+          "P18",
+          "P30",
+          "P31",
+          "P39",
+          "P21",
+          "P22",
+          "P25",
+          "P29",
+          "P34",
+          "P38"
+        ],
         "k": 2,
         "text": "<h2>These clusters of projects are visually detached from the others, proving a considerable difference.</h2>"
       },
       {
-        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
+        "ids": [
+          "P02",
+          "P65",
+          "P58",
+          "P70",
+          "P43",
+          "P40",
+          "P41",
+          "P47",
+          "P55",
+          "P52",
+          "P09",
+          "P06",
+          "P07",
+          "P05",
+          "P08",
+          "P62",
+          "P19",
+          "P49",
+          "P20",
+          "P61",
+          "R02",
+          "P35"
+        ],
         "k": 2,
         "text": "<h2>While the opposite side of the space is populated by many artworks. The glyph mainly shows how most clusters are blue, indicating a predominance of cases designed for a desktop view.</h2>"
       },
@@ -35,29 +69,51 @@
     "title": "Explanations for Lay Users",
     "steps": [
       {
-        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
+        "ids": [
+          "P18",
+          "P30",
+          "P31",
+          "P39",
+          "P21",
+          "P22",
+          "P25",
+          "P29",
+          "P34",
+          "P38"
+        ],
         "k": 2,
         "text": "<h2>Explanation Strategies for lay users</h2>"
       },
       {
-        "ids": ["P18", "P30", "P31", "P39", "P21", "P22", "P25", "P29", "P34", "P38"],
-        "k": 4,
-        "text": "<h2>These clusters of projects are visually <strong>detached</strong> from the others.</h2>"
+        "ids": [
+          "P18",
+          "P30",
+          "P31",
+          "P39",
+          "P21",
+          "P22",
+          "P25",
+          "P29",
+          "P34",
+          "P38"
+        ],
+        "k": 3,
+        "text": "<h2>These clusters of projects are visually <em>detached</em> from the others.</h2>"
       },
       {
         "ids": ["P22", "P25", "P29", "P34"],
         "k": 4,
-        "text": "<h2>All of them are addressed to the <strong>lay public</strong> i.e. users who are not experts in artificial intelligence neither domain experts.</h2><h2>From the interaction standpoint, guided exploration and  linear path are shared characteristics.</h2>"
+        "text": "<h2>All of them are addressed to the <em>lay public</em> i.e. users who are not experts in artificial intelligence neither domain experts.</h2><h2>From the interaction standpoint, <em>guided exploration</em> and <em>linear path</em> are shared characteristics.</h2>"
       },
       {
         "ids": ["P22", "P25", "P29", "P34"],
         "k": 5,
-        "text": "<h2>This group of projects exploits only one type of explanation tactics: the metaphorical narrative.</h2><h2>Indeed, it gatheres together two documentaries, one video and one storytelling dissemination website.</h2>"
+        "text": "<h2>This group of projects exploits only one type of explanation tactics: the metaphorical narrative.</h2><h2>Indeed, it gathers together two documentaries, one video and one storytelling dissemination website.</h2>"
       },
       {
         "ids": ["P18", "P21", "P30", "P31", "P38", "P39"],
         "k": 5,
-        "text": "<h2>Together with metaphohrical narrative, explanation by example is another tactic used for explaining AI to lay users. </h2>"
+        "text": "<h2>Together with <em>metaphorical narrative</em>, <em>explanation by example</em> is another tactic used for explaining AI to lay users. </h2>"
       }
     ]
   },
@@ -66,24 +122,92 @@
     "title": "Interactive Articles",
     "steps": [
       {
-        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
+        "ids": [
+          "P02",
+          "P65",
+          "P58",
+          "P70",
+          "P43",
+          "P40",
+          "P41",
+          "P47",
+          "P55",
+          "P52",
+          "P09",
+          "P06",
+          "P07",
+          "P05",
+          "P08",
+          "P62",
+          "P19",
+          "P49",
+          "P20",
+          "P61",
+          "R02",
+          "P35"
+        ],
         "k": 2,
-        "text": "<h2><strong>Interactive Articles</strong> as triggers for deductive strategies</h2>"
+        "text": "<h2><em>Interactive Articles</em> as triggers for deductive strategies</h2>"
       },
       {
-        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52", "P09", "P06", "P07", "P05", "P08", "P62", "P19", "P49", "P20", "P61", "R02", "P35"],
+        "ids": [
+          "P02",
+          "P65",
+          "P58",
+          "P70",
+          "P43",
+          "P40",
+          "P41",
+          "P47",
+          "P55",
+          "P52",
+          "P09",
+          "P06",
+          "P07",
+          "P05",
+          "P08",
+          "P62",
+          "P19",
+          "P49",
+          "P20",
+          "P61",
+          "R02",
+          "P35"
+        ],
         "k": 3,
-        "text": "<h2>These groups of projects are characterized by the use of the <strong>same presentation format</strong>. In fact, most are Interactive Articles.</h2>"
+        "text": "<h2>These groups of projects are characterized by the use of the <em>same presentation format</em>. In fact, the majority of them are Interactive Articles.</h2>"
       },
       {
-        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52"],
+        "ids": [
+          "P02",
+          "P65",
+          "P58",
+          "P70",
+          "P43",
+          "P40",
+          "P41",
+          "P47",
+          "P55",
+          "P52"
+        ],
         "k": 3,
-        "text": "<h2>From an interaction standpoint, everyone prefers a <strong>linear path and a guided exploration</strong>.</h2>"
+        "text": "<h2>From an interaction standpoint, everyone prefers a <em>linear path and a guided exploration</em>.</h2>"
       },
       {
-        "ids": ["P02", "P65", "P58", "P70", "P43", "P40", "P41", "P47", "P55", "P52"],
+        "ids": [
+          "P02",
+          "P65",
+          "P58",
+          "P70",
+          "P43",
+          "P40",
+          "P41",
+          "P47",
+          "P55",
+          "P52"
+        ],
         "k": 4.1,
-        "text": "<h2><strong>Drill down story, Define and Describe, Overview First</strong> are the most shared explanation strategies, in combination with visuals.</h2>"
+        "text": "<h2><em>Drill down story, Define and Describe, Overview First</em> are the most shared explanation strategies, in combination with visuals.</h2>"
       }
     ]
   }

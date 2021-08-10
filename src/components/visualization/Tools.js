@@ -13,10 +13,12 @@ import { Tabs, Tab, Col, Row } from "react-bootstrap";
 import classNames from "classnames";
 
 import Clusters01 from "../../images/clusters-01.svg";
-import Clusters from "../../images/clusters.svg";
 import Clusters02 from "../../images/clusters-02.svg";
-import Projects from "../../images/projects.svg";
-import Tactics from "../../images/tact.svg";
+import Projects01 from "../../images/projects-01.svg";
+import Projects02 from "../../images/projects-02.svg";
+import Projects03 from "../../images/projects-03.svg";
+import Networks01 from "../../images/network-01.svg";
+
 let tourStep = 0;
 const Tools = ({
   changeVizMode,
@@ -134,21 +136,21 @@ const Tools = ({
                       </small>
                       <div className={styles.colorLegend}>
                         <ul>
-                          <li>
+                        <li>
                             <span className={styles.exhibition}></span>
                             <p className={styles.textLegend}>Exhibition</p>
                           </li>
                           <li>
                             <span className={styles.desktop}></span>
-                            <p className={styles.textLegend}>Exhibition</p>
+                            <p className={styles.textLegend}>Desktop</p>
                           </li>
                           <li>
                             <span className={styles.mobile}></span>
-                            <p className={styles.textLegend}>Exhibition</p>
+                            <p className={styles.textLegend}>Mobile</p>
                           </li>
                           <li>
                             <span className={styles.multiple}></span>
-                            <p className={styles.textLegend}>Exhibition</p>
+                            <p className={styles.textLegend}>Multiple</p>
                           </li>
                         </ul>
                       </div>
@@ -202,15 +204,34 @@ const Tools = ({
                     </p>
                   </Row>
                   <Row className={styles.boxLegend}>
-                    <Col>
-                      <h6 className={styles.subtitleLegend}>Color</h6>
+                  <h6 className={styles.subtitleLegend}>Inside Components</h6>
+                  <Row>
+                    <Col xs={4}>
                       <p className={styles.textLegend}>Scenario</p>
                       <small>
                         <em>
                           <p className={styles.textLegend}>Usage</p>
                         </em>
                       </small>
-                      <div className={styles.colorLegend}>
+                    </Col>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Multimediality</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>sum of media</p>
+                        </em>
+                      </small>
+                      </Col>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Tasks</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>
+                            Expected actions</p>
+                        </em>
+                      </small>
+                    </Col>
+                    <Col xs={4}><div className={styles.colorLegend}>
                         <ul>
                           <li>
                             <span className={styles.exhibition}></span>
@@ -218,51 +239,68 @@ const Tools = ({
                           </li>
                           <li>
                             <span className={styles.desktop}></span>
-                            <p className={styles.textLegend}>Exhibition</p>
+                            <p className={styles.textLegend}>Desktop</p>
                           </li>
                           <li>
                             <span className={styles.mobile}></span>
-                            <p className={styles.textLegend}>Exhibition</p>
+                            <p className={styles.textLegend}>Mobile</p>
                           </li>
                           <li>
                             <span className={styles.multiple}></span>
-                            <p className={styles.textLegend}>Exhibition</p>
+                            <p className={styles.textLegend}>Multiple</p>
                           </li>
                         </ul>
-                      </div>
-                    </Col>
-                    <Col>
-                      <h6 className={styles.subtitleLegend}>Size</h6>
-                      <p className={styles.textLegend}>Projects</p>
-                      <small>
-                        <em>
-                          <p className={styles.textLegend}>sum of projects</p>
-                        </em>
-                      </small>
-                      <img
-                        src={Clusters01}
+                      </div></Col>
+                    <Col xs={8}>
+                    <img
+                        src={Projects01}
                         className={styles.legend}
                         alt="legend"
                       ></img>
+                      </Col>
+                  </Row>
+                  <h6 className={styles.subtitleLegend}>Outside Components</h6>
+                  <Row>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Exploration</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>Interface Exploration</p>
+                        </em>
+                      </small>
+                      <p className={styles.textLegend}>Path</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>path linking explanations</p>
+                        </em>
+                      </small>
                     </Col>
-                    <Col>
-                      <h6 className={styles.subtitleLegend}>Components</h6>
-                      <p className={styles.textLegend}>Explorations</p>
+                    <Col xs={4}>
+                    <img
+                        src={Projects02}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                      </Col>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>End User Groups</p>
                       <small>
                         <em>
                           <p className={styles.textLegend}>
-                            Recurrent exploration
-                          </p>
+                            users' expertise</p>
                         </em>
                       </small>
                       <img
-                        src={Clusters02}
+                        src={Projects03}
                         className={styles.legend}
                         alt="legend"
                       ></img>
                     </Col>
+
+                 
                   </Row>
-                </div>
+                  </Row>
+                  </div>
               </Tab>
               <Tab
                 eventKey="networks"
@@ -270,7 +308,145 @@ const Tools = ({
                 className={styles.customTab}
               >
                 <h5>How to read the visualization</h5>
-                <img src={Tactics} className={styles.legend} alt="legend"></img>
+                <div>
+                  <Row className={styles.boxLegend}>
+                    <h6>Position</h6>
+                    <p className={styles.textLegend}>
+                      Glyphs representing clusters of projects are positioned
+                      according to their similarity, using UMAP projection.
+                    </p>
+                  </Row>
+                  <Row className={styles.boxLegend}>
+                  <h6 className={styles.subtitleLegend}>Network</h6>
+                  <Row>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Size</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>Occurrences</p>
+                        </em>
+                      </small>
+                      <img src={Networks01}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                    </Col>
+                    <Col xs={4}>
+                    <p className={styles.textLegend}>Type</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>
+                            Type of elements</p>
+                        </em>
+                      </small>
+                      <div className={styles.colorLegend}>
+                        <ul>
+                          <li>
+                            <span className={styles.medium}></span>
+                            <p className={styles.textLegend}>Medium</p>
+                          </li>
+                          <li>
+                            <span className={styles.strategy}></span>
+                            <p className={styles.textLegend}>Strategy</p>
+                          </li>
+                        </ul>
+                      </div></Col>
+                    </Row>
+                  <h6 className={styles.subtitleLegend}>Inside Components</h6>
+                  <Row>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Scenario</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>Usage</p>
+                        </em>
+                      </small>
+                    </Col>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Multimediality</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>sum of media</p>
+                        </em>
+                      </small>
+                      </Col>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Tasks</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>
+                            Expected actions</p>
+                        </em>
+                      </small>
+                    </Col>
+                    <Col xs={4}><div className={styles.colorLegend}>
+                        <ul>
+                          <li>
+                            <span className={styles.exhibition}></span>
+                            <p className={styles.textLegend}>Exhibition</p>
+                          </li>
+                          <li>
+                            <span className={styles.desktop}></span>
+                            <p className={styles.textLegend}>Desktop</p>
+                          </li>
+                          <li>
+                            <span className={styles.mobile}></span>
+                            <p className={styles.textLegend}>Mobile</p>
+                          </li>
+                          <li>
+                            <span className={styles.multiple}></span>
+                            <p className={styles.textLegend}>Multiple</p>
+                          </li>
+                        </ul>
+                      </div></Col>
+                    <Col xs={8}>
+                    <img
+                        src={Projects01}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                      </Col>
+                  </Row>
+                  <h6 className={styles.subtitleLegend}>Outside Components</h6>
+                  <Row>
+                    <Col xs={4}>
+                      <p className={styles.textLegend}>Exploration</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>Interface Exploration</p>
+                        </em>
+                      </small>
+                      <p className={styles.textLegend}>Path</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>path linking explanations</p>
+                        </em>
+                      </small>
+                    </Col>
+                    <Col xs={4}>
+                    <img
+                        src={Projects02}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                      </Col>
+                    <Col xs={4}>
+                    <p className={styles.textLegend}>End User Groups</p>
+                      <small>
+                        <em>
+                          <p className={styles.textLegend}>
+                            users' expertise</p>
+                        </em>
+                      </small>
+                      <img
+                        src={Projects03}
+                        className={styles.legend}
+                        alt="legend"
+                      ></img>
+                    </Col>
+                  </Row>
+                  </Row>
+                  </div>
               </Tab>
             </Tabs>
           </div>

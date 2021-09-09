@@ -51,7 +51,7 @@ const IndexPage = () => {
           <hr></hr>
           <Col></Col>
             <Col xs={6}>
-              <section className="references">
+              {/* <section className="references">
                 <h2 className="intro">References</h2>
                 <div className="floatingSquareSmall"></div>
                 <ul className="foreText">
@@ -70,7 +70,7 @@ const IndexPage = () => {
                     Italy,Vol. 12585. Springer, 184–188
                     </h3></li>
                 </ul>
-              </section>
+              </section> */}
             </Col>
             <Col></Col>
             </Row>

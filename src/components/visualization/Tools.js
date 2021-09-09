@@ -157,7 +157,7 @@ const Tools = ({
                     </Col>
                     <Col>
                       <h6 className={styles.subtitleLegend}>Size</h6>
-                      <p className={styles.textLegend}>Projects</p>
+                      <p className={styles.textLegend}>Items</p>
                       <small>
                         <em>
                           <p className={styles.textLegend}>sum of projects</p>
@@ -191,7 +191,7 @@ const Tools = ({
 
               <Tab
                 eventKey="projects"
-                title="Projects"
+                title="Items"
                 className={styles.customTab}
               >
                 <h5>How to read the visualization</h5>

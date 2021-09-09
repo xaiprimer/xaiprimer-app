@@ -143,7 +143,7 @@ const Collection = ({ collection, updateCollection }) => {
         >
           <div className={styles.header}>
             <h5 className={ClassNames("text-uppercase", styles.title)}>
-              ArtWorks/Applications
+              Items/Projects
             </h5>
             <div className={styles.elementsCounter}>
               <p>{collection.filter((d) => !d.category).length}</p>
@@ -178,7 +178,7 @@ const Collection = ({ collection, updateCollection }) => {
         >
           <div className={styles.header}>
             <h5 className={ClassNames("text-uppercase", styles.title)}>
-              Explainable AI tactics
+              Explainable AI strategies
             </h5>
             <div className={styles.elementsCounter}>
               <p>

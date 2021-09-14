@@ -45,7 +45,7 @@ const IndexPage = () => {
                   readings of the visualisation
                 </h2>
               </div>
-              <div><PrimerCard /></div>
+              {/* <div><PrimerCard /></div> */}
             </Col>
             <Col></Col>
           </Row>

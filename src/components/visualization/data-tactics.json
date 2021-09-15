@@ -1,0 +1,66 @@
+[
+  {
+    "tactic": "comparison",
+    "description": "Explaining by comparing two or more items"
+  },
+  {
+    "tactic": "define and describe",
+    "description": "Defining the overview and then going into details."
+  },
+  {
+    "tactic": "depth first",
+    "description": "Following explanation paths down to the smallest detail before continuing with other concepts. Explaining higher-level concepts first, before going into details."
+  },
+  {
+    "tactic": "describe and define",
+    "description": "Explaining by first providing details and then the whole picture."
+  },
+  {
+    "tactic": "divide and conquer",
+    "description": "Explaining by breaking down a problem into two or more sub-problems."
+  },
+  {
+    "tactic": "drill-down story",
+    "description": "Explaining by narrating a story, going deeper and deeper"
+  },
+  {
+    "tactic": "dynamic programming",
+    "description": "Recursively splitting the explanation of complex concepts into smaller sub-problems, accumulating intermediate results."
+  },
+  {
+    "tactic": "example by abnormality",
+    "description": "Explaining by highlighting unusual manifestations of a phenomenon to emphasize the “normal” state in order to prevent misconceptions."
+  },
+  {
+    "tactic": "explanation by example",
+    "description": "Explaining by correlating issues to previous experiences."
+  },
+  {
+    "tactic": "metaphorical narrative",
+    "description": "Explaining complex concepts using metaphors."
+  },
+  {
+    "tactic": "opposite and similar",
+    "description": "Explaining by comparing two or more items highlighting their dissimilarities and similarities."
+  },
+  {
+    "tactic": "overview first",
+    "description": "Explaining by providing users the option for details."
+  },
+  {
+    "tactic": "simplification",
+    "description": "Explaining by simplifying a complex system, limiting the layers of abstraction."
+  },
+  {
+    "tactic": "teaching by association",
+    "description": "Explaining by highlighting similar or different elements."
+  },
+  {
+    "tactic": "teaching by categories",
+    "description": "Explaining by providing pre-exsisting categories."
+  },
+  {
+    "tactic": "transfer learning",
+    "description": "Using material from other cases and apply them."
+  }
+]

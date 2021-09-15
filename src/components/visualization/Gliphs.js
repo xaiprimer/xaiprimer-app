@@ -103,15 +103,16 @@ const cluster = (parent, data) => {
     .attr("x", (d) => -0.5 * d.side)
     .attr("y", (d) => -0.5 * d.side);
 
-    g_treemap
-      .selectAll("text")
-      .data(data, (d) => d.id)
-      .join("text")
-      .attr("fill", "black")
-      .attr("font-size", "var(--label-size)")
-      .attr("y", -20)
-      .attr("text-anchor", "middle")
-      .text((d) => d.id);
+    // ids clusters
+    // g_treemap
+    //   .selectAll("text")
+    //   .data(data, (d) => d.id)
+    //   .join("text")
+    //   .attr("fill", "black")
+    //   .attr("font-size", "var(--label-size)")
+    //   .attr("y", -20)
+    //   .attr("text-anchor", "middle")
+    //   .text((d) => d.id);
 };
 
 const project = (parent, data, mediumSize) => {
@@ -229,16 +230,17 @@ const project = (parent, data, mediumSize) => {
     .attr("fill", (d) => (d.isPresent ? "#222" : "#fafafa"))
     .attr("stroke", "#222")
     .attr("stroke-width", "var(--stroke-width)");
-
-  gliph
-    .selectAll("text")
-    .data(data, (d) => d.id)
-    .join("text")
-    .attr("fill", "black")
-    .attr("font-size", "var(--label-size)")
-    // .attr("y", 0)
-    .attr("text-anchor", "middle")
-    .text((d) => d.id.toUpperCase());
+  
+  // id items
+  // gliph
+  //   .selectAll("text")
+  //   .data(data, (d) => d.id)
+  //   .join("text")
+  //   .attr("fill", "black")
+  //   .attr("font-size", "var(--label-size)")
+  //   // .attr("y", 0)
+  //   .attr("text-anchor", "middle")
+  //   .text((d) => d.id.toUpperCase());
 };
 
 export { cluster, project };

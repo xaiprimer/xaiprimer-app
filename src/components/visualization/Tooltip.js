@@ -1,6 +1,6 @@
 import React from "react";
 import ClassNames from "classnames";
-import {Link} from "gatsby"
+import { Link } from "gatsby";
 import * as styles from "../../styles/visualization.module.scss";
 import {
   BsX,
@@ -8,7 +8,7 @@ import {
   BsFilm as VideoInterview,
   BsBoxArrowInUpRight as OutLink,
 } from "react-icons/bs";
-
+import dataTactics from "./data-tactics.json";
 
 const Tooltip = ({ data, close, collection, updateCollection }) => {
   const { posX, posY } = data;
@@ -19,7 +19,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
   };
 
   const addToCollection = (data) => {
-    if (collection.map(d=>d.title).indexOf(data.title) < 0) {
+    if (collection.map((d) => d.title).indexOf(data.title) < 0) {
       updateCollection(collection.concat(data));
     }
   };
@@ -27,9 +27,27 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
   return (
     <div className={styles.tooltip} style={positioning}>
       {data.title && (
-        <h2 className="fst-italic" style={{ width: "calc(100% - 30px)" }}>
-          {data.title} <a aria-label="Outbond link" href={data.link} target="_blank" rel="noreferrer"><OutLink/></a>
+        <h2
+          className="fst-italic text-capitalize mb-2"
+          style={{ width: "calc(100% - 30px)" }}
+        >
+          {data.title}{" "}
+          {data.category !== "tactic" && data.category !== "medium" && (
+            <a
+              aria-label="Outbond link"
+              href={data.link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <OutLink />
+            </a>
+          )}
         </h2>
+      )}
+      {dataTactics.find((d) => d.tactic === data.title) && (
+        <p className="mb-3">
+          {dataTactics.find((d) => d.tactic === data.title).description}
+        </p>
       )}
       {data.authors && (
         <>
@@ -54,19 +72,19 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
           <p>{data.description}</p>
         </>
       )}
-      {data.category !== "tactic" && (
+      {data.category !== "tactic" && data.category !== "medium" && (
         <>
           <h5 className="text-uppercase">Supplemental material</h5>
-          <Link
+          <a
             className={ClassNames(styles.supplemental)}
-            to={`/design-process-${data.id}`}
+            href={`/design-process-${"P71"||data.id}`}
             target="_blank"
             rel="noreferrer"
           >
             <DesignProcess />
             <p>Explore the design process</p>
-          </Link>
-          <Link
+          </a>
+          {/* <Link
             className={ClassNames(styles.supplemental)}
             to={`/video-interview-${data.id}`}
             target="_blank"
@@ -74,23 +92,25 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
           >
             <VideoInterview />
             <p>Watch the video interview</p>
-          </Link>
+          </Link> */}
         </>
       )}
-      {(updateCollection) && (
+      {updateCollection && (
         <>
-          {collection.map(d=>d.title).indexOf(data.title) < 0 && (
+          {collection.map((d) => d.title).indexOf(data.title) < 0 && (
             <div
               className={styles.addToCollection}
               onClick={() => addToCollection(data)}
-              onKeyDown={() => {return;}}
+              onKeyDown={() => {
+                return;
+              }}
               role="button"
               tabIndex={0}
             >
               Add to collection
             </div>
           )}
-          {collection.map(d=>d.title).indexOf(data.title) !== -1 && (
+          {collection.map((d) => d.title).indexOf(data.title) !== -1 && (
             <div className={styles.addedToCollection}>Added to collection</div>
           )}
         </>

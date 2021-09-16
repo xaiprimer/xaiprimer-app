@@ -1,11 +1,14 @@
 import React from "react";
 import ClassNames from "classnames";
-import { Link } from "gatsby";
+import {
+  // Link,
+  withPrefix
+} from "gatsby";
 import * as styles from "../../styles/visualization.module.scss";
 import {
   BsX,
   BsLayoutWtf as DesignProcess,
-  BsFilm as VideoInterview,
+  // BsFilm as VideoInterview,
   BsBoxArrowInUpRight as OutLink,
 } from "react-icons/bs";
 import dataTactics from "./data-tactics.json";
@@ -77,7 +80,7 @@ const Tooltip = ({ data, close, collection, updateCollection }) => {
           <h5 className="text-uppercase">Supplemental material</h5>
           <a
             className={ClassNames(styles.supplemental)}
-            href={`/design-process-${"P71"||data.id}`}
+            href={withPrefix(`/design-process-${"P71"||data.id}`)}
             target="_blank"
             rel="noreferrer"
           >

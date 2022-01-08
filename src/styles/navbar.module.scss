@@ -1,32 +1,29 @@
 @import "variables.scss";
 
+.customNavbar {
+	font-weight: 600;
+	text-transform: lowercase;
+	position: sticky;
+	border-bottom: 1px solid black;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	z-index: 99999;
+	top: 0;
+	left: 0;
+	padding: 0 1em 0 1em;
+	height: var(--navbar-height); // find variable value in variables.scss, we need a fized value to implement annotations correctly
 
-.customNavbar{ 
-    font-weight: 600;
-    text-transform: lowercase;
-    position: sticky;
-    border-bottom: 1px solid black;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    z-index:99999;
-    top:0;
-    left:0;
-    padding:0 1em 0 1em;
+	a {
+		text-decoration: none;
+		transition: 1s transform ease;
+	}
 
-    a {
-        text-decoration: none;
-        transition: 1s transform ease;
-    }
+	a:hover {
+		border-bottom: 1px solid black;
+	}
 
-    a:hover{
-        border-bottom:1px solid black;
-    }
-
-    .customNavbarLinks{
-        color: black;
-        margin: 0 1em 0 1em;
-        }
-
-
-    
+	.customNavbarLinks {
+		color: black;
+		margin: 0 1em 0 1em;
+	}
 }

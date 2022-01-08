@@ -527,7 +527,7 @@ const initialize = async (
 	);
 	const annotations = annotationsSVG.querySelector("g#annotations");
 	annotationsLayer.node().appendChild(annotations);
-  const annotationsScale = width / annotationsWidth;
+  const annotationsScale = width < height ?  width / annotationsWidth : height / annotationsHeight;
 	d3.select("g#annotations").attr(
 		"transform",
 		`scale(${annotationsScale}) translate(${-annotationsWidth / 2},${-annotationsHeight / 2})`

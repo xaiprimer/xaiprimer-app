@@ -4,6 +4,13 @@ import PrimerFooter from "../components/primer-footer/PrimerFooter";
 
 import { Row, Col } from "react-bootstrap";
 
+import components from "../images/components.svg";
+import meth from "../images/meth.svg";
+import letterA from "../images/letters/letterA.svg";
+import letterB from "../images/letters/letterB.svg";
+import letterC from "../images/letters/letterC.svg";
+import letterD from "../images/letters/letterD.svg";
+
 // markup
 const IndexPage = () => {
   return (
@@ -13,69 +20,154 @@ const IndexPage = () => {
       <body>
         <main>
           <section className="about">
-          <Row>
+            {/* intro */}
+            <Row>
+              <Col></Col>
+              <Col xs={6}>
+                <div className="floatingSquare"></div>
+                <h1 className="foreText" style={{textShadow : '0 0 4px var(--cognac-primer)', color:'white'}}>
+                  We propose an exploratory interface depicting both XAI
+                  strategies and applications to support designers
+                  conceptualizing and developing new projects.
+                </h1>
+                <br></br>
+                <Row></Row>
+                <div>
+                  <h2 className="intro" >
+                    Explainable Artificial Intelligence (XAI) processes
+                    typically combine various explanation and verification
+                    strategies to support the analysis in different domains. Due
+                    to the increasing number of techniques and the variety of
+                    XAI methods deployed, deriving a comprehensive overview
+                    framework of different strategy combinations remains
+                    challenging.
+                    <br></br>
+                    The paper presents a proposal for a digital ideation space
+                    in which designers of XAI processes can derive inspiration
+                    and investigate existing works. The XAI Primer is designed
+                    based on the metaphor of a museum. Users can explore the
+                    presented ideation space as if they were artists visiting an
+                    art gallery. We enable serendipitous and guided
+                    explorations, allowing them to investigate and probe the
+                    state-of-the-art as a source of inspiration.{" "}
+                  </h2>
+                </div>
+              </Col>
+              <Col></Col>
+            </Row>
+            
+            {/* components */}
+            <Row>
             <Col></Col>
             <Col xs={6}>
-            <div className="floatingSquare"></div>
-              <h1 className="foreText">
-                We propose an exploratory interface depicting both XAI
-                strategies and applications to support designers conceptualizing
-                and developing new projects.
-              </h1>
-              <br></br>
-              <Row></Row>
-              <div>
-                <h2 className="intro">
-                  Explainable Artificial Intelligence (XAI) processes typically
-                  combine various explanation and verification strategies to
-                  support the analysis in different domains. Due to the
-                  increasing number of techniques and the variety of XAI methods
-                  deployed, deriving a comprehensive overview framework of
-                  different strategy combinations remains challenging. The paper
-                  presents a proposal for a digital ideation space in which
-                  designers of XAI processes can derive inspiration and
-                  investigate existing works. The XAI Primer is designed based
-                  on the metaphor of a museum. Users can explore the presented
-                  ideation space as if they were artists visiting an art
-                  gallery. We enable serendipitous and guided explorations,
-                  allowing them to investigate and probe the state-of-the-art as
-                  a source of inspiration
-                </h2>
-              </div>
-              
-            </Col>
+            <br></br>
+              <h2 className="intro">
+              The <strong>exploration modes panel <span className="move"><img src={letterA}></img></span></strong> allows for jumping across layers and guided tours; the <strong>collection panel <span><img src={letterB}></img></span></strong> enables visitors collecting items during the navigation; the <strong>minimap<span><img src={letterC}></img></span></strong>  helps in orienting users in digitalspace; the <strong>search bar<span><img src={letterD}></img></span></strong>, accessible by typing ctrl+c enables experts users to look for specific items or authors.
+              </h2>
+              </Col>
             <Col></Col>
           </Row>
-          </section>
-          <Row>
-          <hr></hr>
-          <Col></Col>
-            <Col xs={6}>
-              {/* <section className="references">
-                <h2 className="intro">References</h2>
-                <div className="floatingSquareSmall"></div>
-                <ul className="foreText">
-                  <li><h3>
-                    Mennatallah El-Assady, Wolfgang Jentner, RebeccaKehlbeck,
-                    Udo Schlegel, Rita Sevastjanova, FabianSperrle, Thilo
-                    Spinner, and Daniel Keim. 2019.Towards XAI : Structuring the
-                    Processes of Explanations. InProc. of ACM CHI Workshop
-                    onHuman-Centered Machine Learning Beatrice Gobbo. 2020.
-                    </h3></li>
 
-                  <li><h3>
-                    Explaining AI Through CriticalReflection Artifacts - On the
-                    Role of Communication Design Within XAI. InAdvanced Visual
-                    Interfaces. AVI2020 Workshops, AVI-BDA and ITAVIS,Ischia,
-                    Italy,Vol. 12585. Springer, 184–188
-                    </h3></li>
-                </ul>
-              </section> */}
+            <Row>
+              <Col xs={12}>
+                <img
+                  className="d-block w-100"
+                  src={components}
+                  alt="components"
+                />
+              </Col>
+            </Row>
+            <Row>
+            <Col></Col>
+            <Col xs={6}>
+            <h4 style={{color:'var(--cognac-primer)'}}>Figure 1: the figure depicts a diagrammatic representation of the components of the interface. 
+            Exploration modes allow visitors to dig into thhe space and reveal new layers of information.</h4>
             </Col>
             <Col></Col>
             </Row>
-          <PrimerFooter />
+            
+            <br></br>
+
+            {/* methodology */}
+            <Row>
+              <Col></Col>
+              <Col xs={6}>
+                <h2 className="intro">
+                  The XAI Primer currently includes a collection of 71
+                  Explainable Artificial Intelligence projects gathered from
+                  theVISxAI Workshop, Distill, Google Arts Experiments, IEEVIS
+                  Art Program, as well as independentartworks from the fields of
+                  art, media studies, communication design and data activism. We
+                  deliberately decided to focus on aselection of XAI projects
+                  from various research fields to open up a discussion of
+                  different approaches to XAI, includingcommunication and
+                  explanation strategies across different disciplines.
+                </h2>
+              </Col>
+              <Col></Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <img className="d-block w-100" src={meth} alt="methodology" />
+              </Col>
+            </Row>
+            <Row>
+            <Col></Col>
+            <Col xs={6}>
+            <h4 style={{color:'var(--cognac-primer)'}}>Figure 2: the design process we followed from the data collction to the implementation and study.</h4>
+            </Col>
+            <Col></Col>
+            </Row>
+
+            <br></br>
+            <Row>
+            <Col xs={3}></Col>
+              <Col xs={6}>
+                <h2 className="intro">
+                  Projects have been classified according to the Building Blocks
+                  Framework, previously defined by El-Assady et al. <span style={{color:'var(--cognac-primer)'}}>[1]</span> in
+                  2019 and tailored to the XAI Primer by
+                 Gobbo et El-Assady al. <span style={{color:'var(--cognac-primer)'}}>[2]</span> in 2021. Items have been
+                  positioned in the layered space, then encoded as gliphs and
+                  enriched with additional materials. Guided tours have been
+                  defined by critically reading items' positioning and
+                  relationship. Before conducting the final qualitative study
+                  the system has been implementd as an interactive application
+                  built on top of React.js and D3.js.
+                </h2>
+              </Col>
+              <Col xs={2}>
+              <ol className="foreText" style={{color:'var(--cognac-primer)'}}>
+                    <li>
+                      <p>
+                        Mennatallah El-Assady, Wolfgang Jentner,
+                        Rebecca Kehlbeck, Udo Schlegel, Rita Sevastjanova,
+                        Fabian Sperrle, Thilo Spinner, and Daniel Keim. 2019.
+                        <em>
+                          Towards XAI : Structuring the Processes of
+                          Explanations.
+                        </em>{" "}
+                        InProc. of ACM CHI Workshop on Human-Centered Machine
+                        Learning
+                      </p>
+                    </li>
+                    <br></br>
+                    <li>
+                      <p>
+                      Beatrice Gobbo, Mennatallah El-Assady. 2021.
+                        <em>
+                        The XAI Primer : A Digital Ideation Space for Explainable Artificial Intelligence Strategies.
+                        </em>
+                        InProc. of ACM CHI Workshop on Human-Centered Explainable Artificial Intelligence.
+                      </p>
+                    </li>
+                  </ol>
+                  </Col>
+                  <Col></Col>
+            </Row>
+          </section>
         </main>
+        <PrimerFooter />
       </body>
     </>
   );

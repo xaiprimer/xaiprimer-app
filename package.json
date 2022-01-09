@@ -48,6 +48,7 @@
     "typeface-spectral": "^1.1.13"
   },
   "devDependencies": {
+    "gatsby-plugin-favicons": "^2.0.0",
     "gh-pages": "^3.2.3"
   }
 }

@@ -7,7 +7,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-favicons',
       options: {
-        logo: "src/images/icon.png",
+        logo: "./src/images/icon.png",
         appName: 'My Website',
         background: '#fff',
         icons: {
@@ -27,7 +27,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/icon.png",
+        icon: "./src/images/icon.png",
       },
     },
     "gatsby-plugin-mdx",

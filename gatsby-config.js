@@ -4,23 +4,7 @@ module.exports = {
     title: "xaiprimer-app",
   },
   plugins: [
-    {
-      resolve: 'gatsby-plugin-favicons',
-      options: {
-        logo: "./src/images/icon.png",
-        appName: 'My Website',
-        background: '#fff',
-        icons: {
-          android: true,
-          appleIcon: true,
-          appleStartup: true,
-          coast: false,
-          favicons: true,
-          yandex: false,
-          windows: false
-        }
-      }
-    },
+
     "gatsby-plugin-sass",
     "gatsby-plugin-image",
     "gatsby-plugin-react-helmet",

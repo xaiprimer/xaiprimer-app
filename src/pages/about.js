@@ -96,11 +96,11 @@ const IndexPage = () => {
                   The XAI Primer currently includes a collection of 71
                   Explainable Artificial Intelligence projects gathered from
                   theVISxAI Workshop, Distill, Google Arts Experiments, IEEVIS
-                  Art Program, as well as independentartworks from the fields of
+                  Art Program, as well as independent artworks from the fields of
                   art, media studies, communication design and data activism. We
                   deliberately decided to focus on aselection of XAI projects
                   from various research fields to open up a discussion of
-                  different approaches to XAI, includingcommunication and
+                  different approaches to XAI, including communication and
                   explanation strategies across different disciplines.
                 </h2>
               </Col>
@@ -114,7 +114,7 @@ const IndexPage = () => {
             <Row>
             <Col></Col>
             <Col xs={6}>
-            <h4 style={{color:'var(--cognac-primer)'}}>Figure 2: the design process we followed from the data collction to the implementation and study.</h4>
+            <h4 style={{color:'var(--cognac-primer)'}}>Figure 2: the design process we followed from the data collection to the implementation and study.</h4>
             </Col>
             <Col></Col>
             </Row>

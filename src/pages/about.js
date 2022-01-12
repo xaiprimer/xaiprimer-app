@@ -146,7 +146,7 @@ const IndexPage = () => {
                         <em><u><a target='_blank' href={'https://www.researchgate.net/publication/332802468_Towards_XAI_Structuring_the_Processes_of_Explanations'}> Towards XAI : Structuring the Processes of
                           Explanations.</a>
                         </u></em>
-                        InProceedings of ACM CHI Workshop on Human-Centered Machine
+                        In Proceedings of ACM CHI Workshop on Human-Centered Machine
                         Learning
                       </p>
                     </li>

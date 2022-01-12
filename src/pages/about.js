@@ -143,11 +143,10 @@ const IndexPage = () => {
                         Mennatallah El-Assady, Wolfgang Jentner,
                         Rebecca Kehlbeck, Udo Schlegel, Rita Sevastjanova,
                         Fabian Sperrle, Thilo Spinner, and Daniel Keim. 2019.
-                        <em>
-                          Towards XAI : Structuring the Processes of
-                          Explanations.
-                        </em>{" "}
-                        InProc. of ACM CHI Workshop on Human-Centered Machine
+                        <em><u><a target='_blank' href={'https://www.researchgate.net/publication/332802468_Towards_XAI_Structuring_the_Processes_of_Explanations'}> Towards XAI : Structuring the Processes of
+                          Explanations.</a>
+                        </u></em>
+                        InProceedings of ACM CHI Workshop on Human-Centered Machine
                         Learning
                       </p>
                     </li>
@@ -155,10 +154,10 @@ const IndexPage = () => {
                     <li>
                       <p>
                       Beatrice Gobbo, Mennatallah El-Assady. 2021.
-                        <em>
-                        The XAI Primer : A Digital Ideation Space for Explainable Artificial Intelligence Strategies.
-                        </em>
-                        InProc. of ACM CHI Workshop on Human-Centered Explainable Artificial Intelligence.
+                        <em><u>
+                        <a target='_blank' href={'https://re.public.polimi.it/handle/11311/1193817#.Yd80LVjMLzc'}>
+                          The XAI Primer : A Digital Ideation Space for Explainable Artificial Intelligence Strategies
+                        </a></u></em> In Proceedings of ACM CHI Workshop on Human-Centered Explainable Artificial Intelligence.
                       </p>
                     </li>
                   </ol>

@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
-    title: "xaiprimer-app",
+    siteUrl: "https://xai-primer.com",
+    title: "XAI Primer",
   },
   plugins: [
 
@@ -42,5 +42,5 @@ module.exports = {
       },
     },
   ],
-  pathPrefix: "/xaiprimer-app",
+  // pathPrefix: "/xaiprimer-app",
 };

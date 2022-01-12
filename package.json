@@ -15,7 +15,7 @@
     "clean": "gatsby clean",
     "dev-m": "gatsby develop -H 0.0.0.0 -p 8000 -o",
     "dev-m-clean": "gatsby clean && gatsby develop -H 0.0.0.0 -p 8000 -o",
-    "deploy": "gatsby clean && gatsby build --prefix-paths && gh-pages -d public"
+    "deploy": "gatsby clean && gatsby build && gh-pages -d public"
   },
   "dependencies": {
     "@fontsource/crimson-text": "^4.5.0",
